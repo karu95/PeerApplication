@@ -1,17 +1,17 @@
 package com.peerapplication.handler;
 
-import com.peerapplication.message.LoginMessage;
-import com.peerapplication.message.LogoutMessage;
-import com.peerapplication.message.PasswordChangeMessage;
-import com.peerapplication.message.RegisterMessage;
+import com.peerapplication.message.*;
+import com.peerapplication.messenger.PeerHandler;
 
 public class BSHandler {
+
     public void login(LoginMessage loginMessage){
 
     }
 
-    public void register(RegisterMessage registerMessage){
+    public void signup(RegisterMessage registerMessage){
 
+        PeerHandler.getSenderController().send(registerMessage);
     }
 
     public void logout(LogoutMessage logoutMessage){
@@ -19,6 +19,10 @@ public class BSHandler {
     }
 
     public void changePassword(PasswordChangeMessage pwChangeMessage){
+
+    }
+
+    public void handleRequest(RequestStatusMessage message){
 
     }
 

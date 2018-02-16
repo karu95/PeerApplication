@@ -15,7 +15,7 @@ public class PeerHandler {
     private static ReceiverController receiverController;
     private static SenderController senderController = new SenderController();
     private static int bsPort = 25025;
-    private static int bsAddress;
+    private static String bsAddress = "192.168.8.100";
 
 
     public static ArrayList<Peer> getKnownPeers() {
@@ -47,6 +47,7 @@ public class PeerHandler {
     }
 
     public static String getLocalIPAddress(){
+        InetAddress inetAddress = null;
         try {
             for (
                     final Enumeration<NetworkInterface> interfaces =
@@ -69,8 +70,7 @@ public class PeerHandler {
                     {
                         continue;
                     }
-
-                    return inet_addr.getHostAddress();
+                    inetAddress = inet_addr;
                     System.out.println(
                             "  address: " + inet_addr.getHostAddress( ) +
                                     "/" + addr.getNetworkPrefixLength( )
@@ -80,5 +80,13 @@ public class PeerHandler {
         } catch (SocketException e) {
             e.printStackTrace();
         }
+        if (inetAddress != null) {
+            return inetAddress.getHostAddress();
+        }
+        return "No network Connection!";
+    }
+
+    public static SenderController getSenderController() {
+        return senderController;
     }
 }

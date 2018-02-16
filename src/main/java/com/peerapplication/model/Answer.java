@@ -1,5 +1,7 @@
 package com.peerapplication.model;
 
+import com.peerapplication.repository.AnswerRepository;
+
 import java.util.ArrayList;
 
 public class Answer {
@@ -74,5 +76,10 @@ public class Answer {
 
     public void addVote(Vote vote){
         votes.add(vote);
+    }
+
+    public void getAnswer(String answerID){
+        AnswerRepository answerRepo = new AnswerRepository();
+
     }
 }

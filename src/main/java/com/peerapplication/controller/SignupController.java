@@ -1,7 +1,14 @@
 package com.peerapplication.controller;
 
+import com.peerapplication.message.Message;
+import com.peerapplication.message.RegisterMessage;
+import com.peerapplication.message.RequestStatusMessage;
+import com.peerapplication.messenger.PeerHandler;
+import com.peerapplication.util.Main;
+import com.peerapplication.util.UIUpdater;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -12,8 +19,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class SignupController {
+public class SignupController implements UIUpdater, Initializable{
 
     @FXML
     private Label statusLabel;
@@ -32,6 +41,8 @@ public class SignupController {
 
     @FXML
     private PasswordField txtCnfmPassword;
+
+
 
     @FXML
     void confirmSignup(MouseEvent event) {
@@ -56,7 +67,10 @@ public class SignupController {
                 txtPassword.clear();
                 txtCnfmPassword.clear();
             } else {
-                statusLabel.setText("Registration Success!");
+                RegisterMessage regMsg = new RegisterMessage();
+                regMsg.setUsername(username);
+                regMsg.setPassword(password);
+                PeerHandler.getBsHandler().signup(regMsg);
             }
         } else {
             statusLabel.setText("All fields are required!");
@@ -74,5 +88,19 @@ public class SignupController {
         stage.setScene(scene);
     }
 
+
+    @Override
+    public void updateUI(Message message) {
+        if (message instanceof RequestStatusMessage){
+            statusLabel.setText(((RequestStatusMessage) message).getStatus());
+        }
+
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        Main.setRegisterListener(this);
+
+    }
 }
 

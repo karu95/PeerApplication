@@ -1,7 +1,13 @@
 package com.peerapplication.controller;
 
+import com.peerapplication.message.LogoutMessage;
+import com.peerapplication.message.Message;
+import com.peerapplication.message.RequestStatusMessage;
+import com.peerapplication.util.Main;
+import com.peerapplication.util.UIUpdater;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -12,8 +18,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class LoginController{
+public class LoginController implements UIUpdater, Initializable{
 
     @FXML
     private TextField txtUsername;
@@ -62,5 +70,17 @@ public class LoginController{
         stage.setScene(scene);
     }
 
+    @Override
+    public void updateUI(Message message) {
+        if (message instanceof RequestStatusMessage){
+
+        }
+
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        Main.setLoginListener(this);
+    }
 }
 
