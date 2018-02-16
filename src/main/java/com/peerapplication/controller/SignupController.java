@@ -100,7 +100,6 @@ public class SignupController implements UIUpdater, Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Main.setRegisterListener(this);
-
     }
 }
 

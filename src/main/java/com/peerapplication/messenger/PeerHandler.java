@@ -89,4 +89,20 @@ public class PeerHandler {
     public static SenderController getSenderController() {
         return senderController;
     }
+
+    public static int getBsPort() {
+        return bsPort;
+    }
+
+    public static void setBsPort(int bsPort) {
+        PeerHandler.bsPort = bsPort;
+    }
+
+    public static String getBsAddress() {
+        return bsAddress;
+    }
+
+    public static void setBsAddress(String bsAddress) {
+        PeerHandler.bsAddress = bsAddress;
+    }
 }

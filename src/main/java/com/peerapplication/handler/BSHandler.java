@@ -10,7 +10,8 @@ public class BSHandler {
     }
 
     public void signup(RegisterMessage registerMessage){
-
+        registerMessage.setReceiverAddress(PeerHandler.getBsAddress());
+        registerMessage.setReceiverPort(PeerHandler.getBsPort());
         PeerHandler.getSenderController().send(registerMessage);
     }
 
