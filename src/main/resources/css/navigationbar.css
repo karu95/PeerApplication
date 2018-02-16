@@ -1,0 +1,23 @@
+.my-drop-down-menu{
+    -fx-background-color: TRANSPARENT, TRANSPARENT, TRANSPARENT, TRANSPARENT;
+    -fx-graphic: url('../images/man-icon.png');
+}
+
+@font-face {
+    font-family: Angel;
+    src: url('ANGEL.ttf');
+}
+
+.heading-label{
+    -fx-graphic: url('../images/Users-icon.png');
+    -fx-font-weight: bolder;
+}
+
+
+.my-drop-down-menu-list-item {
+    -fx-background-color: #FAFAFA;
+}
+
+.my-drop-down-menu-list-item:hover {
+    -fx-background-color: cornflowerblue;
+}

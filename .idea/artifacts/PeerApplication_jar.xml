@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="PeerApplication:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/PeerApplication_jar</output-path>
+    <root id="archive" name="PeerApplication.jar">
+      <element id="module-output" name="PeerApplication" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/apache/derby/derby/10.14.1.0/derby-10.14.1.0.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
