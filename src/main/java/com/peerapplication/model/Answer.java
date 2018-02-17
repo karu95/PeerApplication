@@ -11,7 +11,7 @@ public class Answer {
     private String description;
     private ArrayList<Vote> votes;
     private long timestamp;
-    private int userID;
+    private int postedUserID;
 
     public Answer(){ }
 
@@ -66,12 +66,12 @@ public class Answer {
         this.timestamp = timestamp;
     }
 
-    public int getUserID() {
-        return userID;
+    public int getPostedUserID() {
+        return postedUserID;
     }
 
-    public void setUserID(int userID) {
-        this.userID = userID;
+    public void setPostedUserID(int postedUserID) {
+        this.postedUserID = postedUserID;
     }
 
     public void addVote(Vote vote){
@@ -79,6 +79,10 @@ public class Answer {
     }
 
     public void getAnswer(String answerID){
+        AnswerRepository answerRepo = new AnswerRepository();
+        answerRepo.getAnswer(answerID, this);
+    }
+    public void saveAnswer(){
         AnswerRepository answerRepo = new AnswerRepository();
 
     }

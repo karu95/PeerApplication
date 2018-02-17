@@ -9,6 +9,8 @@ public class Vote {
         this.userID = userID;
     }
 
+    public Vote(){}
+
     public String getAnswerID() {
         return answerID;
     }

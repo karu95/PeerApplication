@@ -11,9 +11,7 @@ public class Thread {
     private ArrayList<Answer> answers;
     private int userID;
 
-    public  Thread(){
-
-    }
+    public  Thread(){}
 
     public Thread(String title){
         this.title = title;

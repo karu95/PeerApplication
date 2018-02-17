@@ -1,4 +1,4 @@
 package com.peerapplication.handler;
 
-public class PeerUpdateHandler {
+public class ForumUpdateHandler {
 }

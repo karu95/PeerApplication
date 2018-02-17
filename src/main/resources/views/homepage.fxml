@@ -24,11 +24,11 @@
          <children>
             <TabPane fx:id="homeTabs" layoutX="219.0" layoutY="33.0" minHeight="636.0" minWidth="776.0" opacity="0.55" prefHeight="671.0" prefWidth="776.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="33.0">
               <tabs>
-                <Tab text="Latest Threads">
+                <Tab fx:id="latestThreadTab" closable="false" text="Latest Threads">
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <Pagination fx:id="pagination" currentPageIndex="1" layoutX="173.0" layoutY="111.0" maxPageIndicatorCount="1" minHeight="644.0" minWidth="776.0" pageCount="10" stylesheets="@../css/pagination.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                              <Pagination fx:id="paginationLtstThreads" currentPageIndex="1" layoutX="173.0" layoutY="111.0" maxPageIndicatorCount="1" minHeight="644.0" minWidth="776.0" pageCount="10" stylesheets="@../css/pagination.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                               <TableView fx:id="threadTable" editable="true" layoutX="67.0" layoutY="52.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="50.0">
                                 <columns>
                                   <TableColumn fx:id="colAnswers" editable="false" prefWidth="75.0" sortable="false" text="Answers" />
@@ -39,11 +39,11 @@
                         </AnchorPane>
                   </content>
                 </Tab>
-                  <Tab text="Top Discussions">
+                  <Tab fx:id="topDiscussionsTab" closable="false" text="Top Discussions">
                      <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <Pagination fx:id="pagination1" currentPageIndex="1" layoutX="173.0" layoutY="111.0" maxPageIndicatorCount="1" minHeight="644.0" minWidth="776.0" pageCount="10" stylesheets="@../css/pagination.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                              <Pagination fx:id="paginationTopDiscussions" currentPageIndex="1" layoutX="173.0" layoutY="111.0" maxPageIndicatorCount="1" minHeight="644.0" minWidth="776.0" pageCount="10" stylesheets="@../css/pagination.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                               <TableView fx:id="threadTable1" editable="true" layoutX="67.0" layoutY="52.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="50.0">
                                  <columns>
                                     <TableColumn fx:id="colAnswers1" editable="false" prefWidth="75.0" sortable="false" text="Answers" />
@@ -54,11 +54,11 @@
                         </AnchorPane>
                      </content>
                   </Tab>
-                  <Tab text="My Threads">
+                  <Tab fx:id="myThreadTab" closable="false" text="My Threads">
                      <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <Pagination fx:id="pagination11" currentPageIndex="1" layoutX="173.0" layoutY="111.0" maxPageIndicatorCount="1" minHeight="644.0" minWidth="776.0" pageCount="10" stylesheets="@../css/pagination.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                              <Pagination fx:id="paginationMyThreads" currentPageIndex="1" layoutX="173.0" layoutY="111.0" maxPageIndicatorCount="1" minHeight="644.0" minWidth="776.0" pageCount="10" stylesheets="@../css/pagination.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                               <TableView fx:id="threadTable11" editable="true" layoutX="67.0" layoutY="52.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="50.0">
                                  <columns>
                                     <TableColumn fx:id="colAnswers11" editable="false" prefWidth="75.0" sortable="false" text="Answers" />
@@ -69,11 +69,11 @@
                         </AnchorPane>
                      </content>
                   </Tab>
-                  <Tab text="Notifications">
+                  <Tab fx:id="notificationTab" closable="false" text="Notifications">
                      <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <Pagination fx:id="pagination2" currentPageIndex="1" layoutX="173.0" layoutY="111.0" maxPageIndicatorCount="1" minHeight="644.0" minWidth="776.0" pageCount="10" stylesheets="@../css/pagination.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                              <Pagination fx:id="paginationNotifications" currentPageIndex="1" layoutX="173.0" layoutY="111.0" maxPageIndicatorCount="1" minHeight="644.0" minWidth="776.0" pageCount="10" stylesheets="@../css/pagination.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                            </children>
                         </AnchorPane>
                      </content>
@@ -88,7 +88,7 @@
             <Label fx:id="lblName" alignment="CENTER" layoutX="14.0" layoutY="231.0" prefHeight="32.0" prefWidth="190.0" style="-fx-background-color: darkgray;" text="User001" />
             <Label fx:id="lblPostedThreads" layoutX="14.0" layoutY="275.0" prefHeight="32.0" prefWidth="190.0" style="-fx-background-color: darkgray;" text="Posted Threads :" />
             <Label fx:id="lblAnsweredThreads" layoutX="14.0" layoutY="318.0" prefHeight="32.0" prefWidth="190.0" style="-fx-background-color: darkgray;" text="Answered Threads :" />
-            <Label layoutX="14.0" layoutY="362.0" prefHeight="32.0" prefWidth="190.0" style="-fx-background-color: darkgray;" text="Label" />
+            <Label fx:id="lblRegDate" layoutX="14.0" layoutY="362.0" prefHeight="32.0" prefWidth="190.0" style="-fx-background-color: darkgray;" text="Since" />
             <Button fx:id="btnPostThread" layoutX="14.0" layoutY="406.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="190.0" text="Post a Thread" />
          </children>
       </AnchorPane>
