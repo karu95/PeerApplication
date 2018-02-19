@@ -62,10 +62,6 @@ public abstract class Message implements Serializable {
         this.senderPort = senderPort;
     }
 
-    public String messageToString(){
-        return title+","+String.valueOf(senderID)+","+ receiverAddress +","+Integer.toString(receiverPort)+","+senderAddress+","+Integer.toString(senderPort)+","+timestamp;
-    }
-
     public void setSenderID(int senderID) {
         this.senderID = senderID;
     }

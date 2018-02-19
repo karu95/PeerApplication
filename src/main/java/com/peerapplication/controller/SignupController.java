@@ -1,5 +1,6 @@
 package com.peerapplication.controller;
 
+import javafx.application.Platform;
 import message.Message;
 import message.RegisterMessage;
 import message.RequestStatusMessage;
@@ -22,7 +23,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class SignupController implements UIUpdater, Initializable{
+public class SignupController implements Initializable, UIUpdater{
 
     @FXML
     private Label statusLabel;
@@ -71,7 +72,6 @@ public class SignupController implements UIUpdater, Initializable{
                 regMsg.setUsername(username);
                 regMsg.setPassword(password);
                 PeerHandler.getBsHandler().signup(regMsg);
-                System.out.println("Sent to BSHandler");
             }
         } else {
             statusLabel.setText("All fields are required!");
@@ -91,16 +91,19 @@ public class SignupController implements UIUpdater, Initializable{
 
 
     @Override
-    public void updateUI(Message message) {
-        if (message instanceof RequestStatusMessage){
-            statusLabel.setText(((RequestStatusMessage) message).getStatus());
-        }
-
+    public void initialize(URL location, ResourceBundle resources) {
+        Main.setRegisterUpdater(this);
     }
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        Main.setRegisterListener(this);
+    public void updateUI(Message message) {
+        RequestStatusMessage req = (RequestStatusMessage) message;
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                statusLabel.setText(req.getStatus());
+            }
+        });
     }
 }
 

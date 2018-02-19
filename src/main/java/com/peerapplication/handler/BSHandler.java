@@ -9,13 +9,13 @@ import java.util.Date;
 public class BSHandler {
 
     public void login(LoginMessage loginMessage){
-
+        loginMessage.setTimestamp(new Date(System.currentTimeMillis()).getTime());
+        PeerHandler.getSenderController().send(loginMessage, PeerHandler.getBS());
     }
 
     public void signup(RegisterMessage registerMessage){
         registerMessage.setTimestamp(new Date(System.currentTimeMillis()).getTime());
         PeerHandler.getSenderController().send(registerMessage, PeerHandler.getBS());
-        System.out.println("Sent to Controller");
     }
 
     public void logout(LogoutMessage logoutMessage){
@@ -27,10 +27,11 @@ public class BSHandler {
     }
 
     public void handleRequest(RequestStatusMessage message){
+        System.out.println(message.getTitle());
         if(message.getTitle().equals("LoginStatus")){
-            Main.getLoginListener().updateUI(message);
+            Main.getLoginUpdater().updateUI(message);
         } else if (message.getTitle().equals("RegisterStatus")){
-            Main.getRegisterListener().updateUI(message);
+            Main.getRegisterUpdater().updateUI(message);
         }
 
     }

@@ -1,10 +1,7 @@
 package com.peerapplication.messenger;
 
 import jdk.nashorn.internal.ir.debug.ObjectSizeCalculator;
-import message.ForumUpdateMessage;
-import message.Message;
-import message.RegisterMessage;
-import message.RequestStatusMessage;
+import message.*;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -29,20 +26,12 @@ public class Sender implements Runnable{
     @Override
     public void run() {
         try {
-            System.out.println("Running run method");
-            if (message instanceof RegisterMessage){
-                System.out.println("yes");
-            }
             ObjectOutputStream os = new ObjectOutputStream(senderSocket.getOutputStream());
-            System.out.println("Hi");
-            if (message instanceof RegisterMessage){
-                System.out.println("Inside BS message");
+            if (message instanceof BSMessage){
                 os.writeObject(message);
-                System.out.println("Message sent");
                 ObjectInputStream is = new ObjectInputStream(senderSocket.getInputStream());
                 RequestStatusMessage response = (RequestStatusMessage) is.readObject();
                 is.close();
-                System.out.println("Message Received");
                 PeerHandler.getBsHandler().handleRequest(response);
             }else if (message instanceof ForumUpdateMessage){
 

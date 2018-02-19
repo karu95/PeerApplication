@@ -13,9 +13,8 @@ public class Main extends Application{
 
     private static int systemUserID;
     private static int accountType;
-    private static UIUpdater registerListener;
-
-    private static UIUpdater loginListener;
+    private static UIUpdater registerUpdater;
+    private static UIUpdater loginUpdater;
 
     public static int getSystemUserID() {
         return systemUserID;
@@ -25,28 +24,28 @@ public class Main extends Application{
         Main.systemUserID = systemUserID;
     }
 
-    public static void setRegisterListener(UIUpdater registerListener) {
-        Main.registerListener = registerListener;
-    }
-
-    public static UIUpdater getLoginListener() {
-        return loginListener;
-    }
-
-    public static void setLoginListener(UIUpdater loginListener) {
-        Main.loginListener = loginListener;
-    }
-
-    public static UIUpdater getRegisterListener() {
-        return registerListener;
-    }
-
     public static int getAccountType() {
         return accountType;
     }
 
     public static void setAccountType(int accountType) {
         Main.accountType = accountType;
+    }
+
+    public static UIUpdater getRegisterUpdater() {
+        return registerUpdater;
+    }
+
+    public static void setRegisterUpdater(UIUpdater registerUpdater) {
+        Main.registerUpdater = registerUpdater;
+    }
+
+    public static UIUpdater getLoginUpdater() {
+        return loginUpdater;
+    }
+
+    public static void setLoginUpdater(UIUpdater loginUpdater) {
+        Main.loginUpdater = loginUpdater;
     }
 
     @Override

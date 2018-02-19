@@ -23,9 +23,4 @@ public class RegisterMessage extends Message implements BSMessage{
         this.username = username;
     }
 
-    @Override
-    public String messageToString() {
-        return super.messageToString()+","+username+","+password+"\n";
-    }
-
 }
