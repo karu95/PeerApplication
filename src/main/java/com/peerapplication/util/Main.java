@@ -8,6 +8,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.util.Date;
+
 
 public class Main extends Application{
 
@@ -50,9 +52,8 @@ public class Main extends Application{
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent parent = FXMLLoader.load(getClass().getResource("/views/login.fxml"));
+        Parent parent = FXMLLoader.load(getClass().getResource("/views/homepage.fxml"));
         Scene scene = new Scene(parent, 1035, 859);
-        setUserAgentStylesheet(STYLESHEET_MODENA);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Login");
         primaryStage.show();
@@ -66,6 +67,8 @@ public class Main extends Application{
             port = Integer.parseInt(args[1]);
         }
         PeerHandler.setup(port);
+
+
 
         launch(args);
 

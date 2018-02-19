@@ -1,24 +1,35 @@
 package com.peerapplication.controller;
 
+import com.peerapplication.util.UIUpdater;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Pagination;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import message.Message;
 
-public class HomeController {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class HomeController implements Initializable, UIUpdater{
 
     @FXML
     private TabPane homeTabs;
 
     @FXML
-    private Pagination pagination;
+    private Tab latestThreadTab;
+
+    @FXML
+    private Pagination paginationLtstThreads;
 
     @FXML
     private TableView<?> threadTable;
@@ -30,28 +41,28 @@ public class HomeController {
     private TableColumn<?, ?> colTitle;
 
     @FXML
-    private Pagination pagination1;
+    private Tab myThreadTab;
 
     @FXML
-    private TableView<?> threadTable1;
+    private Pagination paginationMyThreads;
 
     @FXML
-    private TableColumn<?, ?> colAnswers1;
-
-    @FXML
-    private TableColumn<?, ?> colTitle1;
-
-    @FXML
-    private Pagination pagination11;
-
-    @FXML
-    private TableView<?> threadTable11;
+    private TableView<?> myThreadsTable;
 
     @FXML
     private TableColumn<?, ?> colAnswers11;
 
     @FXML
     private TableColumn<?, ?> colTitle11;
+
+    @FXML
+    private Tab notificationTab;
+
+    @FXML
+    private Pagination paginationNotifications;
+
+    @FXML
+    private TableView<?> notificationTable;
 
     @FXML
     private ImageView userImage;
@@ -66,6 +77,12 @@ public class HomeController {
     private Label lblAnsweredThreads;
 
     @FXML
+    private Label lblRegDate;
+
+    @FXML
+    private Button btnPostThread;
+
+    @FXML
     private Label lblHeading;
 
     @FXML
@@ -73,9 +90,6 @@ public class HomeController {
 
     @FXML
     private Button btnThreads;
-
-    @FXML
-    private Button btnUsers;
 
     @FXML
     private Button btnTags;
@@ -105,13 +119,53 @@ public class HomeController {
     }
 
     @FXML
-    void btnUsersClicked(MouseEvent event) {
-
-    }
-
-    @FXML
     void headingClicked(MouseEvent event) {
 
     }
 
+    @FXML
+    void logout(ActionEvent event) {
+        System.out.println("x");
+
+    }
+
+    @FXML
+    void openSettings(ActionEvent event) {
+
+    }
+
+    @FXML
+    void postThread(MouseEvent event) {
+
+    }
+
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        notificationTab.setOnSelectionChanged(ActionEvent -> {
+            if (notificationTab.isSelected()){
+                System.out.println("Notification");
+            }
+        });
+
+        myThreadTab.setOnSelectionChanged(ActionEvent -> {
+            if (myThreadTab.isSelected()){
+                System.out.println("MyThread");
+            }
+        });
+
+        latestThreadTab.setOnSelectionChanged(ActionEvent -> {
+            if (latestThreadTab.isSelected()){
+                System.out.println("LatestThread");
+            }
+        });
+
+
+
+    }
+
+    @Override
+    public void updateUI(Message message) {
+
+    }
 }

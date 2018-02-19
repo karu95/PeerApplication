@@ -39,21 +39,6 @@
                         </AnchorPane>
                   </content>
                 </Tab>
-                  <Tab fx:id="topDiscussionsTab" closable="false" text="Top Discussions">
-                     <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                           <children>
-                              <Pagination fx:id="paginationTopDiscussions" currentPageIndex="1" layoutX="173.0" layoutY="111.0" maxPageIndicatorCount="1" minHeight="644.0" minWidth="776.0" pageCount="10" stylesheets="@../css/pagination.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                              <TableView fx:id="topDiscussionsTable" editable="true" layoutX="67.0" layoutY="52.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="50.0">
-                                 <columns>
-                                    <TableColumn fx:id="colAnswers1" editable="false" prefWidth="75.0" sortable="false" text="Answers" />
-                                    <TableColumn fx:id="colTitle1" editable="false" maxWidth="-1.0" minWidth="600.0" prefWidth="-1.0" sortable="false" text="Title" />
-                                 </columns>
-                              </TableView>
-                           </children>
-                        </AnchorPane>
-                     </content>
-                  </Tab>
                   <Tab fx:id="myThreadTab" closable="false" text="My Threads">
                      <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
@@ -95,7 +80,7 @@
             <Label fx:id="lblPostedThreads" layoutX="14.0" layoutY="275.0" prefHeight="32.0" prefWidth="190.0" style="-fx-background-color: darkgray;" text="Posted Threads :" />
             <Label fx:id="lblAnsweredThreads" layoutX="14.0" layoutY="318.0" prefHeight="32.0" prefWidth="190.0" style="-fx-background-color: darkgray;" text="Answered Threads :" />
             <Label fx:id="lblRegDate" layoutX="14.0" layoutY="362.0" prefHeight="32.0" prefWidth="190.0" style="-fx-background-color: darkgray;" text="Since" />
-            <Button fx:id="btnPostThread" layoutX="14.0" layoutY="406.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="190.0" text="Post a Thread" />
+            <Button fx:id="btnPostThread" layoutX="14.0" layoutY="406.0" mnemonicParsing="false" onMouseClicked="#postThread" prefHeight="32.0" prefWidth="190.0" text="Ask a Question" />
          </children>
       </AnchorPane>
       <HBox layoutX="58.0" layoutY="24.0" styleClass="my-drop-down-menu" stylesheets="@../css/navigationbar.css" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="24.0">
@@ -112,13 +97,13 @@
                   <Button fx:id="btnTags" layoutX="677.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#btnTagsClicked" text="Tags" />
                   <MenuButton fx:id="btnMenu" mnemonicParsing="false" styleClass="my-drop-down-menu">
                      <items>
-                        <MenuItem fx:id="menuItemSettings" mnemonicParsing="false" style="-fx-graphic: url('http://icons.iconarchive.com/icons/martz90/circle/16/settings-icon.png');" text="Settings">
+                        <MenuItem fx:id="menuItemSettings" mnemonicParsing="false" onAction="#openSettings" style="-fx-graphic: url('http://icons.iconarchive.com/icons/martz90/circle/16/settings-icon.png');" text="Settings">
                            <styleClass>
                               <String fx:value="my-drop-down-menu-list-item" />
                               <String fx:value="my-drop-down-menu-list-item:hover" />
                            </styleClass>
                         </MenuItem>
-                        <MenuItem fx:id="menuItemLogout" mnemonicParsing="false" style="-fx-graphic: url('http://icons.iconarchive.com/icons/icons8/windows-8/16/User-Interface-Logout-icon.png');" text="Logout">
+                        <MenuItem fx:id="menuItemLogout" mnemonicParsing="false" onAction="#logout" style="-fx-graphic: url('http://icons.iconarchive.com/icons/icons8/windows-8/16/User-Interface-Logout-icon.png');" text="Logout">
                            <styleClass>
                               <String fx:value="my-drop-down-menu-list-item" />
                               <String fx:value="my-drop-down-menu-list-item:hover" />

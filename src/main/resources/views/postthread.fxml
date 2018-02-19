@@ -1,14 +1,82 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.AmbientLight?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="views.Postthread"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="859.0" prefWidth="1035.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.peerapplication.controller.PostThreadController">
+   <children>
+      <AnchorPane layoutX="29.0" layoutY="64.0" minHeight="681.0" minWidth="995.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
+         <children>
+            <TextField layoutX="259.0" layoutY="73.0" prefHeight="33.0" prefWidth="629.0" promptText="Title" />
+            <TextArea layoutX="259.0" layoutY="136.0" prefHeight="389.0" prefWidth="629.0" promptText="Description" />
+            <TextArea layoutX="259.0" layoutY="543.0" prefHeight="25.0" prefWidth="629.0" promptText="Add tags seperated by comma's" />
+            <Button layoutX="491.0" layoutY="604.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="165.0" text="Post">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
+            <Label alignment="CENTER_RIGHT" layoutX="51.0" layoutY="73.0" prefHeight="33.0" prefWidth="165.0" text="Thread Title">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER_RIGHT" layoutX="51.0" layoutY="136.0" prefHeight="33.0" prefWidth="165.0" text="Description">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER_RIGHT" layoutX="51.0" layoutY="543.0" prefHeight="33.0" prefWidth="165.0" text="Related Tags">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <AmbientLight color="CHARTREUSE" layoutX="112.0" layoutY="342.0" />
+         </children>
+      </AnchorPane>
+      <HBox layoutX="58.0" layoutY="24.0" styleClass="my-drop-down-menu" stylesheets="@../css/navigationbar.css" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="24.0">
+         <children>
+            <Label fx:id="lblHeading" minHeight="40.0" minWidth="190.0" onMouseClicked="#headingClicked" prefHeight="40.0" prefWidth="501.0" styleClass="heading-label" text="ONLINE FORUM">
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+            </Label>
+            <ButtonBar buttonMinWidth="20.0" minHeight="40.0" minWidth="732.0">
+               <buttons>
+                  <Button fx:id="btnHome" accessibleRole="MENU_BUTTON" layoutX="978.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#btnHomeClicked" text="Home" />
+                  <Button fx:id="btnThreads" layoutX="912.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#btnThreadsClicked" text="Threads" />
+                  <Button fx:id="btnTags" layoutX="677.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#btnTagsClicked" text="Tags" />
+                  <MenuButton fx:id="btnMenu" mnemonicParsing="false" styleClass="my-drop-down-menu">
+                     <items>
+                        <MenuItem fx:id="menuItemSettings" mnemonicParsing="false" style="-fx-graphic: url('http://icons.iconarchive.com/icons/martz90/circle/16/settings-icon.png');" text="Settings">
+                           <styleClass>
+                              <String fx:value="my-drop-down-menu-list-item" />
+                              <String fx:value="my-drop-down-menu-list-item:hover" />
+                           </styleClass>
+                        </MenuItem>
+                        <MenuItem fx:id="menuItemLogout" mnemonicParsing="false" style="-fx-graphic: url('http://icons.iconarchive.com/icons/icons8/windows-8/16/User-Interface-Logout-icon.png');" text="Logout">
+                           <styleClass>
+                              <String fx:value="my-drop-down-menu-list-item" />
+                              <String fx:value="my-drop-down-menu-list-item:hover" />
+                           </styleClass>
+                        </MenuItem>
+                     </items>
+                  </MenuButton>
+               </buttons>
+            </ButtonBar>
+         </children>
+      </HBox>
+      <VBox layoutX="186.0" layoutY="768.0" prefHeight="91.0" prefWidth="1035.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+   </children>
 </AnchorPane>
