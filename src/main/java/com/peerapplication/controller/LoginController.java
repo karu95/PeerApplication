@@ -1,5 +1,8 @@
 package com.peerapplication.controller;
 
+import com.peerapplication.messenger.PeerHandler;
+import javafx.application.Platform;
+import message.LoginMessage;
 import message.Message;
 import message.RequestStatusMessage;
 import com.peerapplication.util.Main;
@@ -20,7 +23,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class LoginController implements UIUpdater, Initializable{
+public class LoginController implements Initializable, UIUpdater{
 
     @FXML
     private TextField txtUsername;
@@ -52,7 +55,8 @@ public class LoginController implements UIUpdater, Initializable{
                 statusLabel.setText("Invalid password!");
                 txtPassword.clear();
             } else {
-                statusLabel.setText("Login Successful!");
+                LoginMessage loginMessage = new LoginMessage(username, password);
+                PeerHandler.getBsHandler().login(loginMessage);
             }
         } else {
             statusLabel.setText("All fields are required!");
@@ -70,16 +74,26 @@ public class LoginController implements UIUpdater, Initializable{
     }
 
     @Override
-    public void updateUI(Message message) {
-        if (message instanceof RequestStatusMessage){
-
-        }
-
+    public void initialize(URL location, ResourceBundle resources) {
+        Main.setLoginUpdater(this);
     }
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        Main.setLoginListener(this);
+    public void updateUI(Message message) {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                Stage stage = (Stage)btnRegister.getScene().getWindow();
+                try {
+                    Parent root = FXMLLoader.load(getClass().getResource("/views/homepage.fxml"));
+                    Scene scene = new Scene(root, 1035, 859);
+                    stage.setTitle("Home");
+                    stage.setScene(scene);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 }
 
