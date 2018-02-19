@@ -1,5 +1,6 @@
 package com.peerapplication.util;
 
+import message.LoginMessage;
 import com.peerapplication.messenger.PeerHandler;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -60,6 +61,7 @@ public class Main extends Application{
 
     public static void main(String[] args){
 
+        LoginMessage loginMessage = new LoginMessage();
         int port = 25030;
         if (args.length>1){
             port = Integer.parseInt(args[1]);

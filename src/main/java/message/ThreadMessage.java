@@ -1,4 +1,4 @@
-package com.peerapplication.message;
+package message;
 
 import com.peerapplication.model.Thread;
 

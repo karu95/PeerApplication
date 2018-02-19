@@ -14,8 +14,7 @@ public class PeerHandler {
     private static BSHandler bsHandler = new BSHandler();
     private static ReceiverController receiverController;
     private static SenderController senderController = new SenderController();
-    private static int bsPort = 25025;
-    private static String bsAddress = "192.168.8.100";
+    private static Peer bs = new Peer(00000,"192.168.8.100", 25025);
 
 
     public static ArrayList<Peer> getKnownPeers() {
@@ -90,19 +89,7 @@ public class PeerHandler {
         return senderController;
     }
 
-    public static int getBsPort() {
-        return bsPort;
-    }
-
-    public static void setBsPort(int bsPort) {
-        PeerHandler.bsPort = bsPort;
-    }
-
-    public static String getBsAddress() {
-        return bsAddress;
-    }
-
-    public static void setBsAddress(String bsAddress) {
-        PeerHandler.bsAddress = bsAddress;
+    public static Peer getBS() {
+        return bs;
     }
 }

@@ -1,8 +1,7 @@
 package com.peerapplication.controller;
 
-import com.peerapplication.message.LogoutMessage;
-import com.peerapplication.message.Message;
-import com.peerapplication.message.RequestStatusMessage;
+import message.Message;
+import message.RequestStatusMessage;
 import com.peerapplication.util.Main;
 import com.peerapplication.util.UIUpdater;
 import javafx.fxml.FXML;

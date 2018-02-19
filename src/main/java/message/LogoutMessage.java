@@ -1,6 +1,6 @@
-package com.peerapplication.message;
+package message;
 
-public class LogoutMessage extends Message{
+public class LogoutMessage extends Message implements BSMessage{
     private int userID;
 
     public LogoutMessage(int userID){

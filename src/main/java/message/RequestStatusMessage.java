@@ -1,10 +1,10 @@
-package com.peerapplication.message;
+package message;
 
 import com.peerapplication.messenger.Peer;
 
 import java.util.ArrayList;
 
-public class RequestStatusMessage extends Message{
+public class RequestStatusMessage extends Message implements BSMessage{
 
     private ArrayList<Peer> activePeers = new ArrayList<Peer>();
     private int accountType;

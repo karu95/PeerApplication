@@ -1,11 +1,16 @@
 package com.peerapplication.messenger;
 
-import com.peerapplication.message.Message;
+import message.Message;
 
 public class SenderController {
-    public void send(Message message) {
+    public void send(Message message, Peer peer) {
         message.setSenderAddress(PeerHandler.getUserAddress());
         message.setSenderPort(PeerHandler.getUserPort());
-
+        message.setReceiverAddress(peer.getPeerAddress());
+        message.setReceiverPort(peer.getPeerPort());
+        Sender sender = new Sender(message);
+        Thread senderThread = new Thread(sender);
+        senderThread.start();
+        System.out.println("sender created");
     }
 }

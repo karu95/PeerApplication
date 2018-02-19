@@ -1,8 +1,8 @@
 package com.peerapplication.controller;
 
-import com.peerapplication.message.Message;
-import com.peerapplication.message.RegisterMessage;
-import com.peerapplication.message.RequestStatusMessage;
+import message.Message;
+import message.RegisterMessage;
+import message.RequestStatusMessage;
 import com.peerapplication.messenger.PeerHandler;
 import com.peerapplication.util.Main;
 import com.peerapplication.util.UIUpdater;
@@ -71,6 +71,7 @@ public class SignupController implements UIUpdater, Initializable{
                 regMsg.setUsername(username);
                 regMsg.setPassword(password);
                 PeerHandler.getBsHandler().signup(regMsg);
+                System.out.println("Sent to BSHandler");
             }
         } else {
             statusLabel.setText("All fields are required!");

@@ -44,7 +44,7 @@
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
                               <Pagination fx:id="paginationTopDiscussions" currentPageIndex="1" layoutX="173.0" layoutY="111.0" maxPageIndicatorCount="1" minHeight="644.0" minWidth="776.0" pageCount="10" stylesheets="@../css/pagination.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                              <TableView fx:id="threadTable1" editable="true" layoutX="67.0" layoutY="52.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="50.0">
+                              <TableView fx:id="topDiscussionsTable" editable="true" layoutX="67.0" layoutY="52.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="50.0">
                                  <columns>
                                     <TableColumn fx:id="colAnswers1" editable="false" prefWidth="75.0" sortable="false" text="Answers" />
                                     <TableColumn fx:id="colTitle1" editable="false" maxWidth="-1.0" minWidth="600.0" prefWidth="-1.0" sortable="false" text="Title" />
@@ -59,7 +59,7 @@
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
                               <Pagination fx:id="paginationMyThreads" currentPageIndex="1" layoutX="173.0" layoutY="111.0" maxPageIndicatorCount="1" minHeight="644.0" minWidth="776.0" pageCount="10" stylesheets="@../css/pagination.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                              <TableView fx:id="threadTable11" editable="true" layoutX="67.0" layoutY="52.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="50.0">
+                              <TableView fx:id="myThreadsTable" editable="true" layoutX="67.0" layoutY="52.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="50.0">
                                  <columns>
                                     <TableColumn fx:id="colAnswers11" editable="false" prefWidth="75.0" sortable="false" text="Answers" />
                                     <TableColumn fx:id="colTitle11" editable="false" maxWidth="-1.0" minWidth="600.0" prefWidth="-1.0" sortable="false" text="Title" />
@@ -74,6 +74,12 @@
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
                               <Pagination fx:id="paginationNotifications" currentPageIndex="1" layoutX="173.0" layoutY="111.0" maxPageIndicatorCount="1" minHeight="644.0" minWidth="776.0" pageCount="10" stylesheets="@../css/pagination.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                              <TableView fx:id="notificationTable" editable="true" layoutX="67.0" layoutY="52.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="50.0">
+                                 <columns>
+                                    <TableColumn fx:id="colAnswers" editable="false" prefWidth="75.0" sortable="false" text="Answers" />
+                                    <TableColumn fx:id="colTitle" editable="false" maxWidth="-1.0" minWidth="600.0" prefWidth="-1.0" sortable="false" text="Title" />
+                                 </columns>
+                              </TableView>
                            </children>
                         </AnchorPane>
                      </content>
@@ -94,7 +100,7 @@
       </AnchorPane>
       <HBox layoutX="58.0" layoutY="24.0" styleClass="my-drop-down-menu" stylesheets="@../css/navigationbar.css" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="24.0">
          <children>
-            <Label fx:id="lblHeading" alignment="CENTER" minHeight="40.0" minWidth="190.0" onMouseClicked="#headingClicked" prefHeight="40.0" prefWidth="501.0" styleClass="heading-label" text="ONLINE FORUM">
+            <Label fx:id="lblHeading" minHeight="40.0" minWidth="190.0" onMouseClicked="#headingClicked" prefHeight="40.0" prefWidth="501.0" styleClass="heading-label" text="ONLINE FORUM">
                <HBox.margin>
                   <Insets />
                </HBox.margin>
@@ -103,7 +109,6 @@
               <buttons>
                   <Button fx:id="btnHome" accessibleRole="MENU_BUTTON" layoutX="978.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#btnHomeClicked" text="Home" />
                   <Button fx:id="btnThreads" layoutX="912.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#btnThreadsClicked" text="Threads" />
-                <Button fx:id="btnUsers" mnemonicParsing="false" onMouseClicked="#btnUsersClicked" text="Users" />
                   <Button fx:id="btnTags" layoutX="677.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#btnTagsClicked" text="Tags" />
                   <MenuButton fx:id="btnMenu" mnemonicParsing="false" styleClass="my-drop-down-menu">
                      <items>

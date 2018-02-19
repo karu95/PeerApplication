@@ -1,4 +1,4 @@
-package com.peerapplication.message;
+package message;
 
 public class DeleteThreadMessage extends Message{
 

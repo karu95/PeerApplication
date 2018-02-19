@@ -1,6 +1,6 @@
-package com.peerapplication.message;
+package message;
 
-public class RegisterMessage extends Message{
+public class RegisterMessage extends Message implements BSMessage{
 
     private String username;
     private String password;
