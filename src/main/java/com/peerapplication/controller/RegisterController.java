@@ -49,7 +49,7 @@ public class RegisterController implements Initializable {
         String validity = userValidator.validate(user);
         if (validity.equals("Success")){
 
-        } else {
+        }else{
             statusLabel.setText(validity);
         }
     }

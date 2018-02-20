@@ -19,7 +19,10 @@ public class BSHandler {
     }
 
     public void logout(LogoutMessage logoutMessage){
-
+        logoutMessage.setTimestamp(new Date(System.currentTimeMillis()).getTime());
+        PeerHandler.getSenderController().send(logoutMessage, PeerHandler.getBS());
+        Main.setAccountType(0);
+        Main.setSystemUserID(0);
     }
 
     public void changePassword(PasswordChangeMessage pwChangeMessage){

@@ -1,6 +1,7 @@
 package com.peerapplication.controller;
 
 import com.peerapplication.messenger.PeerHandler;
+import com.peerapplication.model.User;
 import javafx.application.Platform;
 import message.LoginMessage;
 import message.Message;
@@ -21,6 +22,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.security.NoSuchAlgorithmException;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable, UIUpdater{
@@ -41,7 +43,7 @@ public class LoginController implements Initializable, UIUpdater{
     private Label statusLabel;
 
     @FXML
-    void confirmLogin(MouseEvent event) {
+    void confirmLogin(MouseEvent event) throws NoSuchAlgorithmException {
         String username = txtUsername.getText().trim();
         String password = txtPassword.getText().trim();
         if (!(username.isEmpty()) && !(password.isEmpty())) {
@@ -55,7 +57,9 @@ public class LoginController implements Initializable, UIUpdater{
                 statusLabel.setText("Invalid password!");
                 txtPassword.clear();
             } else {
-                LoginMessage loginMessage = new LoginMessage(username, password);
+                String pw = Main.getPwEncrypter().get_SHA_1_SecurePassword(password);
+                System.out.println(pw);
+                LoginMessage loginMessage = new LoginMessage(username, pw);
                 PeerHandler.getBsHandler().login(loginMessage);
             }
         } else {
@@ -85,6 +89,9 @@ public class LoginController implements Initializable, UIUpdater{
             public void run() {
                 Stage stage = (Stage)btnRegister.getScene().getWindow();
                 try {
+                    RequestStatusMessage reqMessage = (RequestStatusMessage) message;
+                    User user = new User();
+
                     Parent root = FXMLLoader.load(getClass().getResource("/views/homepage.fxml"));
                     Scene scene = new Scene(root, 1035, 859);
                     stage.setTitle("Home");

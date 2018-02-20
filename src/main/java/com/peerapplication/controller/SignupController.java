@@ -21,6 +21,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.security.NoSuchAlgorithmException;
 import java.util.ResourceBundle;
 
 public class SignupController implements Initializable, UIUpdater{
@@ -46,7 +47,7 @@ public class SignupController implements Initializable, UIUpdater{
 
 
     @FXML
-    void confirmSignup(MouseEvent event) {
+    void confirmSignup(MouseEvent event) throws NoSuchAlgorithmException {
         String username = txtUsername.getText().trim();
         String password = txtPassword.getText().trim();
         String cnfmPassword = txtCnfmPassword.getText().trim();
@@ -63,14 +64,15 @@ public class SignupController implements Initializable, UIUpdater{
                 txtPassword.clear();
             }else if(password.contains("[-*/|&^+ ]+")){
                 statusLabel.setText("Password shouldn't contain empty spaces or -*/|&^+ characters!");
-            } else if (!password.equals(cnfmPassword)){
+            }else if (!password.equals(cnfmPassword)){
                 statusLabel.setText("Password mismatch!");
                 txtPassword.clear();
                 txtCnfmPassword.clear();
-            } else {
+            }else{
                 RegisterMessage regMsg = new RegisterMessage();
+                String pw = Main.getPwEncrypter().get_SHA_1_SecurePassword(password);
                 regMsg.setUsername(username);
-                regMsg.setPassword(password);
+                regMsg.setPassword(pw);
                 PeerHandler.getBsHandler().signup(regMsg);
             }
         } else {
@@ -101,7 +103,16 @@ public class SignupController implements Initializable, UIUpdater{
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                statusLabel.setText(req.getStatus());
+                Stage stage = (Stage)btnLogin.getScene().getWindow();
+                Parent root = null;
+                try {
+                    root = FXMLLoader.load(getClass().getResource("/views/register.fxml"));
+                    Scene scene = new Scene(root, 1035, 859);
+                    stage.setTitle("Register");
+                    stage.setScene(scene);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }

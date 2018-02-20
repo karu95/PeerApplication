@@ -4,15 +4,12 @@ import com.peerapplication.repository.TableRepository;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.stage.WindowEvent;
-import message.LoginMessage;
 import com.peerapplication.messenger.PeerHandler;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
-import java.util.Date;
 
 
 public class Main extends Application{
@@ -23,6 +20,7 @@ public class Main extends Application{
     private static UIUpdater loginUpdater;
     private static UIUpdater threadUpdater;
     private static UIUpdater answerUpdater;
+    private static PasswordEncrypter pwEncrypter;
 
     public static int getSystemUserID() {
         return systemUserID;
@@ -72,6 +70,14 @@ public class Main extends Application{
         Main.answerUpdater = answerUpdater;
     }
 
+    public static PasswordEncrypter getPwEncrypter() {
+        return pwEncrypter;
+    }
+
+    public static void setPwEncrypter(PasswordEncrypter pwEncrypter) {
+        Main.pwEncrypter = pwEncrypter;
+    }
+
     @Override
     public void start(Stage primaryStage) throws Exception {
         Parent parent = FXMLLoader.load(getClass().getResource("/views/login.fxml"));
@@ -95,6 +101,8 @@ public class Main extends Application{
             port = Integer.parseInt(args[1]);
         }
         PeerHandler.setup(port);
+
+        pwEncrypter = new PasswordEncrypter();
 
         TableRepository tableRepo = new TableRepository();
         tableRepo.createTables();

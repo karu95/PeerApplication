@@ -11,6 +11,5 @@ public class SenderController {
         Sender sender = new Sender(message);
         Thread senderThread = new Thread(sender);
         senderThread.start();
-        System.out.println("sender created");
     }
 }

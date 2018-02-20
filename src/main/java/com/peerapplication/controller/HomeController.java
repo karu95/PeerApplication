@@ -5,7 +5,10 @@ import com.peerapplication.util.Main;
 import com.peerapplication.util.UIUpdater;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
@@ -17,9 +20,11 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import message.LogoutMessage;
 import message.Message;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -38,10 +43,10 @@ public class HomeController implements Initializable, UIUpdater{
     private TableView<?> threadTable;
 
     @FXML
-    private TableColumn<?, ?> colAnswers;
+    private TableColumn<?, ?> colAnswersLatest;
 
     @FXML
-    private TableColumn<?, ?> colTitle;
+    private TableColumn<?, ?> colTitleLatest;
 
     @FXML
     private Tab myThreadTab;
@@ -53,10 +58,10 @@ public class HomeController implements Initializable, UIUpdater{
     private TableView<?> myThreadsTable;
 
     @FXML
-    private TableColumn<?, ?> colAnswers11;
+    private TableColumn<?, ?> colAnswersMyTh;
 
     @FXML
-    private TableColumn<?, ?> colTitle11;
+    private TableColumn<?, ?> colTitleMyTh;
 
     @FXML
     private Tab notificationTab;
@@ -66,6 +71,12 @@ public class HomeController implements Initializable, UIUpdater{
 
     @FXML
     private TableView<?> notificationTable;
+
+    @FXML
+    private TableColumn<?, ?> colAnswersNotification;
+
+    @FXML
+    private TableColumn<?, ?> colTitleNotification;
 
     @FXML
     private ImageView userImage;
@@ -93,9 +104,6 @@ public class HomeController implements Initializable, UIUpdater{
 
     @FXML
     private Button btnThreads;
-
-    @FXML
-    private Button btnTags;
 
     @FXML
     private MenuButton btnMenu;
@@ -127,11 +135,13 @@ public class HomeController implements Initializable, UIUpdater{
     }
 
     @FXML
-    void logout(ActionEvent event) {
+    void logout(ActionEvent event) throws IOException {
         LogoutMessage logoutMessage = new LogoutMessage(Main.getSystemUserID());
         PeerHandler.getBsHandler().logout(logoutMessage);
-
-
+        Stage stage = (Stage) btnPostThread.getScene().getWindow();
+        Parent root = FXMLLoader.load(getClass().getResource("/views/login.fxml"));
+        stage.setScene( new Scene(root, 1035, 859));
+        stage.show();
     }
 
     @FXML
@@ -164,9 +174,6 @@ public class HomeController implements Initializable, UIUpdater{
                 System.out.println("LatestThread");
             }
         });
-
-
-
     }
 
     @Override

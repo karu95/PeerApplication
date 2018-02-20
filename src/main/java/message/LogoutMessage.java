@@ -4,7 +4,7 @@ public class LogoutMessage extends Message implements BSMessage{
     private int userID;
 
     public LogoutMessage(int userID){
-        super("LogoutMessage");
+        super("Logout");
         this.userID = userID;
     }
 

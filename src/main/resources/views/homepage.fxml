@@ -31,8 +31,8 @@
                               <Pagination fx:id="paginationLtstThreads" currentPageIndex="1" layoutX="173.0" layoutY="111.0" maxPageIndicatorCount="1" minHeight="644.0" minWidth="776.0" pageCount="10" stylesheets="@../css/pagination.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                               <TableView fx:id="threadTable" editable="true" layoutX="67.0" layoutY="52.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="50.0">
                                 <columns>
-                                  <TableColumn fx:id="colAnswers" editable="false" prefWidth="75.0" sortable="false" text="Answers" />
-                                    <TableColumn fx:id="colTitle" editable="false" maxWidth="-1.0" minWidth="600.0" prefWidth="-1.0" sortable="false" text="Title" />
+                                  <TableColumn fx:id="colAnswersLatest" editable="false" prefWidth="75.0" sortable="false" text="Answers" />
+                                    <TableColumn fx:id="colTitleLatest" editable="false" maxWidth="-1.0" minWidth="600.0" prefWidth="-1.0" sortable="false" text="Title" />
                                 </columns>
                               </TableView>
                            </children>
@@ -46,8 +46,8 @@
                               <Pagination fx:id="paginationMyThreads" currentPageIndex="1" layoutX="173.0" layoutY="111.0" maxPageIndicatorCount="1" minHeight="644.0" minWidth="776.0" pageCount="10" stylesheets="@../css/pagination.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                               <TableView fx:id="myThreadsTable" editable="true" layoutX="67.0" layoutY="52.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="50.0">
                                  <columns>
-                                    <TableColumn fx:id="colAnswers11" editable="false" prefWidth="75.0" sortable="false" text="Answers" />
-                                    <TableColumn fx:id="colTitle11" editable="false" maxWidth="-1.0" minWidth="600.0" prefWidth="-1.0" sortable="false" text="Title" />
+                                    <TableColumn fx:id="colAnswersMyTh" editable="false" prefWidth="75.0" sortable="false" text="Answers" />
+                                    <TableColumn fx:id="colTitleMyTh" editable="false" maxWidth="-1.0" minWidth="600.0" prefWidth="-1.0" sortable="false" text="Title" />
                                  </columns>
                               </TableView>
                            </children>
@@ -61,8 +61,8 @@
                               <Pagination fx:id="paginationNotifications" currentPageIndex="1" layoutX="173.0" layoutY="111.0" maxPageIndicatorCount="1" minHeight="644.0" minWidth="776.0" pageCount="10" stylesheets="@../css/pagination.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                               <TableView fx:id="notificationTable" editable="true" layoutX="67.0" layoutY="52.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="50.0">
                                  <columns>
-                                    <TableColumn fx:id="colAnswers" editable="false" prefWidth="75.0" sortable="false" text="Answers" />
-                                    <TableColumn fx:id="colTitle" editable="false" maxWidth="-1.0" minWidth="600.0" prefWidth="-1.0" sortable="false" text="Title" />
+                                    <TableColumn fx:id="colAnswersNotification" editable="false" prefWidth="75.0" sortable="false" text="Answers" />
+                                    <TableColumn fx:id="colTitleNotification" editable="false" maxWidth="-1.0" minWidth="600.0" prefWidth="-1.0" sortable="false" text="Title" />
                                  </columns>
                               </TableView>
                            </children>
