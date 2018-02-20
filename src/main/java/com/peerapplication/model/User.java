@@ -1,6 +1,7 @@
 package com.peerapplication.model;
 
 
+import com.peerapplication.repository.UserRepository;
 import javafx.scene.image.Image;
 
 public class User {
@@ -8,6 +9,8 @@ public class User {
     private String name;
     private String email;
     private Image userImage;
+    private String imageURL;
+    private long registerTime;
 
     public User(){}
 
@@ -49,5 +52,30 @@ public class User {
 
     public void setUserImage(Image userImage) {
         this.userImage = userImage;
+    }
+
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
+    }
+
+    public long getRegisterTime() {
+        return registerTime;
+    }
+
+    public void setRegisterTime(long registerTime) {
+        this.registerTime = registerTime;
+    }
+
+    public void getUser(int userID){
+        UserRepository userRepo = new UserRepository();
+        userRepo.getUser(userID, this);
+    }
+
+    public void saveUser(){
+
     }
 }

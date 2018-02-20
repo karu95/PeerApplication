@@ -3,9 +3,7 @@ package com.peerapplication.repository;
 import com.peerapplication.model.User;
 import com.peerapplication.util.DBConnection;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class UserRepository {
@@ -20,24 +18,26 @@ public class UserRepository {
         return  users;
     }
 
-    public User getUser(int userID){
-        User user = null;
-
-        return user;
-    }
-
-    public void setupTables(){
-        Connection conn = dbConn.getConnection();
-        String userTableStmt = "CREATE TABLE user_detail(" +
-                "user_id int," +
-                "name VARCHAR(20)," +
-                "email VARCHAR (40) NOT NULL," +
-                "PRIMARY KEY (user_id))";
+    public void getUser(int userID, User user){
+        Connection connection = dbConn.getConnection();
+        String statement = "SELECT * FROM users WHERE user_id=?";
         try {
-            Statement stmt = conn.createStatement();
-            stmt.execute(userTableStmt);
+            PreparedStatement stmt = connection.prepareStatement(statement);
+            stmt.setInt(1, userID);
+            ResultSet rs = stmt.executeQuery(statement);
+            while (rs.next()){
+                user.setUserID(userID);
+                user.setName(rs.getString("user_name"));
+                user.setEmail(rs.getString("email"));
+                user.setImageURL(rs.getString("image"));
+                user.setRegisterTime(rs.getLong("register_time"));
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public void saveUser(User user){
+
     }
 }
