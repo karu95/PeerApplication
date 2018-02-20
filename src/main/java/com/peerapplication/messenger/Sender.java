@@ -35,7 +35,7 @@ public class Sender implements Runnable{
             os.close();
             senderSocket.close();
         } catch (IOException e) {
-            System.out.println(e.hashCode());
+            e.printStackTrace();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }

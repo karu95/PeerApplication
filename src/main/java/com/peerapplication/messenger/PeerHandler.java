@@ -14,7 +14,7 @@ public class PeerHandler {
     private static BSHandler bsHandler = new BSHandler();
     private static ReceiverController receiverController;
     private static SenderController senderController = new SenderController();
-    private static Peer bs = new Peer(00000,"192.168.8.100", 25025);
+    private static Peer bs = new Peer(00000,"192.168.8.101", 25025);
 
 
     public static ArrayList<Peer> getKnownPeers() {

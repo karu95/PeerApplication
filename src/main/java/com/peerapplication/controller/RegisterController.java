@@ -13,8 +13,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import net.coobird.thumbnailator.Thumbnails;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -37,29 +40,34 @@ public class RegisterController implements Initializable {
 
     private FileChooser fileChooser;
 
-    private Image image;
+    private BufferedImage bufferedImage;
 
     private UserValidator userValidator;
 
+    private File file;
+
     @FXML
-    void register(MouseEvent event) {
+    void register(MouseEvent event) throws IOException {
         String name = txtName.getText().trim();
         String email = txtEmail.getText().trim();
-        User user = new User(Main.getSystemUserID(), name, email, image);
+        User user = new User(Main.getSystemUserID(), name, email);
         String validity = userValidator.validate(user);
         if (validity.equals("Success")){
-
+            if (file!= null) {
+                Thumbnails.of(file).scale(0.8).outputFormat("jpg").toFile(new File("/" + System.getProperty("user.dir") + "/images/" + String.valueOf(user.getUserID())));
+            }
+            System.out.println("file saved");
         }else{
             statusLabel.setText(validity);
         }
     }
 
     @FXML
-    void selectImage(MouseEvent event) {
+    void selectImage(MouseEvent event) throws IOException {
         Stage stage = (Stage)userImage.getScene().getWindow();
-        File file = fileChooser.showOpenDialog(stage);
-        if (file != null) {
-            image = new Image(file.toURI().toString());
+        file = fileChooser.showOpenDialog(stage);
+        if (file != null){
+            Image image = new Image(file.toURI().toString());
             userImage.setImage(image);
         }
 
@@ -67,6 +75,7 @@ public class RegisterController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        userValidator = new UserValidator();
         fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("JPEG", "*.jpg"),

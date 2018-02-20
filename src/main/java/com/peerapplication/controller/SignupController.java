@@ -1,5 +1,6 @@
 package com.peerapplication.controller;
 
+import com.peerapplication.util.PasswordEncrypter;
 import javafx.application.Platform;
 import message.Message;
 import message.RegisterMessage;
@@ -70,7 +71,7 @@ public class SignupController implements Initializable, UIUpdater{
                 txtCnfmPassword.clear();
             }else{
                 RegisterMessage regMsg = new RegisterMessage();
-                String pw = Main.getPwEncrypter().get_SHA_1_SecurePassword(password);
+                String pw = PasswordEncrypter.get_SHA_1_SecurePassword(password);
                 regMsg.setUsername(username);
                 regMsg.setPassword(pw);
                 PeerHandler.getBsHandler().signup(regMsg);

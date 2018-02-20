@@ -2,6 +2,7 @@ package com.peerapplication.controller;
 
 import com.peerapplication.messenger.PeerHandler;
 import com.peerapplication.model.User;
+import com.peerapplication.util.PasswordEncrypter;
 import javafx.application.Platform;
 import message.LoginMessage;
 import message.Message;
@@ -57,7 +58,7 @@ public class LoginController implements Initializable, UIUpdater{
                 statusLabel.setText("Invalid password!");
                 txtPassword.clear();
             } else {
-                String pw = Main.getPwEncrypter().get_SHA_1_SecurePassword(password);
+                String pw = PasswordEncrypter.get_SHA_1_SecurePassword(password);
                 System.out.println(pw);
                 LoginMessage loginMessage = new LoginMessage(username, pw);
                 PeerHandler.getBsHandler().login(loginMessage);
@@ -91,8 +92,13 @@ public class LoginController implements Initializable, UIUpdater{
                 try {
                     RequestStatusMessage reqMessage = (RequestStatusMessage) message;
                     User user = new User();
-
-                    Parent root = FXMLLoader.load(getClass().getResource("/views/homepage.fxml"));
+                    user.getUser(Main.getSystemUserID());
+                    Parent root;
+                    if (user.getUserID()!=0) {
+                        root = FXMLLoader.load(getClass().getResource("/views/homepage.fxml"));
+                    }else {
+                        root = FXMLLoader.load(getClass().getResource("/views/register.fxml"));
+                    }
                     Scene scene = new Scene(root, 1035, 859);
                     stage.setTitle("Home");
                     stage.setScene(scene);

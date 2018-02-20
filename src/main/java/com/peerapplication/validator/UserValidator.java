@@ -9,7 +9,7 @@ public class UserValidator {
 
     public String validate(User user){
         String error= "Success";
-        if (user.getName().matches("[a-zA-Z0-9 ]+")){
+        if (user.getName().matches("[a-zA-Z ]+")){
             if (!(EmailValidator.getInstance().isValid(user.getEmail()))){
                 error = "Invalid Email Address!";
             }

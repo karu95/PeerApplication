@@ -2,23 +2,23 @@ package com.peerapplication.model;
 
 
 import com.peerapplication.repository.UserRepository;
-import javafx.scene.image.Image;
+
+import java.awt.image.BufferedImage;
 
 public class User {
     private int userID;
     private String name;
     private String email;
-    private Image userImage;
+    private BufferedImage userImage;
     private String imageURL;
     private long registerTime;
 
     public User(){}
 
-    public User(int userID, String name, String email, Image userImage){
+    public User(int userID, String name, String email){
         this.userID = userID;
         this.email = email;
         this.name = name;
-        this.userImage = userImage;
     }
 
 
@@ -46,11 +46,11 @@ public class User {
         this.userID = userID;
     }
 
-    public Image getUserImage() {
+    public BufferedImage getUserImage() {
         return userImage;
     }
 
-    public void setUserImage(Image userImage) {
+    public void setUserImage(BufferedImage userImage) {
         this.userImage = userImage;
     }
 
@@ -76,6 +76,7 @@ public class User {
     }
 
     public void saveUser(){
+        UserRepository userRepository = new UserRepository();
 
     }
 }

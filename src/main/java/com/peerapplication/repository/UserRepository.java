@@ -26,7 +26,7 @@ public class UserRepository {
             stmt.setInt(1, userID);
             ResultSet rs = stmt.executeQuery(statement);
             while (rs.next()){
-                user.setUserID(userID);
+                user.setUserID(rs.getInt("user_id"));
                 user.setName(rs.getString("user_name"));
                 user.setEmail(rs.getString("email"));
                 user.setImageURL(rs.getString("image"));
@@ -38,6 +38,17 @@ public class UserRepository {
     }
 
     public void saveUser(User user){
-
+        Connection connection = dbConn.getConnection();
+        String statement = "INSERT INTO users(user_id, user_name, email, register_time, image) VALUES (?, ?, ?, ?, ?)";
+        try {
+            PreparedStatement stmt = connection.prepareStatement(statement);
+            stmt.setInt(1, user.getUserID());
+            stmt.setString(2, user.getName());
+            stmt.setString(3, user.getEmail());
+            stmt.setLong(4, user.getRegisterTime());
+            stmt.setString(5, user.getImageURL());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

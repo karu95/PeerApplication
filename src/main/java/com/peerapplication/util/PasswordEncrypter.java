@@ -6,9 +6,7 @@ import java.security.SecureRandom;
 
 public class PasswordEncrypter {
 
-    public PasswordEncrypter(){}
-
-    public String get_SHA_1_SecurePassword(String passwordToHash) throws NoSuchAlgorithmException {
+    public static String get_SHA_1_SecurePassword(String passwordToHash) throws NoSuchAlgorithmException {
         String generatedPassword = null;
         byte[] salt = getSalt();
         try {
@@ -29,7 +27,7 @@ public class PasswordEncrypter {
         return generatedPassword;
     }
 
-    public byte[] getSalt() throws NoSuchAlgorithmException
+    private static byte[] getSalt() throws NoSuchAlgorithmException
     {
         SecureRandom sr = SecureRandom.getInstance("SHA1PRNG");
         byte[] salt = new byte[16];
