@@ -13,7 +13,7 @@ public class DBConnection {
     public DBConnection(){
         this.prop = new Properties();
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-        InputStream stream = classLoader.getResourceAsStream("resources/properties/db.properties");
+        InputStream stream = classLoader.getResourceAsStream("properties/db.properties");
         try {
             prop.load(stream);
         } catch (IOException e) {

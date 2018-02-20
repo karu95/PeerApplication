@@ -14,11 +14,6 @@ public class Sender implements Runnable{
 
     public Sender(Message message){
         this.message = message;
-        try {
-            senderSocket = new Socket(message.getReceiverAddress(), message.getReceiverPort());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
 
@@ -26,6 +21,7 @@ public class Sender implements Runnable{
     @Override
     public void run() {
         try {
+            senderSocket = new Socket(message.getReceiverAddress(), message.getReceiverPort());
             ObjectOutputStream os = new ObjectOutputStream(senderSocket.getOutputStream());
             if (message instanceof BSMessage){
                 os.writeObject(message);
@@ -39,7 +35,7 @@ public class Sender implements Runnable{
             os.close();
             senderSocket.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println(e.hashCode());
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }

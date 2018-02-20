@@ -1,5 +1,9 @@
 package com.peerapplication.util;
 
+import com.peerapplication.repository.TableRepository;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
+import javafx.stage.WindowEvent;
 import message.LoginMessage;
 import com.peerapplication.messenger.PeerHandler;
 import javafx.application.Application;
@@ -52,8 +56,15 @@ public class Main extends Application{
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent parent = FXMLLoader.load(getClass().getResource("/views/homepage.fxml"));
+        Parent parent = FXMLLoader.load(getClass().getResource("/views/login.fxml"));
         Scene scene = new Scene(parent, 1035, 859);
+        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent t) {
+                Platform.exit();
+                System.exit(0);
+            }
+        });
         primaryStage.setScene(scene);
         primaryStage.setTitle("Login");
         primaryStage.show();
@@ -61,14 +72,17 @@ public class Main extends Application{
 
     public static void main(String[] args){
 
-        LoginMessage loginMessage = new LoginMessage();
         int port = 25030;
         if (args.length>1){
             port = Integer.parseInt(args[1]);
         }
         PeerHandler.setup(port);
 
+        TableRepository tableRepo = new TableRepository();
+        tableRepo.createTables();
 
+        TableRepository tableRepository = new TableRepository();
+        tableRepository.createTables();
 
         launch(args);
 
