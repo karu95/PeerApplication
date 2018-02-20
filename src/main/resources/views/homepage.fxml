@@ -94,7 +94,6 @@
               <buttons>
                   <Button fx:id="btnHome" accessibleRole="MENU_BUTTON" layoutX="978.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#btnHomeClicked" text="Home" />
                   <Button fx:id="btnThreads" layoutX="912.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#btnThreadsClicked" text="Threads" />
-                  <Button fx:id="btnTags" layoutX="677.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#btnTagsClicked" text="Tags" />
                   <MenuButton fx:id="btnMenu" mnemonicParsing="false" styleClass="my-drop-down-menu">
                      <items>
                         <MenuItem fx:id="menuItemSettings" mnemonicParsing="false" onAction="#openSettings" style="-fx-graphic: url('http://icons.iconarchive.com/icons/martz90/circle/16/settings-icon.png');" text="Settings">

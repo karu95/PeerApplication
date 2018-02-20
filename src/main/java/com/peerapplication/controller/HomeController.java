@@ -1,5 +1,7 @@
 package com.peerapplication.controller;
 
+import com.peerapplication.messenger.PeerHandler;
+import com.peerapplication.util.Main;
 import com.peerapplication.util.UIUpdater;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,6 +17,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import message.LogoutMessage;
 import message.Message;
 
 import java.net.URL;
@@ -125,7 +128,9 @@ public class HomeController implements Initializable, UIUpdater{
 
     @FXML
     void logout(ActionEvent event) {
-        System.out.println("x");
+        LogoutMessage logoutMessage = new LogoutMessage(Main.getSystemUserID());
+        PeerHandler.getBsHandler().logout(logoutMessage);
+
 
     }
 

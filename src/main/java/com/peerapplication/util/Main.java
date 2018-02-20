@@ -21,6 +21,8 @@ public class Main extends Application{
     private static int accountType;
     private static UIUpdater registerUpdater;
     private static UIUpdater loginUpdater;
+    private static UIUpdater threadUpdater;
+    private static UIUpdater answerUpdater;
 
     public static int getSystemUserID() {
         return systemUserID;
@@ -52,6 +54,22 @@ public class Main extends Application{
 
     public static void setLoginUpdater(UIUpdater loginUpdater) {
         Main.loginUpdater = loginUpdater;
+    }
+
+    public static UIUpdater getThreadUpdater() {
+        return threadUpdater;
+    }
+
+    public static void setThreadUpdater(UIUpdater threadUpdater) {
+        Main.threadUpdater = threadUpdater;
+    }
+
+    public static UIUpdater getAnswerUpdater() {
+        return answerUpdater;
+    }
+
+    public static void setAnswerUpdater(UIUpdater answerUpdater) {
+        Main.answerUpdater = answerUpdater;
     }
 
     @Override

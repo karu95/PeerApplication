@@ -28,11 +28,11 @@ public class BSHandler {
 
     public void handleRequest(RequestStatusMessage message){
         Main.setSystemUserID(message.getUserID());
+        Main.setAccountType(message.getAccountType());
         if(message.getTitle().equals("LoginStatus")){
             Main.getLoginUpdater().updateUI(message);
         } else if (message.getTitle().equals("RegisterStatus")){
             Main.getRegisterUpdater().updateUI(message);
         }
     }
-
 }
