@@ -27,17 +27,17 @@
                   <Font size="16.0" />
                </font>
             </Button>
-            <Label alignment="CENTER_RIGHT" layoutX="51.0" layoutY="73.0" prefHeight="33.0" prefWidth="165.0" text="Thread Title">
+            <Label layoutX="125.0" layoutY="70.0" prefHeight="33.0" prefWidth="121.0" text="Thread Title">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label alignment="CENTER_RIGHT" layoutX="51.0" layoutY="136.0" prefHeight="33.0" prefWidth="165.0" text="Description">
+            <Label layoutX="125.0" layoutY="136.0" prefHeight="33.0" prefWidth="121.0" text="Description">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label alignment="CENTER_RIGHT" layoutX="51.0" layoutY="543.0" prefHeight="33.0" prefWidth="165.0" text="Related Tags">
+            <Label layoutX="118.0" layoutY="543.0" prefHeight="33.0" prefWidth="121.0" text="Related Tags">
                <font>
                   <Font size="20.0" />
                </font>
@@ -56,7 +56,6 @@
                <buttons>
                   <Button fx:id="btnHome" accessibleRole="MENU_BUTTON" layoutX="978.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#btnHomeClicked" text="Home" />
                   <Button fx:id="btnThreads" layoutX="912.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#btnThreadsClicked" text="Threads" />
-                  <Button fx:id="btnTags" layoutX="677.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#btnTagsClicked" text="Tags" />
                   <MenuButton fx:id="btnMenu" mnemonicParsing="false" styleClass="my-drop-down-menu">
                      <items>
                         <MenuItem fx:id="menuItemSettings" mnemonicParsing="false" style="-fx-graphic: url('http://icons.iconarchive.com/icons/martz90/circle/16/settings-icon.png');" text="Settings">

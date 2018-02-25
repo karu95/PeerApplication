@@ -21,6 +21,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.security.NoSuchAlgorithmException;
 import java.util.ResourceBundle;
@@ -48,7 +49,7 @@ public class SignupController implements Initializable, UIUpdater{
 
 
     @FXML
-    void confirmSignup(MouseEvent event) throws NoSuchAlgorithmException {
+    void confirmSignup(MouseEvent event) throws NoSuchAlgorithmException, UnsupportedEncodingException {
         String username = txtUsername.getText().trim();
         String password = txtPassword.getText().trim();
         String cnfmPassword = txtCnfmPassword.getText().trim();
@@ -71,7 +72,7 @@ public class SignupController implements Initializable, UIUpdater{
                 txtCnfmPassword.clear();
             }else{
                 RegisterMessage regMsg = new RegisterMessage();
-                String pw = PasswordEncrypter.get_SHA_1_SecurePassword(password);
+                String pw = PasswordEncrypter.SHA1(password);
                 regMsg.setUsername(username);
                 regMsg.setPassword(pw);
                 PeerHandler.getBsHandler().signup(regMsg);

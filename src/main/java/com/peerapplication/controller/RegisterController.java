@@ -4,7 +4,10 @@ import com.peerapplication.model.User;
 import com.peerapplication.util.Main;
 import com.peerapplication.validator.UserValidator;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -20,6 +23,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.Date;
 
 public class RegisterController implements Initializable {
 
@@ -54,9 +58,16 @@ public class RegisterController implements Initializable {
         String validity = userValidator.validate(user);
         if (validity.equals("Success")){
             if (file!= null) {
+                user.setImageURL(String.valueOf(user.getUserID()));
                 Thumbnails.of(file).scale(0.8).outputFormat("jpg").toFile(new File("/" + System.getProperty("user.dir") + "/images/" + String.valueOf(user.getUserID())));
             }
-            System.out.println("file saved");
+            user.setRegisterTime(new Date(System.currentTimeMillis()).getTime());
+            user.saveUser();
+            Stage stage = (Stage) btnRegister.getScene().getWindow();
+            Parent root = FXMLLoader.load(getClass().getResource("/views/homepage.fxml"));
+            Scene scene = new Scene(root, 1035, 859);
+            stage.setTitle("Home");
+            stage.setScene(scene);
         }else{
             statusLabel.setText(validity);
         }

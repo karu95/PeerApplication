@@ -8,7 +8,7 @@ public class SenderController {
         message.setSenderPort(PeerHandler.getUserPort());
         message.setReceiverAddress(peer.getPeerAddress());
         message.setReceiverPort(peer.getPeerPort());
-        Sender sender = new Sender(message);
+        Sender sender = new Sender(message, peer);
         Thread senderThread = new Thread(sender);
         senderThread.start();
     }

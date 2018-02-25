@@ -24,13 +24,14 @@ public class UserRepository {
         try {
             PreparedStatement stmt = connection.prepareStatement(statement);
             stmt.setInt(1, userID);
-            ResultSet rs = stmt.executeQuery(statement);
+            ResultSet rs = stmt.executeQuery();
             while (rs.next()){
                 user.setUserID(rs.getInt("user_id"));
                 user.setName(rs.getString("user_name"));
                 user.setEmail(rs.getString("email"));
                 user.setImageURL(rs.getString("image"));
                 user.setRegisterTime(rs.getLong("register_time"));
+                System.out.println("User found");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -47,6 +48,7 @@ public class UserRepository {
             stmt.setString(3, user.getEmail());
             stmt.setLong(4, user.getRegisterTime());
             stmt.setString(5, user.getImageURL());
+            System.out.println("user saved");
         } catch (SQLException e) {
             e.printStackTrace();
         }

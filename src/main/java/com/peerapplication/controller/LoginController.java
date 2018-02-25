@@ -22,6 +22,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.security.NoSuchAlgorithmException;
 import java.util.ResourceBundle;
@@ -44,7 +45,7 @@ public class LoginController implements Initializable, UIUpdater{
     private Label statusLabel;
 
     @FXML
-    void confirmLogin(MouseEvent event) throws NoSuchAlgorithmException {
+    void confirmLogin(MouseEvent event) throws NoSuchAlgorithmException, UnsupportedEncodingException {
         String username = txtUsername.getText().trim();
         String password = txtPassword.getText().trim();
         if (!(username.isEmpty()) && !(password.isEmpty())) {
@@ -58,7 +59,7 @@ public class LoginController implements Initializable, UIUpdater{
                 statusLabel.setText("Invalid password!");
                 txtPassword.clear();
             } else {
-                String pw = PasswordEncrypter.get_SHA_1_SecurePassword(password);
+                String pw = PasswordEncrypter.SHA1(password);
                 System.out.println(pw);
                 LoginMessage loginMessage = new LoginMessage(username, pw);
                 PeerHandler.getBsHandler().login(loginMessage);
@@ -85,25 +86,32 @@ public class LoginController implements Initializable, UIUpdater{
 
     @Override
     public void updateUI(Message message) {
+
         Platform.runLater(new Runnable() {
+            RequestStatusMessage reqMessage = (RequestStatusMessage) message;
             @Override
             public void run() {
-                Stage stage = (Stage)btnRegister.getScene().getWindow();
-                try {
-                    RequestStatusMessage reqMessage = (RequestStatusMessage) message;
-                    User user = new User();
-                    user.getUser(Main.getSystemUserID());
-                    Parent root;
-                    if (user.getUserID()!=0) {
-                        root = FXMLLoader.load(getClass().getResource("/views/homepage.fxml"));
-                    }else {
-                        root = FXMLLoader.load(getClass().getResource("/views/register.fxml"));
+                if (reqMessage.getStatus()!="Success"){
+                    statusLabel.setText(reqMessage.getStatus());
+                }else {
+                    Stage stage = (Stage) btnRegister.getScene().getWindow();
+                    try {
+                        User user = new User();
+                        user.getUser(Main.getSystemUserID());
+                        System.out.println(Main.getSystemUserID());
+                        Parent root;
+                        System.out.println(user.getName());
+                        if (user.getUserID() != 0) {
+                            root = FXMLLoader.load(getClass().getResource("/views/homepage.fxml"));
+                        } else {
+                            root = FXMLLoader.load(getClass().getResource("/views/register.fxml"));
+                        }
+                        Scene scene = new Scene(root, 1035, 859);
+                        stage.setTitle("Home");
+                        stage.setScene(scene);
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
-                    Scene scene = new Scene(root, 1035, 859);
-                    stage.setTitle("Home");
-                    stage.setScene(scene);
-                } catch (IOException e) {
-                    e.printStackTrace();
                 }
             }
         });

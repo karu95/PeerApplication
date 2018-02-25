@@ -31,6 +31,7 @@ public class BSHandler {
 
     public void handleRequest(RequestStatusMessage message){
         Main.setSystemUserID(message.getUserID());
+        System.out.println(message.getUserID());
         Main.setAccountType(message.getAccountType());
         if(message.getTitle().equals("LoginStatus")){
             Main.getLoginUpdater().updateUI(message);

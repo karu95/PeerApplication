@@ -77,6 +77,6 @@ public class User {
 
     public void saveUser(){
         UserRepository userRepository = new UserRepository();
-
+        userRepository.saveUser(this);
     }
 }
