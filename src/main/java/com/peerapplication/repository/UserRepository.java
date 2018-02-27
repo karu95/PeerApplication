@@ -31,7 +31,6 @@ public class UserRepository {
                 user.setEmail(rs.getString("email"));
                 user.setImageURL(rs.getString("image"));
                 user.setRegisterTime(rs.getLong("register_time"));
-                System.out.println("User found");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -48,7 +47,6 @@ public class UserRepository {
             stmt.setString(3, user.getEmail());
             stmt.setLong(4, user.getRegisterTime());
             stmt.setString(5, user.getImageURL());
-            System.out.println("user saved");
         } catch (SQLException e) {
             e.printStackTrace();
         }

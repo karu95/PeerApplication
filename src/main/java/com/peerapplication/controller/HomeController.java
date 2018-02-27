@@ -9,15 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.MenuButton;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.Pagination;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
@@ -28,7 +20,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class HomeController implements Initializable, UIUpdater{
+public class HomeController implements Initializable, UIUpdater {
 
     @FXML
     private TabPane homeTabs;
@@ -120,11 +112,6 @@ public class HomeController implements Initializable, UIUpdater{
     }
 
     @FXML
-    void btnTagsClicked(MouseEvent event) {
-
-    }
-
-    @FXML
     void btnThreadsClicked(MouseEvent event) {
 
     }
@@ -140,7 +127,7 @@ public class HomeController implements Initializable, UIUpdater{
         PeerHandler.getBsHandler().logout(logoutMessage);
         Stage stage = (Stage) btnPostThread.getScene().getWindow();
         Parent root = FXMLLoader.load(getClass().getResource("/views/login.fxml"));
-        stage.setScene( new Scene(root, 1035, 859));
+        stage.setScene(new Scene(root, 1035, 859));
         stage.show();
     }
 
@@ -150,27 +137,30 @@ public class HomeController implements Initializable, UIUpdater{
     }
 
     @FXML
-    void postThread(MouseEvent event) {
-
+    void postThread(MouseEvent event) throws IOException {
+        Stage threadStage = (Stage) btnPostThread.getScene().getWindow();
+        Parent root = FXMLLoader.load(getClass().getResource("/views/postthread.fxml"));
+        threadStage.setScene(new Scene(root, 1035, 859));
+        threadStage.show();
     }
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         notificationTab.setOnSelectionChanged(ActionEvent -> {
-            if (notificationTab.isSelected()){
+            if (notificationTab.isSelected()) {
                 System.out.println("Notification");
             }
         });
 
         myThreadTab.setOnSelectionChanged(ActionEvent -> {
-            if (myThreadTab.isSelected()){
+            if (myThreadTab.isSelected()) {
                 System.out.println("MyThread");
             }
         });
 
         latestThreadTab.setOnSelectionChanged(ActionEvent -> {
-            if (latestThreadTab.isSelected()){
+            if (latestThreadTab.isSelected()) {
                 System.out.println("LatestThread");
             }
         });
@@ -178,6 +168,5 @@ public class HomeController implements Initializable, UIUpdater{
 
     @Override
     public void updateUI(Message message) {
-
     }
 }

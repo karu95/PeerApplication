@@ -59,7 +59,8 @@ public class RegisterController implements Initializable {
         if (validity.equals("Success")){
             if (file!= null) {
                 user.setImageURL(String.valueOf(user.getUserID()));
-                Thumbnails.of(file).scale(0.8).outputFormat("jpg").toFile(new File("/" + System.getProperty("user.dir") + "/images/" + String.valueOf(user.getUserID())));
+                Thumbnails.of(file).scale(0.8).outputFormat("jpg").toFile(new File("/" +
+                        System.getProperty("user.dir") + "/images/" + String.valueOf(user.getUserID())));
             }
             user.setRegisterTime(new Date(System.currentTimeMillis()).getTime());
             user.saveUser();

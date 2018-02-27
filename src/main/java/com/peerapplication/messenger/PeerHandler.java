@@ -14,8 +14,8 @@ public class PeerHandler {
     private static BSHandler bsHandler = new BSHandler();
     private static ReceiverController receiverController;
     private static SenderController senderController = new SenderController();
-    private static Peer bs = new Peer(00000,"192.168.8.101", 25025);
-    private static HeartBeatHandler heartBeatHandler = new HeartBeatHandler();
+    private static Peer bs = new Peer(00000,"192.168.8.100", 25025);
+    private static Thread heartBeatHandler;
 
 
     public static ArrayList<Peer> getKnownPeers() {
@@ -86,9 +86,16 @@ public class PeerHandler {
         return "No network Connection!";
     }
 
-    public void startHeartBeat(){
-        Thread heartBeat = new Thread(heartBeatHandler);
-        heartBeat.start();
+    public static void startHeartBeat(){
+        heartBeatHandler = new Thread(new HeartBeatHandler());
+        heartBeatHandler.setDaemon(true);
+        heartBeatHandler.start();
+    }
+
+    public static void stopHeartBeat(){
+        if (heartBeatHandler.isAlive()){
+            heartBeatHandler.stop();
+        }
     }
 
     public static SenderController getSenderController() {

@@ -1,19 +1,28 @@
 package com.peerapplication.messenger;
 
+import com.peerapplication.util.Main;
 import message.HeartBeatMessage;
 
 import java.util.ArrayList;
 
 public class HeartBeatHandler implements Runnable{
 
+    private boolean loggedIn;
+
+    public HeartBeatHandler(){
+        loggedIn = true;
+    }
+
     @Override
     public void run() {
-        while (true){
+        while (loggedIn) {
             ArrayList<Peer> peers = PeerHandler.getKnownPeers();
-            PeerHandler.getSenderController().send(new HeartBeatMessage(), PeerHandler.getBS());
-            if (!peers.isEmpty()){
-                for (Peer peer: peers){
-                        PeerHandler.getSenderController().send(new HeartBeatMessage(), peer);
+            HeartBeatMessage heartBeatMessage = new HeartBeatMessage();
+            heartBeatMessage.setSenderID(Main.getSystemUserID());
+            PeerHandler.getSenderController().send(heartBeatMessage, PeerHandler.getBS());
+            if (!peers.isEmpty()) {
+                for (Peer peer : peers) {
+                    PeerHandler.getSenderController().send(heartBeatMessage, peer);
                 }
             }
             try {
@@ -22,5 +31,9 @@ public class HeartBeatHandler implements Runnable{
                 e.printStackTrace();
             }
         }
+    }
+
+    public void setLoggedIn(boolean loggedIn) {
+        this.loggedIn = loggedIn;
     }
 }
