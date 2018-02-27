@@ -6,7 +6,6 @@ import javafx.application.Platform;
 import message.Message;
 import message.RegisterMessage;
 import message.RequestStatusMessage;
-import com.peerapplication.messenger.PeerHandler;
 import com.peerapplication.util.Main;
 import com.peerapplication.util.UIUpdater;
 import javafx.fxml.FXML;

@@ -4,8 +4,9 @@ package com.peerapplication.model;
 import com.peerapplication.repository.UserRepository;
 
 import java.awt.image.BufferedImage;
+import java.io.Serializable;
 
-public class User {
+public class User implements Serializable {
     private int userID;
     private String name;
     private String email;
@@ -13,9 +14,10 @@ public class User {
     private String imageURL;
     private long registerTime;
 
-    public User(){}
+    public User() {
+    }
 
-    public User(int userID, String name, String email){
+    public User(int userID, String name, String email) {
         this.userID = userID;
         this.email = email;
         this.name = name;
@@ -70,12 +72,12 @@ public class User {
         this.registerTime = registerTime;
     }
 
-    public void getUser(int userID){
+    public void getUser(int userID) {
         UserRepository userRepo = new UserRepository();
         userRepo.getUser(userID, this);
     }
 
-    public void saveUser(){
+    public void saveUser() {
         UserRepository userRepository = new UserRepository();
         userRepository.saveUser(this);
     }

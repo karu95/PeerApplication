@@ -1,4 +1,4 @@
-package com.peerapplication.messenger;
+package messenger;
 
 import java.net.Socket;
 

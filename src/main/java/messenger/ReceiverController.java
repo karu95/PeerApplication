@@ -1,9 +1,8 @@
-package com.peerapplication.messenger;
+package messenger;
 
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.sql.SQLException;
 
 public class ReceiverController implements Runnable{
     private int port;

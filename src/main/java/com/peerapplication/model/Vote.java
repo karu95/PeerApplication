@@ -1,15 +1,18 @@
 package com.peerapplication.model;
 
-public class Vote {
+import java.io.Serializable;
+
+public class Vote implements Serializable {
     private int userID;
     private String answerID;
 
-    public Vote(int userID, String answerID){
+    public Vote(int userID, String answerID) {
         this.answerID = answerID;
         this.userID = userID;
     }
 
-    public Vote(){}
+    public Vote() {
+    }
 
     public String getAnswerID() {
         return answerID;

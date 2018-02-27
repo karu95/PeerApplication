@@ -1,7 +1,6 @@
-package com.peerapplication.messenger;
+package messenger;
 
 import com.peerapplication.handler.BSHandler;
-import jdk.nashorn.internal.ir.debug.ObjectSizeCalculator;
 import message.*;
 
 import java.io.IOException;
@@ -32,14 +31,18 @@ public class Sender implements Runnable{
                     ObjectInputStream is = new ObjectInputStream(senderSocket.getInputStream());
                     RequestStatusMessage response = (RequestStatusMessage) is.readObject();
                     is.close();
-                    BSHandler.handleRequest(response);
+                    if (!response.getTitle().equals("LogoutSuccess")) {
+                        BSHandler.handleRequest(response);
+                    }
                 } else if (message instanceof ForumUpdateMessage) {
 
                 }
                 os.close();
                 senderSocket.close();
             } catch (IOException e) {
-                e.printStackTrace();
+                if (peer.getUserID()==000000){
+                    System.out.println("No Network Connection!");
+                }
             } catch (ClassNotFoundException ex) {
                 ex.printStackTrace();
             }

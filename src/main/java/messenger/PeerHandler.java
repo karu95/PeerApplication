@@ -1,6 +1,4 @@
-package com.peerapplication.messenger;
-
-import com.peerapplication.handler.BSHandler;
+package messenger;
 
 import java.net.*;
 import java.util.ArrayList;
@@ -14,7 +12,7 @@ public class PeerHandler {
     private static ReceiverController receiverController;
     private static SenderController senderController = new SenderController();
     private static Peer bs = new Peer(000000, "192.168.8.100", 25025);
-    private static Thread heartBeatHandler;
+    private static HeartBeatHandler heartBeatHandler = new HeartBeatHandler();
 
 
     public static ArrayList<Peer> getKnownPeers() {
@@ -31,7 +29,7 @@ public class PeerHandler {
         }
     }
 
-    public static void removeKnownPeer(Peer peer){
+    public static void removeKnownPeer(Peer peer) {
         synchronized (knownPeers) {
             knownPeers.remove(peer);
         }
@@ -90,15 +88,13 @@ public class PeerHandler {
     }
 
     public static void startHeartBeat() {
-        heartBeatHandler = new Thread(new HeartBeatHandler());
-        heartBeatHandler.setDaemon(true);
-        heartBeatHandler.start();
+        Thread HBWorker = new Thread(heartBeatHandler);
+        HBWorker.setDaemon(true);
+        HBWorker.start();
     }
 
     public static void stopHeartBeat() {
-        if (heartBeatHandler.isAlive()) {
-            heartBeatHandler.stop();
-        }
+        heartBeatHandler.setLoggedIn(false);
     }
 
     public static SenderController getSenderController() {

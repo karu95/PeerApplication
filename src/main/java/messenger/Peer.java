@@ -1,6 +1,8 @@
-package com.peerapplication.messenger;
+package messenger;
 
-public class Peer {
+import java.io.Serializable;
+
+public class Peer implements Serializable{
 
     private String peerAddress;
     private int peerPort;
@@ -49,4 +51,3 @@ public class Peer {
         this.lastSeen = lastSeen;
     }
 }
-

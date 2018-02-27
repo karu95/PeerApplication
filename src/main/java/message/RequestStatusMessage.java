@@ -1,6 +1,6 @@
 package message;
 
-import com.peerapplication.messenger.Peer;
+import messenger.Peer;
 
 import java.util.ArrayList;
 

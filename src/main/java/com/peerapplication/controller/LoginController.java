@@ -1,7 +1,6 @@
 package com.peerapplication.controller;
 
 import com.peerapplication.handler.BSHandler;
-import com.peerapplication.messenger.PeerHandler;
 import com.peerapplication.model.User;
 import com.peerapplication.util.PasswordEncrypter;
 import com.peerapplication.util.SystemUser;

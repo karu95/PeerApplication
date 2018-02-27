@@ -1,8 +1,9 @@
 package com.peerapplication.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Thread {
+public class Thread implements Serializable {
     private String threadID;
     private long timestamp;
     private String title;
@@ -11,9 +12,10 @@ public class Thread {
     private ArrayList<Answer> answers;
     private int userID;
 
-    public  Thread(){}
+    public Thread() {
+    }
 
-    public Thread(String title){
+    public Thread(String title) {
         this.title = title;
     }
 
@@ -66,11 +68,11 @@ public class Thread {
         this.threadID = threadID;
     }
 
-    public void addAnswer(Answer answer){
+    public void addAnswer(Answer answer) {
         answers.add(answer);
     }
 
-    public void addTag(String tag){
+    public void addTag(String tag) {
         tags.add(tag);
     }
 

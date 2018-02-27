@@ -2,9 +2,10 @@ package com.peerapplication.model;
 
 import com.peerapplication.repository.AnswerRepository;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Answer {
+public class Answer implements Serializable {
 
     private String answerID;
     private String threadID;

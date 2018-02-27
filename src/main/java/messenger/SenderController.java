@@ -1,4 +1,4 @@
-package com.peerapplication.messenger;
+package messenger;
 
 import com.peerapplication.util.SystemUser;
 import message.Message;
@@ -17,11 +17,10 @@ public class SenderController {
         senderThread.start();
     }
 
-    public void sendToAll(Message message) {
-        ArrayList<Peer> receivers = (ArrayList<Peer>) PeerHandler.getKnownPeers().clone();
+    public void sendToAll(Message message, ArrayList<Peer> receivers) {
         if (!receivers.isEmpty()) {
-            for (Peer reciever : receivers) {
-                send(message, reciever);
+            for (Peer receiver : receivers) {
+                send(message, receiver);
             }
         }
     }

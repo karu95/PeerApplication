@@ -1,8 +1,6 @@
 package com.peerapplication.controller;
 
 import com.peerapplication.handler.BSHandler;
-import com.peerapplication.messenger.PeerHandler;
-import com.peerapplication.util.Main;
 import com.peerapplication.util.SystemUser;
 import com.peerapplication.util.UIUpdater;
 import javafx.event.ActionEvent;
