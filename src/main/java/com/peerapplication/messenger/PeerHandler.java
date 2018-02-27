@@ -14,7 +14,7 @@ public class PeerHandler {
     private static BSHandler bsHandler = new BSHandler();
     private static ReceiverController receiverController;
     private static SenderController senderController = new SenderController();
-    private static Peer bs = new Peer(00000,"192.168.8.100", 25025);
+    private static Peer bs = new Peer(000000, "192.168.8.100", 25025);
     private static Thread heartBeatHandler;
 
 
@@ -24,6 +24,18 @@ public class PeerHandler {
 
     public static void setKnownPeers(ArrayList<Peer> knownPeers) {
         PeerHandler.knownPeers = knownPeers;
+    }
+
+    public static void addKnownPeer(Peer peer) {
+        synchronized (knownPeers) {
+            knownPeers.add(peer);
+        }
+    }
+
+    public static void removeKnownPeer(Peer peer){
+        synchronized (knownPeers) {
+            knownPeers.remove(peer);
+        }
     }
 
     public static BSHandler getBsHandler() {
@@ -38,7 +50,7 @@ public class PeerHandler {
         return userPort;
     }
 
-    public static void setup(int port){
+    public static void setup(int port) {
         PeerHandler.userPort = port;
         receiverController = new ReceiverController(userPort);
         PeerHandler.userAddress = getLocalIPAddress();
@@ -46,34 +58,30 @@ public class PeerHandler {
         t.start();
     }
 
-    public static String getLocalIPAddress(){
+    public static String getLocalIPAddress() {
         InetAddress inetAddress = null;
         try {
             for (
                     final Enumeration<NetworkInterface> interfaces =
                     NetworkInterface.getNetworkInterfaces();
-                    interfaces.hasMoreElements( );
-                    )
-            {
-                final NetworkInterface cur = interfaces.nextElement( );
+                    interfaces.hasMoreElements();
+                    ) {
+                final NetworkInterface cur = interfaces.nextElement();
 
-                if ( cur.isLoopback( ) )
-                {
+                if (cur.isLoopback()) {
                     continue;
                 }
 
-                for ( final InterfaceAddress addr : cur.getInterfaceAddresses( ) )
-                {
-                    final InetAddress inet_addr = addr.getAddress( );
+                for (final InterfaceAddress addr : cur.getInterfaceAddresses()) {
+                    final InetAddress inet_addr = addr.getAddress();
 
-                    if ( !( inet_addr instanceof Inet4Address) )
-                    {
+                    if (!(inet_addr instanceof Inet4Address)) {
                         continue;
                     }
                     inetAddress = inet_addr;
                     System.out.println(
-                            "  address: " + inet_addr.getHostAddress( ) +
-                                    "/" + addr.getNetworkPrefixLength( )
+                            "  address: " + inet_addr.getHostAddress() +
+                                    "/" + addr.getNetworkPrefixLength()
                     );
                 }
             }
@@ -86,14 +94,14 @@ public class PeerHandler {
         return "No network Connection!";
     }
 
-    public static void startHeartBeat(){
+    public static void startHeartBeat() {
         heartBeatHandler = new Thread(new HeartBeatHandler());
         heartBeatHandler.setDaemon(true);
         heartBeatHandler.start();
     }
 
-    public static void stopHeartBeat(){
-        if (heartBeatHandler.isAlive()){
+    public static void stopHeartBeat() {
+        if (heartBeatHandler.isAlive()) {
             heartBeatHandler.stop();
         }
     }

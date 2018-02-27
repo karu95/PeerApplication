@@ -2,6 +2,7 @@ package com.peerapplication.handler;
 
 import com.peerapplication.messenger.PeerHandler;
 import com.peerapplication.util.Main;
+import com.peerapplication.util.SystemUser;
 import message.*;
 
 import java.util.Date;
@@ -23,8 +24,8 @@ public class BSHandler {
         PeerHandler.getSenderController().send(logoutMessage, PeerHandler.getBS());
         PeerHandler.stopHeartBeat();
         PeerHandler.getKnownPeers().clear();
-        Main.setAccountType(0);
-        Main.setSystemUserID(0);
+        SystemUser.setAccountType(0);
+        SystemUser.setSystemUserID(0);
     }
 
     public void changePassword(PasswordChangeMessage pwChangeMessage){
@@ -32,9 +33,9 @@ public class BSHandler {
     }
 
     public void handleRequest(RequestStatusMessage message){
-        Main.setSystemUserID(message.getUserID());
+        SystemUser.setSystemUserID(message.getUserID());
         System.out.println(message.getUserID());
-        Main.setAccountType(message.getAccountType());
+        SystemUser.setAccountType(message.getAccountType());
         if(message.getTitle().equals("LoginStatus")){
             Main.getLoginUpdater().updateUI(message);
         } else if (message.getTitle().equals("RegisterStatus")){

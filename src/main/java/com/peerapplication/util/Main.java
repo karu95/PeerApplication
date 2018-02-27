@@ -18,28 +18,10 @@ import java.security.NoSuchAlgorithmException;
 
 public class Main extends Application{
 
-    private static int systemUserID;
-    private static int accountType;
     private static UIUpdater registerUpdater;
     private static UIUpdater loginUpdater;
     private static UIUpdater threadUpdater;
     private static UIUpdater answerUpdater;
-
-    public static int getSystemUserID() {
-        return systemUserID;
-    }
-
-    public static void setSystemUserID(int systemUserID) {
-        Main.systemUserID = systemUserID;
-    }
-
-    public static int getAccountType() {
-        return accountType;
-    }
-
-    public static void setAccountType(int accountType) {
-        Main.accountType = accountType;
-    }
 
     public static UIUpdater getRegisterUpdater() {
         return registerUpdater;
@@ -103,7 +85,6 @@ public class Main extends Application{
         File imageDir = new File("/"+System.getProperty("user.dir")+"/images");
         if (!imageDir.exists()){
             imageDir.mkdir();
-            System.out.println("Created");
         }
 
         launch(args);

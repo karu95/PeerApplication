@@ -2,6 +2,7 @@ package com.peerapplication.controller;
 
 import com.peerapplication.model.User;
 import com.peerapplication.util.Main;
+import com.peerapplication.util.SystemUser;
 import com.peerapplication.validator.UserValidator;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -54,7 +55,7 @@ public class RegisterController implements Initializable {
     void register(MouseEvent event) throws IOException {
         String name = txtName.getText().trim();
         String email = txtEmail.getText().trim();
-        User user = new User(Main.getSystemUserID(), name, email);
+        User user = new User(SystemUser.getSystemUserID(), name, email);
         String validity = userValidator.validate(user);
         if (validity.equals("Success")){
             if (file!= null) {

@@ -91,7 +91,7 @@ public class LoginController implements Initializable, UIUpdater{
             RequestStatusMessage reqMessage = (RequestStatusMessage) message;
             @Override
             public void run() {
-                if (reqMessage.getStatus()!="Success"){
+                if (!(reqMessage.getStatus().equals("Success"))){
                     statusLabel.setText(reqMessage.getStatus());
                 }else {
                     Stage stage = (Stage) btnRegister.getScene().getWindow();

@@ -1,9 +1,10 @@
 package com.peerapplication.handler;
 
+import com.peerapplication.model.User;
 import message.UserInfoMessage;
 
 public class UserHandler {
-    public void postUser(UserInfoMessage userInfoMessage){
+    public void postUser(User user){
 
     }
 
