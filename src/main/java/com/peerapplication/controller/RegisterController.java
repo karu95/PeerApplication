@@ -65,6 +65,7 @@ public class RegisterController implements Initializable {
             }
             user.setRegisterTime(new Date(System.currentTimeMillis()).getTime());
             user.saveUser();
+
             Stage stage = (Stage) btnRegister.getScene().getWindow();
             Parent root = FXMLLoader.load(getClass().getResource("/views/homepage.fxml"));
             Scene scene = new Scene(root, 1035, 859);

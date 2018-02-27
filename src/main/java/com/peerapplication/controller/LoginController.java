@@ -1,8 +1,10 @@
 package com.peerapplication.controller;
 
+import com.peerapplication.handler.BSHandler;
 import com.peerapplication.messenger.PeerHandler;
 import com.peerapplication.model.User;
 import com.peerapplication.util.PasswordEncrypter;
+import com.peerapplication.util.SystemUser;
 import javafx.application.Platform;
 import message.LoginMessage;
 import message.Message;
@@ -62,7 +64,7 @@ public class LoginController implements Initializable, UIUpdater{
                 String pw = PasswordEncrypter.SHA1(password);
                 System.out.println(pw);
                 LoginMessage loginMessage = new LoginMessage(username, pw);
-                PeerHandler.getBsHandler().login(loginMessage);
+                BSHandler.login(loginMessage);
             }
         } else {
             statusLabel.setText("All fields are required!");
@@ -97,8 +99,8 @@ public class LoginController implements Initializable, UIUpdater{
                     Stage stage = (Stage) btnRegister.getScene().getWindow();
                     try {
                         User user = new User();
-                        user.getUser(Main.getSystemUserID());
-                        System.out.println(Main.getSystemUserID());
+                        user.getUser(SystemUser.getSystemUserID());
+                        System.out.println(SystemUser.getSystemUserID());
                         Parent root;
                         System.out.println(user.getName());
                         if (user.getUserID() != 0) {

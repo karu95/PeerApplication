@@ -9,17 +9,17 @@ import java.util.Date;
 
 public class BSHandler {
 
-    public void login(LoginMessage loginMessage){
+    public static void login(LoginMessage loginMessage){
         loginMessage.setTimestamp(new Date(System.currentTimeMillis()).getTime());
         PeerHandler.getSenderController().send(loginMessage, PeerHandler.getBS());
     }
 
-    public void signup(RegisterMessage registerMessage){
+    public static void signup(RegisterMessage registerMessage){
         registerMessage.setTimestamp(new Date(System.currentTimeMillis()).getTime());
         PeerHandler.getSenderController().send(registerMessage, PeerHandler.getBS());
     }
 
-    public void logout(LogoutMessage logoutMessage){
+    public static void logout(LogoutMessage logoutMessage){
         logoutMessage.setTimestamp(new Date(System.currentTimeMillis()).getTime());
         PeerHandler.getSenderController().send(logoutMessage, PeerHandler.getBS());
         PeerHandler.stopHeartBeat();
@@ -28,11 +28,11 @@ public class BSHandler {
         SystemUser.setSystemUserID(0);
     }
 
-    public void changePassword(PasswordChangeMessage pwChangeMessage){
+    public static void changePassword(PasswordChangeMessage pwChangeMessage){
         
     }
 
-    public void handleRequest(RequestStatusMessage message){
+    public static void handleRequest(RequestStatusMessage message){
         SystemUser.setSystemUserID(message.getUserID());
         System.out.println(message.getUserID());
         SystemUser.setAccountType(message.getAccountType());

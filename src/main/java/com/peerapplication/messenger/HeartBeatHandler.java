@@ -1,6 +1,7 @@
 package com.peerapplication.messenger;
 
 import com.peerapplication.util.Main;
+import com.peerapplication.util.SystemUser;
 import message.HeartBeatMessage;
 
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ public class HeartBeatHandler implements Runnable{
         while (loggedIn) {
             ArrayList<Peer> peers = PeerHandler.getKnownPeers();
             HeartBeatMessage heartBeatMessage = new HeartBeatMessage();
-            heartBeatMessage.setSenderID(Main.getSystemUserID());
+            heartBeatMessage.setSenderID(SystemUser.getSystemUserID());
             PeerHandler.getSenderController().send(heartBeatMessage, PeerHandler.getBS());
             if (!peers.isEmpty()) {
                 for (Peer peer : peers) {

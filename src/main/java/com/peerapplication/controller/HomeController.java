@@ -1,7 +1,9 @@
 package com.peerapplication.controller;
 
+import com.peerapplication.handler.BSHandler;
 import com.peerapplication.messenger.PeerHandler;
 import com.peerapplication.util.Main;
+import com.peerapplication.util.SystemUser;
 import com.peerapplication.util.UIUpdater;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -123,8 +125,8 @@ public class HomeController implements Initializable, UIUpdater {
 
     @FXML
     void logout(ActionEvent event) throws IOException {
-        LogoutMessage logoutMessage = new LogoutMessage(Main.getSystemUserID());
-        PeerHandler.getBsHandler().logout(logoutMessage);
+        LogoutMessage logoutMessage = new LogoutMessage(SystemUser.getSystemUserID());
+        BSHandler.logout(logoutMessage);
         Stage stage = (Stage) btnPostThread.getScene().getWindow();
         Parent root = FXMLLoader.load(getClass().getResource("/views/login.fxml"));
         stage.setScene(new Scene(root, 1035, 859));

@@ -11,7 +11,6 @@ public class PeerHandler {
     private static int userPort;
     private static String userAddress;
     private static ArrayList<Peer> knownPeers = new ArrayList<>();
-    private static BSHandler bsHandler = new BSHandler();
     private static ReceiverController receiverController;
     private static SenderController senderController = new SenderController();
     private static Peer bs = new Peer(000000, "192.168.8.100", 25025);
@@ -36,10 +35,6 @@ public class PeerHandler {
         synchronized (knownPeers) {
             knownPeers.remove(peer);
         }
-    }
-
-    public static BSHandler getBsHandler() {
-        return bsHandler;
     }
 
     public static String getUserAddress() {

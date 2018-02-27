@@ -1,5 +1,6 @@
 package com.peerapplication.controller;
 
+import com.peerapplication.handler.BSHandler;
 import com.peerapplication.util.PasswordEncrypter;
 import javafx.application.Platform;
 import message.Message;
@@ -75,7 +76,7 @@ public class SignupController implements Initializable, UIUpdater{
                 String pw = PasswordEncrypter.SHA1(password);
                 regMsg.setUsername(username);
                 regMsg.setPassword(pw);
-                PeerHandler.getBsHandler().signup(regMsg);
+                BSHandler.signup(regMsg);
             }
         } else {
             statusLabel.setText("All fields are required!");

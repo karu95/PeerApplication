@@ -1,5 +1,6 @@
 package com.peerapplication.messenger;
 
+import com.peerapplication.handler.BSHandler;
 import jdk.nashorn.internal.ir.debug.ObjectSizeCalculator;
 import message.*;
 
@@ -31,7 +32,7 @@ public class Sender implements Runnable{
                     ObjectInputStream is = new ObjectInputStream(senderSocket.getInputStream());
                     RequestStatusMessage response = (RequestStatusMessage) is.readObject();
                     is.close();
-                    PeerHandler.getBsHandler().handleRequest(response);
+                    BSHandler.handleRequest(response);
                 } else if (message instanceof ForumUpdateMessage) {
 
                 }
