@@ -47,6 +47,7 @@ public class UserRepository {
             stmt.setString(3, user.getEmail());
             stmt.setLong(4, user.getRegisterTime());
             stmt.setString(5, user.getImageURL());
+            stmt.execute();
         } catch (SQLException e) {
             e.printStackTrace();
         }

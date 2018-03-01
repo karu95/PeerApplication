@@ -19,6 +19,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import net.coobird.thumbnailator.Thumbnails;
 
+import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -59,15 +60,17 @@ public class RegisterController implements Initializable {
         String validity = userValidator.validate(user);
         if (validity.equals("Success")){
             if (file!= null) {
+                user.setUserImage(ImageIO.read(file));
                 user.setImageURL(String.valueOf(user.getUserID()));
-                Thumbnails.of(file).scale(0.8).outputFormat("jpg").toFile(new File("/" +
-                        System.getProperty("user.dir") + "/images/" + String.valueOf(user.getUserID())));
             }
             user.setRegisterTime(new Date(System.currentTimeMillis()).getTime());
             user.saveUser();
 
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/homepage.fxml"));
+            Parent root = loader.load();
+            HomeController controller = loader.getController();
+            controller.init(user);
             Stage stage = (Stage) btnRegister.getScene().getWindow();
-            Parent root = FXMLLoader.load(getClass().getResource("/views/homepage.fxml"));
             Scene scene = new Scene(root, 1035, 859);
             stage.setTitle("Home");
             stage.setScene(scene);

@@ -12,7 +12,10 @@ public class AnswerRepository {
 
     public Answer getAnswer(String answerID, Answer answer){
 
-
         return answer;
+    }
+
+    public void saveAnswer(Answer answer){
+
     }
 }

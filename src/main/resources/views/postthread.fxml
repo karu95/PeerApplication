@@ -22,7 +22,7 @@
             <TextField layoutX="259.0" layoutY="73.0" prefHeight="33.0" prefWidth="629.0" promptText="Title" />
             <TextArea layoutX="259.0" layoutY="136.0" prefHeight="389.0" prefWidth="629.0" promptText="Description" />
             <TextArea layoutX="259.0" layoutY="543.0" prefHeight="25.0" prefWidth="629.0" promptText="Add tags seperated by comma's" />
-            <Button layoutX="491.0" layoutY="604.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="165.0" text="Post">
+            <Button fx:id="btnPost" layoutX="491.0" layoutY="604.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="165.0" text="Post">
                <font>
                   <Font size="16.0" />
                </font>

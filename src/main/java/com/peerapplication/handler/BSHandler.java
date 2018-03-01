@@ -1,10 +1,9 @@
 package com.peerapplication.handler;
 
-import messenger.HeartBeatHandler;
-import messenger.PeerHandler;
 import com.peerapplication.util.Main;
 import com.peerapplication.util.SystemUser;
 import message.*;
+import messenger.PeerHandler;
 
 import java.util.Date;
 
@@ -39,6 +38,7 @@ public class BSHandler {
         SystemUser.setAccountType(message.getAccountType());
         if (message.getStatus().equals("Success")){
             PeerHandler.startHeartBeat();
+            PeerHandler.setKnownPeers(message.getActivePeers());
         }
         if(message.getTitle().equals("LoginStatus")){
             Main.getLoginUpdater().updateUI(message);

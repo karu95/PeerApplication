@@ -11,7 +11,7 @@ public class PeerHandler {
     private static ArrayList<Peer> knownPeers = new ArrayList<>();
     private static ReceiverController receiverController;
     private static SenderController senderController = new SenderController();
-    private static Peer bs = new Peer(000000, "192.168.8.100", 25025);
+    private static Peer bs = new Peer(000000, "192.168.43.87", 25025);
     private static HeartBeatHandler heartBeatHandler = new HeartBeatHandler();
 
 

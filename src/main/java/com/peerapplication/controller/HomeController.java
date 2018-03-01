@@ -1,8 +1,10 @@
 package com.peerapplication.controller;
 
 import com.peerapplication.handler.BSHandler;
+import com.peerapplication.model.User;
 import com.peerapplication.util.SystemUser;
 import com.peerapplication.util.UIUpdater;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,6 +21,7 @@ import message.Message;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.Date;
 
 public class HomeController implements Initializable, UIUpdater {
 
@@ -106,6 +109,8 @@ public class HomeController implements Initializable, UIUpdater {
     @FXML
     private MenuItem menuItemLogout;
 
+    private User user;
+
     @FXML
     void btnHomeClicked(MouseEvent event) {
 
@@ -168,5 +173,17 @@ public class HomeController implements Initializable, UIUpdater {
 
     @Override
     public void updateUI(Message message) {
+
+    }
+
+    public void init(User user){
+        this.user = user;
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                lblName.setText(user.getName());
+                lblRegDate.setText("Joined on "+String.valueOf(new Date(user.getRegisterTime())));
+            }
+        });
     }
 }

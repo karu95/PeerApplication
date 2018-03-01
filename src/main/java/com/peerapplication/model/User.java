@@ -2,8 +2,12 @@ package com.peerapplication.model;
 
 
 import com.peerapplication.repository.UserRepository;
+import net.coobird.thumbnailator.Thumbnails;
 
+import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
 
 public class User implements Serializable {
@@ -77,8 +81,20 @@ public class User implements Serializable {
         userRepo.getUser(userID, this);
     }
 
-    public void saveUser() {
+    public void saveUser() throws IOException {
         UserRepository userRepository = new UserRepository();
         userRepository.saveUser(this);
+        if (userImage != null) {
+            Thumbnails.of(userImage).scale(0.8).outputFormat("jpg").toFile(new File("/" +
+                    System.getProperty("user.dir") + "/images/" + String.valueOf(getUserID())));
+        }
+    }
+
+    public void getUserWithImage(int userID) throws IOException {
+        getUser(userID);
+        if (!imageURL.isEmpty()) {
+            setUserImage(ImageIO.read(new File("/" + System.getProperty("user.dir") +
+                    "/images/" + String.valueOf(getUserID()))));
+        }
     }
 }
