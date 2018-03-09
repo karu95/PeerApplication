@@ -1,37 +1,59 @@
 package messenger;
 
+import com.peerapplication.handler.Handler;
+import com.peerapplication.handler.UserHandler;
+import message.Message;
+import message.UserInfoMessage;
+
 import java.net.*;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.HashMap;
 
 public class PeerHandler {
 
     private static int userPort;
     private static String userAddress;
-    private static ArrayList<Peer> knownPeers = new ArrayList<>();
+    private static HashMap<Integer, Peer> knownPeers = new HashMap<>();
     private static ReceiverController receiverController;
     private static SenderController senderController = new SenderController();
     private static Peer bs = new Peer(000000, "192.168.43.87", 25025);
     private static HeartBeatHandler heartBeatHandler = new HeartBeatHandler();
+    private static HashMap<Class<Handler>, Class<Message>> hanlders = new HashMap<Class<Handler>, Class<Message>>();
 
+    public static void registerHandler(Class<Handler> handlerType, Class<Message> messageType){
+        hanlders.put(handlerType, messageType);
+    }
 
-    public static ArrayList<Peer> getKnownPeers() {
+    public static void hanldeMessage(Message message){
+        hanlders.get(message.getClass());
+    }
+
+    public static HashMap<Integer, Peer> getKnownPeers() {
         return knownPeers;
     }
 
     public static void setKnownPeers(ArrayList<Peer> knownPeers) {
-        PeerHandler.knownPeers = knownPeers;
+        HashMap<Integer, Peer> peers = new HashMap<>();
+        if (knownPeers.isEmpty()){
+            return;
+        } else {
+            for (Peer peer : knownPeers) {
+                peers.put(peer.getUserID(), peer);
+            }
+        }
+        PeerHandler.knownPeers = peers;
     }
 
     public static void addKnownPeer(Peer peer) {
-        synchronized (knownPeers) {
-            knownPeers.add(peer);
+        synchronized (knownPeers){
+            knownPeers.put(peer.getUserID(), peer);
         }
     }
 
-    public static void removeKnownPeer(Peer peer) {
-        synchronized (knownPeers) {
-            knownPeers.remove(peer);
+    public static void removeKnownPeer(Integer peerID) {
+        synchronized (knownPeers){
+            knownPeers.remove(peerID);
         }
     }
 

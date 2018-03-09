@@ -1,4 +1,4 @@
 package com.peerapplication.handler;
 
-public class AnswerHandler {
+public class AnswerHandler extends Handler{
 }

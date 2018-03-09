@@ -1,4 +1,4 @@
 package com.peerapplication.handler;
 
-public class ThreadHandler {
+public class ThreadHandler extends Handler {
 }

@@ -1,9 +1,12 @@
 package com.peerapplication.util;
 
+import com.peerapplication.handler.UserHandler;
+import com.peerapplication.model.User;
 import com.peerapplication.repository.TableRepository;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.stage.WindowEvent;
+import message.UserInfoMessage;
 import messenger.PeerHandler;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -85,7 +88,9 @@ public class Main extends Application{
             imageDir.mkdir();
         }
 
-        launch(args);
+
+
+        //launch(args);
 
     }
 }

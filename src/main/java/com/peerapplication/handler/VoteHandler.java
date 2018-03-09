@@ -1,4 +1,4 @@
 package com.peerapplication.handler;
 
-public class VoteHandler {
+public class VoteHandler extends Handler{
 }
