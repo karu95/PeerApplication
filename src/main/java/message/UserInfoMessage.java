@@ -5,7 +5,7 @@ import com.peerapplication.model.User;
 public class UserInfoMessage extends Message {
     private User user;
 
-    public UserInfoMessage(){
+    public UserInfoMessage() {
         super("UserInfo");
     }
 

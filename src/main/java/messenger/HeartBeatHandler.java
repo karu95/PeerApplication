@@ -3,21 +3,21 @@ package messenger;
 import com.peerapplication.util.SystemUser;
 import message.HeartBeatMessage;
 
-public class HeartBeatHandler implements Runnable{
+public class HeartBeatHandler implements Runnable {
 
-    private boolean loggedIn;
+    private boolean stop;
 
-    public HeartBeatHandler(){
-        loggedIn = true;
+    public HeartBeatHandler() {
+        this.stop = false;
     }
 
     @Override
     public void run() {
-        while (loggedIn) {
+        while (!stop) {
             try {
                 Thread.sleep(120000);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                continue;
             }
             HeartBeatMessage heartBeatMessage = new HeartBeatMessage();
             heartBeatMessage.setSenderID(SystemUser.getSystemUserID());
@@ -25,7 +25,11 @@ public class HeartBeatHandler implements Runnable{
         }
     }
 
-    public void setLoggedIn(boolean loggedIn) {
-        this.loggedIn = loggedIn;
+    public void stop() {
+        this.stop = true;
+    }
+
+    public void start() {
+        this.stop = false;
     }
 }

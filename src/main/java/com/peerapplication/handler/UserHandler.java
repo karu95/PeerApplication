@@ -1,6 +1,7 @@
 package com.peerapplication.handler;
 
 import com.peerapplication.model.User;
+import message.Message;
 import message.UserInfoMessage;
 import messenger.Peer;
 import messenger.PeerHandler;
@@ -10,7 +11,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class UserHandler extends Handler{
+public class UserHandler extends Handler {
+
+    public UserHandler(){ }
+
+    public void handle(Message userMessage){
+        try {
+            UserHandler.handleUser((UserInfoMessage) userMessage);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     private static Object handleLock = new Object();
 
@@ -25,7 +36,8 @@ public class UserHandler extends Handler{
             User user = new User();
             user.getUser(userInfoMessage.getUser().getUserID());
             if (user.getUserID() != userInfoMessage.getUser().getUserID()) {
-                HashMap<Integer, Peer> peers = (HashMap<Integer, Peer>) PeerHandler.getKnownPeers().clone();
+                PeerHandler.knownPeersReadLock();
+                HashMap<Integer, Peer> peers = PeerHandler.getKnownPeers();
                 ArrayList<Peer> receivers = new ArrayList<>();
                 userInfoMessage.getUser().saveUser();
                 for (Map.Entry peer : peers.entrySet()) {
@@ -36,6 +48,7 @@ public class UserHandler extends Handler{
                         receivers.add((Peer) peer.getValue());
                     }
                 }
+                PeerHandler.knownPeersReadUnlock();
                 PeerHandler.getSenderController().sendToAll(userInfoMessage, receivers);
             }
         }

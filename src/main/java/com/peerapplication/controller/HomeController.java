@@ -20,8 +20,8 @@ import message.Message;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ResourceBundle;
 import java.util.Date;
+import java.util.ResourceBundle;
 
 public class HomeController implements Initializable, UIUpdater {
 
@@ -176,13 +176,13 @@ public class HomeController implements Initializable, UIUpdater {
 
     }
 
-    public void init(User user){
+    public void init(User user) {
         this.user = user;
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
                 lblName.setText(user.getName());
-                lblRegDate.setText("Joined on "+String.valueOf(new Date(user.getRegisterTime())));
+                lblRegDate.setText("Joined on " + String.valueOf(new Date(user.getRegisterTime())));
             }
         });
     }

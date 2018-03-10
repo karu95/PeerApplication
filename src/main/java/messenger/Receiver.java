@@ -6,8 +6,8 @@ public class Receiver implements Runnable {
 
     private Socket senderSocket;
 
-    public Receiver(Socket senderSocket){
-        this.senderSocket=senderSocket;
+    public Receiver(Socket senderSocket) {
+        this.senderSocket = senderSocket;
     }
 
     @Override

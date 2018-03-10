@@ -1,4 +1,8 @@
 package com.peerapplication.handler;
 
-public class Handler {
+import message.Message;
+
+public abstract class Handler {
+
+    public abstract void handle(Message message);
 }

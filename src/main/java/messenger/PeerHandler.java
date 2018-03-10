@@ -1,67 +1,80 @@
 package messenger;
 
 import com.peerapplication.handler.Handler;
-import com.peerapplication.handler.UserHandler;
 import message.Message;
-import message.UserInfoMessage;
 
 import java.net.*;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 public class PeerHandler {
 
     private static int userPort;
     private static String userAddress;
     private static HashMap<Integer, Peer> knownPeers = new HashMap<>();
+    private static ReadWriteLock knownPeersLock = new ReentrantReadWriteLock();
     private static ReceiverController receiverController;
     private static SenderController senderController = new SenderController();
     private static Peer bs = new Peer(000000, "192.168.43.87", 25025);
     private static HeartBeatHandler heartBeatHandler = new HeartBeatHandler();
-    private static HashMap<Class<Handler>, Class<Message>> hanlders = new HashMap<Class<Handler>, Class<Message>>();
+    private static ExecutorService heartbeatExecutor = Executors.newSingleThreadExecutor();
+    private static ExecutorService serverWorker = Executors.newSingleThreadExecutor();
+    private static HashMap<String, Handler> handlers = new HashMap<>();
 
-    public static void registerHandler(Class<Handler> handlerType, Class<Message> messageType){
-        hanlders.put(handlerType, messageType);
+    public static void registerHandler(String messageTitle, Handler handler) {
+        handlers.putIfAbsent(messageTitle, handler);
     }
 
-    public static void hanldeMessage(Message message){
-        hanlders.get(message.getClass());
+    static void handle(Message message) {
+
     }
 
     public static HashMap<Integer, Peer> getKnownPeers() {
         return knownPeers;
     }
 
-    public static void setKnownPeers(ArrayList<Peer> knownPeers) {
+    static void setKnownPeers(ArrayList<Peer> knownPeers) {
         HashMap<Integer, Peer> peers = new HashMap<>();
-        if (knownPeers.isEmpty()){
+        if (knownPeers.isEmpty()) {
             return;
         } else {
             for (Peer peer : knownPeers) {
                 peers.put(peer.getUserID(), peer);
             }
         }
+        knownPeersWriteLock();
         PeerHandler.knownPeers = peers;
+        knownPeersWriteUnlock();
     }
 
-    public static void addKnownPeer(Peer peer) {
-        synchronized (knownPeers){
+    static void addKnownPeer(Peer peer) {
+        knownPeersWriteLock();
+        if (!knownPeers.containsKey(peer.getUserID())) {
             knownPeers.put(peer.getUserID(), peer);
+        } else {
+            knownPeers.replace(peer.getUserID(), peer);
         }
+        knownPeersWriteUnlock();
     }
 
-    public static void removeKnownPeer(Integer peerID) {
-        synchronized (knownPeers){
+    static void removeKnownPeer(Integer peerID) {
+        knownPeersWriteLock();
+        if (knownPeers.containsKey(peerID)) {
             knownPeers.remove(peerID);
         }
+        knownPeersWriteUnlock();
     }
 
-    public static String getUserAddress() {
+    static String getUserAddress() {
         return userAddress;
     }
 
-    public static int getUserPort() {
+    static int getUserPort() {
         return userPort;
     }
 
@@ -69,11 +82,10 @@ public class PeerHandler {
         PeerHandler.userPort = port;
         receiverController = new ReceiverController(userPort);
         PeerHandler.userAddress = getLocalIPAddress();
-        Thread t = new Thread(receiverController);
-        t.start();
+        serverWorker.execute(receiverController);
     }
 
-    public static String getLocalIPAddress() {
+    static String getLocalIPAddress() {
         InetAddress inetAddress = null;
         try {
             for (
@@ -110,13 +122,12 @@ public class PeerHandler {
     }
 
     public static void startHeartBeat() {
-        Thread HBWorker = new Thread(heartBeatHandler);
-        HBWorker.setDaemon(true);
-        HBWorker.start();
+        heartBeatHandler.start();
+        heartbeatExecutor.execute(heartBeatHandler);
     }
 
     public static void stopHeartBeat() {
-        heartBeatHandler.setLoggedIn(false);
+        heartBeatHandler.stop();
     }
 
     public static SenderController getSenderController() {
@@ -125,5 +136,21 @@ public class PeerHandler {
 
     public static Peer getBS() {
         return bs;
+    }
+
+    public static void knownPeersReadLock() {
+        knownPeersLock.readLock().lock();
+    }
+
+    public static void knownPeersWriteLock() {
+        knownPeersLock.writeLock().lock();
+    }
+
+    public static void knownPeersReadUnlock() {
+        knownPeersLock.readLock().unlock();
+    }
+
+    public static void knownPeersWriteUnlock() {
+        knownPeersLock.writeLock().unlock();
     }
 }

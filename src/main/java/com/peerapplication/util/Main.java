@@ -1,23 +1,20 @@
 package com.peerapplication.util;
 
-import com.peerapplication.handler.UserHandler;
-import com.peerapplication.model.User;
 import com.peerapplication.repository.TableRepository;
+import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
-import javafx.stage.WindowEvent;
-import message.UserInfoMessage;
-import messenger.PeerHandler;
-import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
+import messenger.PeerHandler;
 
 import java.io.File;
 
 
-public class Main extends Application{
+public class Main extends Application {
 
     private static UIUpdater registerUpdater;
     private static UIUpdater loginUpdater;
@@ -72,10 +69,10 @@ public class Main extends Application{
         primaryStage.show();
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
 
         int port = 25030;
-        if (args.length>1){
+        if (args.length > 1) {
             port = Integer.parseInt(args[1]);
         }
         PeerHandler.setup(port);
@@ -83,11 +80,10 @@ public class Main extends Application{
         TableRepository tableRepo = new TableRepository();
         tableRepo.createTables();
 
-        File imageDir = new File("/"+System.getProperty("user.dir")+"/images");
-        if (!imageDir.exists()){
+        File imageDir = new File("/" + System.getProperty("user.dir") + "/images");
+        if (!imageDir.exists()) {
             imageDir.mkdir();
         }
-
 
 
         //launch(args);

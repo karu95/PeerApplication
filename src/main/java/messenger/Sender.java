@@ -1,23 +1,25 @@
 package messenger;
 
 import com.peerapplication.handler.BSHandler;
-import message.*;
+import message.BSMessage;
+import message.ForumUpdateMessage;
+import message.Message;
+import message.RequestStatusMessage;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-public class Sender implements Runnable{
+public class Sender implements Runnable {
     private Message message;
     private Socket senderSocket;
     private Peer peer;
 
-    public Sender(Message message, Peer peer){
+    public Sender(Message message, Peer peer) {
         this.message = message;
         this.peer = peer;
     }
-
 
 
     @Override
@@ -40,8 +42,10 @@ public class Sender implements Runnable{
                 os.close();
                 senderSocket.close();
             } catch (IOException e) {
-                if (peer.getUserID()==000000){
+                if (peer.getUserID() == 000000) {
                     System.out.println("No Network Connection!");
+                } else {
+                    PeerHandler.removeKnownPeer(peer.getUserID());
                 }
             } catch (ClassNotFoundException ex) {
                 ex.printStackTrace();

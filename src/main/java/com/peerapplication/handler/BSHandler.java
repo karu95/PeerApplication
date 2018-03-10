@@ -3,13 +3,17 @@ package com.peerapplication.handler;
 import com.peerapplication.util.Main;
 import com.peerapplication.util.SystemUser;
 import message.*;
-import messenger.Peer;
 import messenger.PeerHandler;
 
 import java.util.Date;
-import java.util.HashMap;
 
-public class BSHandler extends Handler {
+public class BSHandler extends Handler{
+
+    public BSHandler(){}
+
+    public void handle(Message message){
+        BSHandler.handleRequest((RequestStatusMessage) message);
+    }
 
     public static void login(LoginMessage loginMessage) {
         loginMessage.setTimestamp(new Date(System.currentTimeMillis()).getTime());
@@ -38,10 +42,6 @@ public class BSHandler extends Handler {
         SystemUser.setSystemUserID(message.getUserID());
         System.out.println(message.getUserID());
         SystemUser.setAccountType(message.getAccountType());
-        if (message.getStatus().equals("Success")) {
-            PeerHandler.startHeartBeat();
-            PeerHandler.setKnownPeers(message.getActivePeers());
-        }
         if (message.getTitle().equals("LoginStatus")) {
             Main.getLoginUpdater().updateUI(message);
         } else if (message.getTitle().equals("RegisterStatus")) {

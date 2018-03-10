@@ -1,4 +1,4 @@
 package message;
 
-public class PasswordChangeMessage extends Message implements BSMessage{
+public class PasswordChangeMessage extends Message implements BSMessage {
 }

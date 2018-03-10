@@ -7,7 +7,8 @@ public class Notification {
     private String type;
     private String relatedID;
 
-    public Notification(){}
+    public Notification() {
+    }
 
     public int getNotificationID() {
         return notificationID;

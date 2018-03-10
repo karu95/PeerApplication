@@ -4,14 +4,14 @@ import messenger.Peer;
 
 import java.util.ArrayList;
 
-public class RequestStatusMessage extends Message implements BSMessage{
+public class RequestStatusMessage extends Message implements BSMessage {
 
     private ArrayList<Peer> activePeers = new ArrayList<Peer>();
     private int accountType;
     private int userID;
     private String status;
 
-    public RequestStatusMessage(){
+    public RequestStatusMessage() {
         super();
     }
 
@@ -47,7 +47,7 @@ public class RequestStatusMessage extends Message implements BSMessage{
         this.userID = userID;
     }
 
-    public void setTitle(String title){
+    public void setTitle(String title) {
         this.title = title;
     }
 

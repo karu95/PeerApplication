@@ -14,11 +14,14 @@ public class Answer implements Serializable {
     private long timestamp;
     private int postedUserID;
 
-    public Answer(){ }
+    public Answer() {
+    }
 
-    public Answer(String answerID){ this.answerID = answerID;}
+    public Answer(String answerID) {
+        this.answerID = answerID;
+    }
 
-    public Answer (String answerID, String threadID, String description, ArrayList<Vote> votes, long timestamp){
+    public Answer(String answerID, String threadID, String description, ArrayList<Vote> votes, long timestamp) {
         this.answerID = answerID;
         this.threadID = threadID;
         this.description = description;
@@ -75,15 +78,16 @@ public class Answer implements Serializable {
         this.postedUserID = postedUserID;
     }
 
-    public void addVote(Vote vote){
+    public void addVote(Vote vote) {
         votes.add(vote);
     }
 
-    public void getAnswer(String answerID){
+    public void getAnswer(String answerID) {
         AnswerRepository answerRepo = new AnswerRepository();
         answerRepo.getAnswer(answerID, this);
     }
-    public void saveAnswer(){
+
+    public void saveAnswer() {
         AnswerRepository answerRepo = new AnswerRepository();
 
     }

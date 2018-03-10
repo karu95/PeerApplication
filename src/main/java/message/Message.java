@@ -12,11 +12,12 @@ public abstract class Message implements Serializable {
     private int senderPort;
     private long timestamp;
 
-    public Message(String title){
+    public Message(String title) {
         this.title = title;
     }
 
-    public Message(){}
+    public Message() {
+    }
 
     public long getTimestamp() {
         return timestamp;

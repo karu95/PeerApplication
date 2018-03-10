@@ -7,15 +7,15 @@ public class VoteRepository {
 
     private DBConnection dbConnection;
 
-    public VoteRepository(){
+    public VoteRepository() {
         dbConnection = new DBConnection();
     }
 
-    public Vote getVote(String voteID, Vote vote){
+    public Vote getVote(String voteID, Vote vote) {
         return vote;
     }
 
-    public void saveVote(Vote vote){
+    public void saveVote(Vote vote) {
 
     }
 }

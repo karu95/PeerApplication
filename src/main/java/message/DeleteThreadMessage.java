@@ -1,11 +1,13 @@
 package message;
 
-public class DeleteThreadMessage extends Message{
+public class DeleteThreadMessage extends Message {
 
     private String threadID;
     private int deletedUser;
 
-    public DeleteThreadMessage(){ super("DeleteThread");}
+    public DeleteThreadMessage() {
+        super("DeleteThread");
+    }
 
 
     public int getDeletedUser() {

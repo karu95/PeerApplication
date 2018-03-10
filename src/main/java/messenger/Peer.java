@@ -2,18 +2,18 @@ package messenger;
 
 import java.io.Serializable;
 
-public class Peer implements Serializable{
+public class Peer implements Serializable {
 
     private String peerAddress;
     private int peerPort;
     private int userID;
     private long lastSeen;
 
-    public Peer(){
+    public Peer() {
 
     }
 
-    public Peer(int userID, String peerAddress, int peerPort){
+    public Peer(int userID, String peerAddress, int peerPort) {
         this.peerAddress = peerAddress;
         this.peerPort = peerPort;
         this.userID = userID;

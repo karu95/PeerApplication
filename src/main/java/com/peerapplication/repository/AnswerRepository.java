@@ -6,16 +6,16 @@ import com.peerapplication.util.DBConnection;
 public class AnswerRepository {
     private DBConnection dbConn;
 
-    public AnswerRepository(){
+    public AnswerRepository() {
         dbConn = new DBConnection();
     }
 
-    public Answer getAnswer(String answerID, Answer answer){
+    public Answer getAnswer(String answerID, Answer answer) {
 
         return answer;
     }
 
-    public void saveAnswer(Answer answer){
+    public void saveAnswer(Answer answer) {
 
     }
 }

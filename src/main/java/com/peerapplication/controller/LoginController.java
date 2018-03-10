@@ -2,14 +2,11 @@ package com.peerapplication.controller;
 
 import com.peerapplication.handler.BSHandler;
 import com.peerapplication.model.User;
+import com.peerapplication.util.Main;
 import com.peerapplication.util.PasswordEncrypter;
 import com.peerapplication.util.SystemUser;
-import javafx.application.Platform;
-import message.LoginMessage;
-import message.Message;
-import message.RequestStatusMessage;
-import com.peerapplication.util.Main;
 import com.peerapplication.util.UIUpdater;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -21,6 +18,9 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import message.LoginMessage;
+import message.Message;
+import message.RequestStatusMessage;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -28,7 +28,7 @@ import java.net.URL;
 import java.security.NoSuchAlgorithmException;
 import java.util.ResourceBundle;
 
-public class LoginController implements Initializable, UIUpdater{
+public class LoginController implements Initializable, UIUpdater {
 
     @FXML
     private TextField txtUsername;
@@ -73,7 +73,7 @@ public class LoginController implements Initializable, UIUpdater{
 
     @FXML
     void openSignup(MouseEvent event) throws IOException {
-        Stage stage = (Stage)btnRegister.getScene().getWindow();
+        Stage stage = (Stage) btnRegister.getScene().getWindow();
         Parent root = FXMLLoader.load(getClass().getResource("/views/signup.fxml"));
         Scene scene = new Scene(root, 1035, 859);
         stage.setTitle("Sign Up");
@@ -90,11 +90,12 @@ public class LoginController implements Initializable, UIUpdater{
 
         Platform.runLater(new Runnable() {
             RequestStatusMessage reqMessage = (RequestStatusMessage) message;
+
             @Override
             public void run() {
-                if (!(reqMessage.getStatus().equals("Success"))){
+                if (!(reqMessage.getStatus().equals("Success"))) {
                     statusLabel.setText(reqMessage.getStatus());
-                }else {
+                } else {
                     Stage stage = (Stage) btnRegister.getScene().getWindow();
                     try {
                         User user = new User();

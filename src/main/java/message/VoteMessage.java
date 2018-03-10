@@ -6,7 +6,7 @@ public class VoteMessage extends Message {
 
     private Vote vote;
 
-    public VoteMessage(){
+    public VoteMessage() {
         super("VoteMessage");
     }
 

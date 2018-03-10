@@ -9,11 +9,11 @@ import java.sql.Statement;
 public class TableRepository {
     private DBConnection dbConn;
 
-    public TableRepository(){
+    public TableRepository() {
         dbConn = new DBConnection();
     }
 
-    public void createTables(){
+    public void createTables() {
         Connection connection = dbConn.getConnection();
         String userTable = "CREATE TABLE users(" +
                 "user_id INT PRIMARY KEY," +
@@ -38,23 +38,23 @@ public class TableRepository {
                 "FOREIGN KEY (related_thread) REFERENCES thread(thread_id))";
         String tagTable = "CREATE TABLE tag(" +
                 "tag VARCHAR (100) PRIMARY KEY)";
-        String notificationTable="CREATE TABLE notification(" +
+        String notificationTable = "CREATE TABLE notification(" +
                 "notification_id INT PRIMARY KEY," +
                 "related_user INT," +
                 "notify_status BOOLEAN," +
                 "related_post VARCHAR(20)," +
                 "FOREIGN KEY (related_user) REFERENCES users(user_id))";
-        String votedTable="CREATE TABLE voted (" +
+        String votedTable = "CREATE TABLE voted (" +
                 "answer_id VARCHAR (20) PRIMARY KEY," +
                 "user_id INT," +
                 "voted_time BIGINT," +
                 "FOREIGN KEY (user_id) REFERENCES users(user_id))";
-        String deletedTable="CREATE TABLE deleted(" +
+        String deletedTable = "CREATE TABLE deleted(" +
                 "thread_id VARCHAR(20) PRIMARY KEY," +
                 "user_id INT," +
                 "delete_time BIGINT," +
                 "FOREIGN KEY (user_id) REFERENCES users)";
-        String taggedTable="CREATE TABLE tagged(" +
+        String taggedTable = "CREATE TABLE tagged(" +
                 "tag VARCHAR(100) PRIMARY KEY," +
                 "thread_id VARCHAR(20)," +
                 "FOREIGN KEY (thread_id) REFERENCES thread)";
@@ -71,7 +71,7 @@ public class TableRepository {
             stmt.close();
             connection.close();
         } catch (SQLException e) {
-            if (e.getSQLState().equals("X0Y32")){
+            if (e.getSQLState().equals("X0Y32")) {
                 System.out.println("Tables created");
                 return;
             }

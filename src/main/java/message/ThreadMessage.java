@@ -2,13 +2,15 @@ package message;
 
 import com.peerapplication.model.Thread;
 
-public class ThreadMessage extends Message{
+public class ThreadMessage extends Message {
 
     private Thread thread;
 
-    public ThreadMessage(){super("ThreadMessage");}
+    public ThreadMessage() {
+        super("ThreadMessage");
+    }
 
-    public ThreadMessage (Thread thread) {
+    public ThreadMessage(Thread thread) {
         this.thread = thread;
     }
 

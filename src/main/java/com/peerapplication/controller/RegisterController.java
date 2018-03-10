@@ -1,7 +1,6 @@
 package com.peerapplication.controller;
 
 import com.peerapplication.model.User;
-import com.peerapplication.util.Main;
 import com.peerapplication.util.SystemUser;
 import com.peerapplication.validator.UserValidator;
 import javafx.fxml.FXML;
@@ -17,15 +16,14 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import net.coobird.thumbnailator.Thumbnails;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ResourceBundle;
 import java.util.Date;
+import java.util.ResourceBundle;
 
 public class RegisterController implements Initializable {
 
@@ -58,8 +56,8 @@ public class RegisterController implements Initializable {
         String email = txtEmail.getText().trim();
         User user = new User(SystemUser.getSystemUserID(), name, email);
         String validity = userValidator.validate(user);
-        if (validity.equals("Success")){
-            if (file!= null) {
+        if (validity.equals("Success")) {
+            if (file != null) {
                 user.setUserImage(ImageIO.read(file));
                 user.setImageURL(String.valueOf(user.getUserID()));
             }
@@ -74,16 +72,16 @@ public class RegisterController implements Initializable {
             Scene scene = new Scene(root, 1035, 859);
             stage.setTitle("Home");
             stage.setScene(scene);
-        }else{
+        } else {
             statusLabel.setText(validity);
         }
     }
 
     @FXML
     void selectImage(MouseEvent event) throws IOException {
-        Stage stage = (Stage)userImage.getScene().getWindow();
+        Stage stage = (Stage) userImage.getScene().getWindow();
         file = fileChooser.showOpenDialog(stage);
-        if (file != null){
+        if (file != null) {
             Image image = new Image(file.toURI().toString());
             userImage.setImage(image);
         }

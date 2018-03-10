@@ -1,11 +1,13 @@
 package message;
 
-public class RegisterMessage extends Message implements BSMessage{
+public class RegisterMessage extends Message implements BSMessage {
 
     private String username;
     private String password;
 
-    public RegisterMessage(){super("Register");}
+    public RegisterMessage() {
+        super("Register");
+    }
 
     public String getPassword() {
         return password;

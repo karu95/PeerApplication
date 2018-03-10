@@ -1,4 +1,4 @@
-.my-drop-down-menu{
+.my-drop-down-menu {
     -fx-background-color: TRANSPARENT, TRANSPARENT, TRANSPARENT, TRANSPARENT;
     -fx-graphic: url('../images/man-icon.png');
 }
@@ -8,11 +8,10 @@
     src: url('ANGEL.ttf');
 }
 
-.heading-label{
+.heading-label {
     -fx-graphic: url('../images/Users-icon.png');
     -fx-font-weight: bolder;
 }
-
 
 .my-drop-down-menu-list-item {
     -fx-background-color: #FAFAFA;

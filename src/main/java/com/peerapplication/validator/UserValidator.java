@@ -5,12 +5,13 @@ import org.apache.commons.validator.routines.EmailValidator;
 
 public class UserValidator {
 
-    public UserValidator(){}
+    public UserValidator() {
+    }
 
-    public String validate(User user){
-        String error= "Success";
-        if (user.getName().matches("[a-zA-Z ]+")){
-            if (!(EmailValidator.getInstance().isValid(user.getEmail()))){
+    public String validate(User user) {
+        String error = "Success";
+        if (user.getName().matches("[a-zA-Z ]+")) {
+            if (!(EmailValidator.getInstance().isValid(user.getEmail()))) {
                 error = "Invalid Email Address!";
             }
         } else {

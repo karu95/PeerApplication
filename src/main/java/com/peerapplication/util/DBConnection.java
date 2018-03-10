@@ -10,7 +10,7 @@ import java.util.Properties;
 public class DBConnection {
     private Properties prop;
 
-    public DBConnection(){
+    public DBConnection() {
         this.prop = new Properties();
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         InputStream stream = classLoader.getResourceAsStream("properties/db.properties");
@@ -21,7 +21,7 @@ public class DBConnection {
         }
     }
 
-    public Connection getConnection(){
+    public Connection getConnection() {
         Connection conn = null;
         try {
             Class.forName(prop.getProperty("db.driver"));

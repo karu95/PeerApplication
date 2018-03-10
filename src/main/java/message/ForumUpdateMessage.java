@@ -6,7 +6,7 @@ import com.peerapplication.model.Vote;
 
 import java.util.ArrayList;
 
-public class ForumUpdateMessage extends Message{
+public class ForumUpdateMessage extends Message {
 
     private int requesterID;
     private String status;
@@ -15,7 +15,7 @@ public class ForumUpdateMessage extends Message{
     private ArrayList<Answer> latestAnswers;
     private ArrayList<Vote> latestVotes;
 
-    public ForumUpdateMessage(){
+    public ForumUpdateMessage() {
         super("ForumUpdateMessage");
     }
 
