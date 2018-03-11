@@ -1,4 +1,10 @@
 package com.peerapplication.handler;
 
-public class ThreadHandler {
+import message.Message;
+
+public class ThreadHandler extends Handler {
+    @Override
+    public void handle(Message message) {
+
+    }
 }

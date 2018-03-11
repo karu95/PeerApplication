@@ -6,7 +6,7 @@ public class ThreadRepository {
     private DBConnection dbConnection;
 
     public ThreadRepository() {
-        dbConnection = new DBConnection();
+        dbConnection = DBConnection.getDBConnection();
     }
 
     public Thread getThread(String threadID, Thread thread) {

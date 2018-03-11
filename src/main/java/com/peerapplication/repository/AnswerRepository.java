@@ -7,7 +7,7 @@ public class AnswerRepository {
     private DBConnection dbConn;
 
     public AnswerRepository() {
-        dbConn = new DBConnection();
+        dbConn = DBConnection.getDBConnection();
     }
 
     public Answer getAnswer(String answerID, Answer answer) {

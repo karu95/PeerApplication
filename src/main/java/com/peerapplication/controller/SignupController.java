@@ -75,6 +75,7 @@ public class SignupController implements Initializable, UIUpdater {
                 regMsg.setUsername(username);
                 regMsg.setPassword(pw);
                 BSHandler.signup(regMsg);
+                System.out.println("Reg");
             }
         } else {
             statusLabel.setText("All fields are required!");

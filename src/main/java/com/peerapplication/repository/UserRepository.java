@@ -13,7 +13,7 @@ public class UserRepository {
     DBConnection dbConn;
 
     public UserRepository() {
-        dbConn = new DBConnection();
+        dbConn = DBConnection.getDBConnection();
     }
 
     public ArrayList<User> getUsers() {

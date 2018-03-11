@@ -6,7 +6,7 @@ public class DeleteThreadMessage extends Message {
     private int deletedUser;
 
     public DeleteThreadMessage() {
-        super("DeleteThread");
+        super("DeleteThreadMessage");
     }
 
 

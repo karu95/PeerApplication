@@ -10,6 +10,9 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class Sender implements Runnable {
     private Message message;
@@ -33,22 +36,27 @@ public class Sender implements Runnable {
                     ObjectInputStream is = new ObjectInputStream(senderSocket.getInputStream());
                     RequestStatusMessage response = (RequestStatusMessage) is.readObject();
                     is.close();
-                    if (!response.getTitle().equals("LogoutSuccess")) {
-                        BSHandler.handleRequest(response);
-                    }
-                } else if (message instanceof ForumUpdateMessage) {
-
+                    ExecutorService handler = Executors.newSingleThreadExecutor();
+                    handler.submit(new Runnable() {
+                        @Override
+                        public void run() {
+                                PeerHandler.handle(response);
+                            }
+                    });
+                } else {
+                    os.writeObject(message);
+                    os.flush();
                 }
                 os.close();
                 senderSocket.close();
             } catch (IOException e) {
-                if (peer.getUserID() == 000000) {
+                if (peer.getUserID() == 1) {
                     System.out.println("No Network Connection!");
                 } else {
                     PeerHandler.removeKnownPeer(peer.getUserID());
                 }
             } catch (ClassNotFoundException ex) {
-                ex.printStackTrace();
+
             }
         }
     }

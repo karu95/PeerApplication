@@ -43,9 +43,20 @@ public class BSHandler extends Handler{
         System.out.println(message.getUserID());
         SystemUser.setAccountType(message.getAccountType());
         if (message.getTitle().equals("LoginStatus")) {
+            if (message.getStatus().equals("Success")){
+                notifyPeerHandler(message);
+            }
             Main.getLoginUpdater().updateUI(message);
         } else if (message.getTitle().equals("RegisterStatus")) {
+            if (message.getStatus().equals("Success")){
+                notifyPeerHandler(message);
+            }
             Main.getRegisterUpdater().updateUI(message);
         }
+    }
+
+    private static void notifyPeerHandler(RequestStatusMessage message){
+        PeerHandler.setKnownPeers(message.getActivePeers());
+        PeerHandler.startHeartBeat();
     }
 }

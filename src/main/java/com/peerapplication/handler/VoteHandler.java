@@ -1,4 +1,10 @@
 package com.peerapplication.handler;
 
-public class VoteHandler {
+import message.Message;
+
+public class VoteHandler extends Handler {
+    @Override
+    public void handle(Message message) {
+
+    }
 }

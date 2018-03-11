@@ -10,7 +10,7 @@ public class TableRepository {
     private DBConnection dbConn;
 
     public TableRepository() {
-        dbConn = new DBConnection();
+        dbConn = DBConnection.getDBConnection();
     }
 
     public void createTables() {

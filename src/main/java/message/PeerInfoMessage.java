@@ -10,7 +10,7 @@ public class PeerInfoMessage extends Message {
     private HashMap<Integer, Peer> knownPeers;
 
     public PeerInfoMessage() {
-        super("PeerInfo");
+        super("PeerInfoMessage");
     }
 
 

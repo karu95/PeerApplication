@@ -6,7 +6,7 @@ public class UserInfoMessage extends Message {
     private User user;
 
     public UserInfoMessage() {
-        super("UserInfo");
+        super("UserInfoMessage");
     }
 
     public User getUser() {

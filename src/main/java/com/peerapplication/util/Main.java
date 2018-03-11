@@ -1,5 +1,6 @@
 package com.peerapplication.util;
 
+import com.peerapplication.handler.*;
 import com.peerapplication.repository.TableRepository;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -85,8 +86,22 @@ public class Main extends Application {
             imageDir.mkdir();
         }
 
+        registerHandlers();
+        launch(args);
 
-        //launch(args);
+    }
 
+    private static void registerHandlers() {
+        BSHandler bsHandler = new BSHandler();
+        ThreadHandler threadHandler = new ThreadHandler();
+        PeerHandler.registerHandler("LoginStatus", bsHandler);
+        PeerHandler.registerHandler("RegisterStatus", bsHandler);
+        PeerHandler.registerHandler("ThreadMessage", threadHandler);
+        PeerHandler.registerHandler("DeleteThreadMessage", threadHandler);
+        PeerHandler.registerHandler("AnswerMessage", new AnswerHandler());
+        PeerHandler.registerHandler("UserInfoMessage", new UserHandler());
+        PeerHandler.registerHandler("VoteMessage", new VoteHandler());
+        PeerHandler.registerHandler("ForumUpdateMessage", new ForumUpdateHandler());
+        PeerHandler.registerHandler("PWChangeStatus", bsHandler);
     }
 }

@@ -8,9 +8,11 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 public class DBConnection {
+    private static DBConnection dbConnection;
+
     private Properties prop;
 
-    public DBConnection() {
+    private DBConnection() {
         this.prop = new Properties();
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         InputStream stream = classLoader.getResourceAsStream("properties/db.properties");
@@ -19,6 +21,15 @@ public class DBConnection {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static DBConnection getDBConnection(){
+        if (dbConnection==null){
+            synchronized (DBConnection.class){
+                dbConnection = new DBConnection();
+            }
+        }
+        return dbConnection;
     }
 
     public Connection getConnection() {

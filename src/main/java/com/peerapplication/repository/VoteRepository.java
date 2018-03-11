@@ -8,7 +8,7 @@ public class VoteRepository {
     private DBConnection dbConnection;
 
     public VoteRepository() {
-        dbConnection = new DBConnection();
+        dbConnection = DBConnection.getDBConnection();
     }
 
     public Vote getVote(String voteID, Vote vote) {
