@@ -14,7 +14,8 @@ public class SenderController {
     private ExecutorService senderService;
 
     public SenderController() {
-        senderService = new ThreadPoolExecutor(20, 100, 1, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>());
+        senderService = new ThreadPoolExecutor(20, 100,
+                1, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>());
     }
 
     public void send(Message message, Peer peer) {

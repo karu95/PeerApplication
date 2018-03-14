@@ -13,7 +13,6 @@ public class PeerInfoMessage extends Message {
         super("PeerInfoMessage");
     }
 
-
     public String getStatus() {
         return status;
     }

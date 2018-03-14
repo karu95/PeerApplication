@@ -2,20 +2,22 @@ package com.peerapplication.handler;
 
 import message.AnswerMessage;
 import message.Message;
+import messenger.Handler;
 
 public class AnswerHandler extends Handler {
 
-    public AnswerHandler(){}
+    public AnswerHandler() {
+    }
 
-    public void handle(Message answerMessage){
+    public static void postAnswer(AnswerMessage answerMessage) {
+
+    }
+
+    private static void handleAnswer(AnswerMessage answerMessage) {
+
+    }
+
+    public void handle(Message answerMessage) {
         handleAnswer((AnswerMessage) answerMessage);
-    }
-
-    public static void postAnswer(AnswerMessage answerMessage){
-
-    }
-
-    public static void handleAnswer(AnswerMessage answerMessage){
-
     }
 }

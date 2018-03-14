@@ -1,6 +1,5 @@
 package messenger;
 
-import com.peerapplication.handler.Handler;
 import message.Message;
 
 import java.net.*;
@@ -52,6 +51,7 @@ public class PeerHandler {
         knownPeersWriteLock();
         PeerHandler.knownPeers = peers;
         knownPeersWriteUnlock();
+        KnownPeerHandler.sendJoinMessageToAll();
     }
 
     static void addKnownPeer(Peer peer) {
@@ -85,6 +85,9 @@ public class PeerHandler {
         receiverController = new ReceiverController(userPort);
         PeerHandler.userAddress = getLocalIPAddress();
         serverWorker.execute(receiverController);
+        KnownPeerHandler knownPeerHandler = new KnownPeerHandler();
+        registerHandler("JoinMessage", knownPeerHandler);
+        registerHandler("PeerInfoMessage", knownPeerHandler);
     }
 
     static String getLocalIPAddress() {

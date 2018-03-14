@@ -23,9 +23,9 @@ public class DBConnection {
         }
     }
 
-    public static DBConnection getDBConnection(){
-        if (dbConnection==null){
-            synchronized (DBConnection.class){
+    public static DBConnection getDBConnection() {
+        if (dbConnection == null) {
+            synchronized (DBConnection.class) {
                 dbConnection = new DBConnection();
             }
         }

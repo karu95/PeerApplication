@@ -1,4 +1,4 @@
-package com.peerapplication.handler;
+package messenger;
 
 import message.Message;
 

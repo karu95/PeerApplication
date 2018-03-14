@@ -14,7 +14,8 @@ public class ReceiverController implements Runnable {
 
     public ReceiverController(int port) {
         this.port = port;
-        receiverService = new ThreadPoolExecutor(30, 40, 1, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>());
+        receiverService = new ThreadPoolExecutor(30, 40,
+                1, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>());
     }
 
     @Override

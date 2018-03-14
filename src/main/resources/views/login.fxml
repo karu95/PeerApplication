@@ -5,8 +5,8 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-<AnchorPane prefHeight="859.0" prefWidth="1035.0" stylesheets="@../css/bootstrapfx.css"
-            xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1"
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="859.0" prefWidth="1035.0"
+            stylesheets="@../css/bootstrapfx.css" xmlns="http://javafx.com/javafx/8.0.141"
             fx:controller="com.peerapplication.controller.LoginController">
     <children>
         <AnchorPane layoutX="313.0" layoutY="218.0" prefHeight="423.0" prefWidth="409.0"

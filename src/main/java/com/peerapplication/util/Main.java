@@ -54,22 +54,6 @@ public class Main extends Application {
         Main.answerUpdater = answerUpdater;
     }
 
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-        Parent parent = FXMLLoader.load(getClass().getResource("/views/login.fxml"));
-        Scene scene = new Scene(parent, 1035, 859);
-        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-            @Override
-            public void handle(WindowEvent t) {
-                Platform.exit();
-                System.exit(0);
-            }
-        });
-        primaryStage.setScene(scene);
-        primaryStage.setTitle("Login");
-        primaryStage.show();
-    }
-
     public static void main(String[] args) {
 
         int port = 25030;
@@ -103,5 +87,21 @@ public class Main extends Application {
         PeerHandler.registerHandler("VoteMessage", new VoteHandler());
         PeerHandler.registerHandler("ForumUpdateMessage", new ForumUpdateHandler());
         PeerHandler.registerHandler("PWChangeStatus", bsHandler);
+    }
+
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        Parent parent = FXMLLoader.load(getClass().getResource("/views/login.fxml"));
+        Scene scene = new Scene(parent, 1035, 859);
+        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent t) {
+                Platform.exit();
+                System.exit(0);
+            }
+        });
+        primaryStage.setScene(scene);
+        primaryStage.setTitle("Login");
+        primaryStage.show();
     }
 }

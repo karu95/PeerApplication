@@ -1,8 +1,6 @@
 package messenger;
 
-import com.peerapplication.handler.BSHandler;
 import message.BSMessage;
-import message.ForumUpdateMessage;
 import message.Message;
 import message.RequestStatusMessage;
 
@@ -10,7 +8,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -40,8 +37,8 @@ public class Sender implements Runnable {
                     handler.submit(new Runnable() {
                         @Override
                         public void run() {
-                                PeerHandler.handle(response);
-                            }
+                            PeerHandler.handle(response);
+                        }
                     });
                 } else {
                     os.writeObject(message);

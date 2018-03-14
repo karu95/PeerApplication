@@ -3,6 +3,7 @@ package com.peerapplication.handler;
 import com.peerapplication.model.User;
 import message.Message;
 import message.UserInfoMessage;
+import messenger.Handler;
 import messenger.Peer;
 import messenger.PeerHandler;
 
@@ -13,17 +14,10 @@ import java.util.Map;
 
 public class UserHandler extends Handler {
 
-    public UserHandler(){ }
+    private static final Object handleLock = new Object();
 
-    public void handle(Message userMessage){
-        try {
-            UserHandler.handleUser((UserInfoMessage) userMessage);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public UserHandler() {
     }
-
-    private static Object handleLock = new Object();
 
     public static void postUser(User user) {
         UserInfoMessage userInfoMessage = new UserInfoMessage();
@@ -31,7 +25,7 @@ public class UserHandler extends Handler {
         PeerHandler.getSenderController().sendToAll(userInfoMessage, new ArrayList<>(PeerHandler.getKnownPeers().values()));
     }
 
-    public static void handleUser(UserInfoMessage userInfoMessage) throws IOException {
+    private static void handleUser(UserInfoMessage userInfoMessage) throws IOException {
         synchronized (handleLock) {
             User user = new User();
             user.getUser(userInfoMessage.getUser().getUserID());
@@ -51,6 +45,14 @@ public class UserHandler extends Handler {
                 PeerHandler.knownPeersReadUnlock();
                 PeerHandler.getSenderController().sendToAll(userInfoMessage, receivers);
             }
+        }
+    }
+
+    public void handle(Message userMessage) {
+        try {
+            UserHandler.handleUser((UserInfoMessage) userMessage);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

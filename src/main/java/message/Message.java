@@ -63,11 +63,11 @@ public abstract class Message implements Serializable {
         this.senderPort = senderPort;
     }
 
-    public void setSenderID(int senderID) {
-        this.senderID = senderID;
-    }
-
     public int getSenderID() {
         return senderID;
+    }
+
+    public void setSenderID(int senderID) {
+        this.senderID = senderID;
     }
 }
