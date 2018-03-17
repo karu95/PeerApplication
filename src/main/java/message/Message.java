@@ -1,5 +1,8 @@
 package message;
 
+import com.peerapplication.util.SystemUser;
+import messenger.PeerHandler;
+
 import java.io.Serializable;
 
 public abstract class Message implements Serializable {
@@ -14,9 +17,9 @@ public abstract class Message implements Serializable {
 
     public Message(String title) {
         this.title = title;
-    }
-
-    public Message() {
+        setSenderID(SystemUser.getSystemUserID());
+        setSenderAddress(PeerHandler.getUserAddress());
+        setSenderPort(PeerHandler.getUserPort());
     }
 
     public long getTimestamp() {

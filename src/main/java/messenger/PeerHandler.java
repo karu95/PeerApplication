@@ -19,7 +19,7 @@ public class PeerHandler {
     private static ReadWriteLock knownPeersLock = new ReentrantReadWriteLock();
     private static ReceiverController receiverController;
     private static SenderController senderController = new SenderController();
-    private static Peer bs = new Peer(1, "192.168.8.102", 25025);
+    private static Peer bs = new Peer(1, "192.168.8.100", 25025);
     private static HeartBeatHandler heartBeatHandler = new HeartBeatHandler();
     private static ExecutorService heartbeatExecutor = Executors.newSingleThreadExecutor();
     private static ExecutorService serverWorker = Executors.newSingleThreadExecutor();
@@ -72,11 +72,11 @@ public class PeerHandler {
         knownPeersWriteUnlock();
     }
 
-    static String getUserAddress() {
+    public static String getUserAddress() {
         return userAddress;
     }
 
-    static int getUserPort() {
+    public static int getUserPort() {
         return userPort;
     }
 

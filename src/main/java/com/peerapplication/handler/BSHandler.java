@@ -63,4 +63,9 @@ public class BSHandler extends Handler {
     public void handle(Message message) {
         BSHandler.handleRequest((RequestStatusMessage) message);
     }
+
+    @Override
+    public void handleFailedMesssage(Message message) {
+
+    }
 }

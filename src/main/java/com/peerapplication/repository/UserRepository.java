@@ -7,18 +7,28 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 public class UserRepository {
-    DBConnection dbConn;
 
-    public UserRepository() {
+    private static UserRepository userRepository;
+
+    private DBConnection dbConn;
+    private ReadWriteLock readWriteLock;
+
+    private UserRepository() {
         dbConn = DBConnection.getDBConnection();
+        readWriteLock = new ReentrantReadWriteLock();
     }
 
-    public ArrayList<User> getUsers() {
-        ArrayList<User> users = new ArrayList<>();
-        return users;
+    public static UserRepository getUserRepository() {
+        if (userRepository == null) {
+            synchronized (UserRepository.class) {
+                userRepository = new UserRepository();
+            }
+        }
+        return userRepository;
     }
 
     public void getUser(int userID, User user) {
@@ -27,7 +37,9 @@ public class UserRepository {
         try {
             PreparedStatement stmt = connection.prepareStatement(statement);
             stmt.setInt(1, userID);
+            readWriteLock.readLock().lock();
             ResultSet rs = stmt.executeQuery();
+            readWriteLock.readLock().unlock();
             while (rs.next()) {
                 user.setUserID(rs.getInt("user_id"));
                 user.setName(rs.getString("user_name"));
@@ -50,7 +62,9 @@ public class UserRepository {
             stmt.setString(3, user.getEmail());
             stmt.setLong(4, user.getRegisterTime());
             stmt.setString(5, user.getImageURL());
+            readWriteLock.writeLock().lock();
             stmt.execute();
+            readWriteLock.writeLock().unlock();
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -11,6 +11,7 @@ import java.util.Map;
 public class KnownPeerHandler extends Handler {
 
     KnownPeerHandler() {
+
     }
 
     private static void handleJoinMessage(JoinMessage joinMessage) {
@@ -53,5 +54,10 @@ public class KnownPeerHandler extends Handler {
         } else if (message instanceof PeerInfoMessage) {
             KnownPeerHandler.handlePeerInfoRequest((PeerInfoMessage) message);
         }
+    }
+
+    @Override
+    public void handleFailedMesssage(Message message) {
+
     }
 }

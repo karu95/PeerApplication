@@ -1,5 +1,7 @@
 package com.peerapplication.model;
 
+import com.peerapplication.repository.ThreadRepository;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -18,7 +20,6 @@ public class Thread implements Serializable {
     public Thread(String title) {
         this.title = title;
     }
-
 
     public ArrayList<Answer> getAnswers() {
         return answers;
@@ -82,6 +83,19 @@ public class Thread implements Serializable {
 
     public void setUserID(int userID) {
         this.userID = userID;
+    }
+
+    public void saveThread() {
+        ThreadRepository threadRepository = ThreadRepository.getThreadRepository();
+    }
+
+    public void getThread(String threadID){
+        ThreadRepository threadRepository = ThreadRepository.getThreadRepository();
+    }
+
+    public static ArrayList<Thread> getThreads(int userID){
+        ThreadRepository threadRepository = ThreadRepository.getThreadRepository();
+        return threadRepository.getThreads(userID);
     }
 
 }

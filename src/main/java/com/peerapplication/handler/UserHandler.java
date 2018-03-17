@@ -55,4 +55,8 @@ public class UserHandler extends Handler {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public void handleFailedMesssage(Message message) {
+    }
 }

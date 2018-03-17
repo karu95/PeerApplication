@@ -29,6 +29,15 @@ public class Answer implements Serializable {
         this.timestamp = timestamp;
     }
 
+    public static ArrayList<Answer> getAnswers(String threadID) {
+        AnswerRepository answerRepository = AnswerRepository.getAnswerRepository();
+        return answerRepository.getAnswers(threadID);
+    }
+
+    public static int getAnswerCount(int userID){
+        AnswerRepository answerRepository = AnswerRepository.getAnswerRepository();
+        return answerRepository.getAnswerCount(userID);
+    }
 
     public String getAnswerID() {
         return answerID;
@@ -83,12 +92,15 @@ public class Answer implements Serializable {
     }
 
     public void getAnswer(String answerID) {
-        AnswerRepository answerRepo = new AnswerRepository();
+        AnswerRepository answerRepo = AnswerRepository.getAnswerRepository();
         answerRepo.getAnswer(answerID, this);
+        if (this.answerID == answerID) {
+            this.setVotes(Vote.getVotes(this.answerID));
+        }
     }
 
     public void saveAnswer() {
-        AnswerRepository answerRepo = new AnswerRepository();
-
+        AnswerRepository answerRepo = AnswerRepository.getAnswerRepository();
+        answerRepo.saveAnswer(this);
     }
 }

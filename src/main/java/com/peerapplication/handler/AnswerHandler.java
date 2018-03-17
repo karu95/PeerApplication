@@ -20,4 +20,9 @@ public class AnswerHandler extends Handler {
     public void handle(Message answerMessage) {
         handleAnswer((AnswerMessage) answerMessage);
     }
+
+    @Override
+    public void handleFailedMesssage(Message message) {
+
+    }
 }

@@ -10,6 +10,7 @@ public class AnswerMessage extends Message {
     }
 
     public AnswerMessage(Answer answer) {
+        super("AnswerMessage");
         this.answer = answer;
     }
 

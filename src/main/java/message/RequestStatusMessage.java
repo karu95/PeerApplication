@@ -12,7 +12,7 @@ public class RequestStatusMessage extends Message implements BSMessage {
     private String status;
 
     public RequestStatusMessage() {
-        super();
+        super("");
     }
 
     public String getStatus() {

@@ -77,12 +77,12 @@ public class User implements Serializable {
     }
 
     public void getUser(int userID) {
-        UserRepository userRepo = new UserRepository();
+        UserRepository userRepo = UserRepository.getUserRepository();
         userRepo.getUser(userID, this);
     }
 
     public void saveUser() throws IOException {
-        UserRepository userRepository = new UserRepository();
+        UserRepository userRepository = UserRepository.getUserRepository();
         userRepository.saveUser(this);
         if (userImage != null) {
             Thumbnails.of(userImage).scale(0.8).outputFormat("jpg").toFile(new File("/" +

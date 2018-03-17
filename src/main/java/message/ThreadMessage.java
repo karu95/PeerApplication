@@ -11,6 +11,7 @@ public class ThreadMessage extends Message {
     }
 
     public ThreadMessage(Thread thread) {
+        super("ThreadMessage");
         this.thread = thread;
     }
 

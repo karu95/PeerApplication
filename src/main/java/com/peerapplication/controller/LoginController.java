@@ -100,21 +100,25 @@ public class LoginController implements Initializable, UIUpdater {
                     try {
                         User user = new User();
                         user.getUser(SystemUser.getSystemUserID());
-                        System.out.println(SystemUser.getSystemUserID());
-                        System.out.println(user.getUserID());
+                        System.out.println(SystemUser.getSystemUserID() + "here");
+                        System.out.println(user.getUserID() + "here");
                         FXMLLoader loader;
                         System.out.println(user.getName());
                         if (user.getUserID() == SystemUser.getSystemUserID()) {
                             loader = new FXMLLoader(getClass().getResource("/views/homepage.fxml"));
+                            Parent root = loader.load();
+                            HomeController controller = loader.getController();
+                            controller.init(user);
+                            Scene scene = new Scene(root, 1035, 859);
+                            stage.setTitle("Home");
+                            stage.setScene(scene);
                         } else {
                             loader = new FXMLLoader(getClass().getResource("/views/register.fxml"));
+                            Parent root = loader.load();
+                            Scene scene = new Scene(root, 1035, 859);
+                            stage.setTitle("Register");
+                            stage.setScene(scene);
                         }
-                        Parent root = loader.load();
-                        HomeController controller = loader.getController();
-                        controller.init(user);
-                        Scene scene = new Scene(root, 1035, 859);
-                        stage.setTitle("Home");
-                        stage.setScene(scene);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

@@ -20,4 +20,9 @@ public class ForumUpdateHandler extends Handler {
     public void handle(Message message) {
         ForumUpdateHandler.handleUpdate((ForumUpdateMessage) message);
     }
+
+    @Override
+    public void handleFailedMesssage(Message message) {
+
+    }
 }
