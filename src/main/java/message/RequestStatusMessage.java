@@ -10,6 +10,7 @@ public class RequestStatusMessage extends Message implements BSMessage {
     private int accountType;
     private int userID;
     private String status;
+    private long lastSeen;
 
     public RequestStatusMessage() {
         super("");
@@ -51,4 +52,11 @@ public class RequestStatusMessage extends Message implements BSMessage {
         this.title = title;
     }
 
+    public long getLastSeen() {
+        return lastSeen;
+    }
+
+    public void setLastSeen(long lastSeen) {
+        this.lastSeen = lastSeen;
+    }
 }

@@ -4,23 +4,37 @@ import com.peerapplication.util.Main;
 import com.peerapplication.util.SystemUser;
 import message.*;
 import messenger.Handler;
+import messenger.Peer;
 import messenger.PeerHandler;
 
 import java.util.Date;
 
 public class BSHandler extends Handler {
 
-    public BSHandler() {
+    private static BSHandler bsHandler;
+
+    private BSHandler() {
+    }
+
+    public static BSHandler getBSHandler() {
+        if (bsHandler == null) {
+            synchronized (BSHandler.class) {
+                bsHandler = new BSHandler();
+            }
+        }
+        return bsHandler;
     }
 
     public static void login(LoginMessage loginMessage) {
         loginMessage.setTimestamp(new Date(System.currentTimeMillis()).getTime());
         PeerHandler.getSenderController().send(loginMessage, PeerHandler.getBS());
+        System.out.println("Login Sent!");
     }
 
     public static void signup(RegisterMessage registerMessage) {
         registerMessage.setTimestamp(new Date(System.currentTimeMillis()).getTime());
         PeerHandler.getSenderController().send(registerMessage, PeerHandler.getBS());
+        System.out.println("Register Sent!");
     }
 
     public static void logout(LogoutMessage logoutMessage) {
@@ -50,12 +64,11 @@ public class BSHandler extends Handler {
                 notifyPeerHandler(message);
             }
             Main.getRegisterUpdater().updateUI(message);
-        } else if (message.getTitle().equals("LogoutSuccess")) {
-            PeerHandler.stopHeartBeat();
         }
     }
 
     private static void notifyPeerHandler(RequestStatusMessage message) {
+        System.out.println("Active size " + message.getActivePeers().size());
         PeerHandler.setKnownPeers(message.getActivePeers());
         PeerHandler.startHeartBeat();
     }
@@ -65,7 +78,9 @@ public class BSHandler extends Handler {
     }
 
     @Override
-    public void handleFailedMesssage(Message message) {
-
+    public void handleFailedMessage(Message message, Peer peer) {
+        super.handleFailedMessage(message, peer);
+        System.out.println("Failed Message : " + message.getTitle());
+        System.out.println("No Network Connection");
     }
 }

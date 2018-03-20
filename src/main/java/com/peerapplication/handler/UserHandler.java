@@ -15,8 +15,18 @@ import java.util.Map;
 public class UserHandler extends Handler {
 
     private static final Object handleLock = new Object();
+    private static UserHandler userHandler;
 
-    public UserHandler() {
+    private UserHandler() {
+    }
+
+    public static UserHandler getUserHandler() {
+        if (userHandler == null) {
+            synchronized (UserHandler.class) {
+                userHandler = new UserHandler();
+            }
+        }
+        return userHandler;
     }
 
     public static void postUser(User user) {
@@ -57,6 +67,6 @@ public class UserHandler extends Handler {
     }
 
     @Override
-    public void handleFailedMesssage(Message message) {
+    public void handleFailedMessage(Message message, Peer peer) {
     }
 }

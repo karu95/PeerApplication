@@ -7,6 +7,7 @@ import message.RequestStatusMessage;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.ConnectException;
 import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -26,7 +27,7 @@ public class Sender implements Runnable {
     public void run() {
         synchronized (peer) {
             try {
-                senderSocket = new Socket(message.getReceiverAddress(), message.getReceiverPort());
+                senderSocket = new Socket(peer.getPeerAddress(), peer.getPeerPort());
                 ObjectOutputStream os = new ObjectOutputStream(senderSocket.getOutputStream());
                 if (message instanceof BSMessage) {
                     os.writeObject(message);
@@ -47,10 +48,9 @@ public class Sender implements Runnable {
                 os.close();
                 senderSocket.close();
             } catch (IOException e) {
-                if (peer.getUserID() == 1) {
-                    System.out.println("No Network Connection!");
-                } else {
-                    PeerHandler.removeKnownPeer(peer.getUserID());
+                if (e instanceof ConnectException) {
+                    System.out.println("Passed to peerhanlder");
+                    PeerHandler.handleFailedMessage(message, peer);
                 }
             } catch (ClassNotFoundException ex) {
 

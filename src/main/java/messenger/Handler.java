@@ -1,10 +1,16 @@
 package messenger;
 
+import message.BSMessage;
 import message.Message;
 
 public abstract class Handler {
 
     public abstract void handle(Message message);
 
-    public abstract void handleFailedMesssage(Message message);
+    public void handleFailedMessage(Message message, Peer peer) {
+        System.out.println("here");
+        if (!(message instanceof BSMessage)) {
+            PeerHandler.removeKnownPeer(peer.getUserID());
+        }
+    }
 }

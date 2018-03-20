@@ -56,12 +56,11 @@ public class Main extends Application {
 
     public static void main(String[] args) {
 
-        int port = 25030;
+        int port = 25037;
         if (args.length > 1) {
             port = Integer.parseInt(args[1]);
         }
         PeerHandler.setup(port);
-
         TableRepository tableRepo = new TableRepository();
         tableRepo.createTables();
 
@@ -76,17 +75,19 @@ public class Main extends Application {
     }
 
     private static void registerHandlers() {
-        BSHandler bsHandler = new BSHandler();
-        ThreadHandler threadHandler = new ThreadHandler();
-        PeerHandler.registerHandler("LoginStatus", bsHandler);
-        PeerHandler.registerHandler("RegisterStatus", bsHandler);
-        PeerHandler.registerHandler("ThreadMessage", threadHandler);
-        PeerHandler.registerHandler("DeleteThreadMessage", threadHandler);
-        PeerHandler.registerHandler("AnswerMessage", new AnswerHandler());
-        PeerHandler.registerHandler("UserInfoMessage", new UserHandler());
-        PeerHandler.registerHandler("VoteMessage", new VoteHandler());
-        PeerHandler.registerHandler("ForumUpdateMessage", new ForumUpdateHandler());
-        PeerHandler.registerHandler("PWChangeStatus", bsHandler);
+        PeerHandler.registerHandler("LoginStatus", BSHandler.getBSHandler());
+        PeerHandler.registerHandler("RegisterStatus", BSHandler.getBSHandler());
+        PeerHandler.registerHandler("ThreadMessage", ThreadHandler.getThreadHandler());
+        PeerHandler.registerHandler("DeleteThreadMessage", ThreadHandler.getThreadHandler());
+        PeerHandler.registerHandler("AnswerMessage", AnswerHandler.getAnswerHandler());
+        PeerHandler.registerHandler("UserInfoMessage", UserHandler.getUserHandler());
+        PeerHandler.registerHandler("VoteMessage", VoteHandler.getVoteHandler());
+        PeerHandler.registerHandler("ForumUpdateMessage", ForumUpdateHandler.getForumUpdateHandler());
+        PeerHandler.registerHandler("PWChangeStatus", BSHandler.getBSHandler());
+        PeerHandler.registerHandler("Login", BSHandler.getBSHandler());
+        PeerHandler.registerHandler("Register", BSHandler.getBSHandler());
+        PeerHandler.registerHandler("HeartBeatMessage", BSHandler.getBSHandler());
+        PeerHandler.registerHandler("Logout", BSHandler.getBSHandler());
     }
 
     @Override

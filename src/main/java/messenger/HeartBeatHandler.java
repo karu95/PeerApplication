@@ -14,19 +14,20 @@ public class HeartBeatHandler implements Runnable {
     @Override
     public void run() {
         while (!stop) {
+            HeartBeatMessage heartBeatMessage = new HeartBeatMessage();
+            heartBeatMessage.setSenderID(SystemUser.getSystemUserID());
+            PeerHandler.getSenderController().send(heartBeatMessage, PeerHandler.getBS());
             try {
                 Thread.sleep(120000);
             } catch (InterruptedException e) {
                 continue;
             }
-            HeartBeatMessage heartBeatMessage = new HeartBeatMessage();
-            heartBeatMessage.setSenderID(SystemUser.getSystemUserID());
-            PeerHandler.getSenderController().send(heartBeatMessage, PeerHandler.getBS());
         }
     }
 
     public void stop() {
         this.stop = true;
+        System.out.println("Stopped");
     }
 
     public void start() {

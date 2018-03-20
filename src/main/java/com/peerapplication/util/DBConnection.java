@@ -1,5 +1,7 @@
 package com.peerapplication.util;
 
+import messenger.PeerHandler;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
@@ -36,7 +38,7 @@ public class DBConnection {
         Connection conn = null;
         try {
             Class.forName(prop.getProperty("db.driver"));
-            conn = DriverManager.getConnection(prop.getProperty("db.url"), prop.getProperty("db.username"), prop.getProperty("db.password"));
+            conn = DriverManager.getConnection(prop.getProperty("db.url") + String.valueOf(PeerHandler.getUserPort()) + ";create=true", prop.getProperty("db.username"), prop.getProperty("db.password"));
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException e) {

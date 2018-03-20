@@ -10,7 +10,7 @@ public class Thread implements Serializable {
     private long timestamp;
     private String title;
     private String description;
-    private ArrayList<String> tags;
+    private ArrayList<Tag> tags;
     private ArrayList<Answer> answers;
     private int userID;
 
@@ -29,11 +29,11 @@ public class Thread implements Serializable {
         this.answers = answers;
     }
 
-    public ArrayList<String> getTags() {
+    public ArrayList<Tag> getTags() {
         return tags;
     }
 
-    public void setTags(ArrayList<String> tags) {
+    public void setTags(ArrayList<Tag> tags) {
         this.tags = tags;
     }
 
@@ -73,7 +73,7 @@ public class Thread implements Serializable {
         answers.add(answer);
     }
 
-    public void addTag(String tag) {
+    public void addTag(Tag tag) {
         tags.add(tag);
     }
 
@@ -87,15 +87,26 @@ public class Thread implements Serializable {
 
     public void saveThread() {
         ThreadRepository threadRepository = ThreadRepository.getThreadRepository();
+        threadRepository.saveThread(this);
+        Tag.saveTags(tags, threadID);
     }
 
     public void getThread(String threadID){
         ThreadRepository threadRepository = ThreadRepository.getThreadRepository();
+        threadRepository.getThread(threadID, this);
+        if (threadID.equals(this.threadID)) {
+            tags = Tag.getTags(threadID);
+            answers = Answer.getAnswers(threadID);
+        }
     }
 
-    public static ArrayList<Thread> getThreads(int userID){
+    public static ArrayList<Thread> getUserThreads(int userID) {
         ThreadRepository threadRepository = ThreadRepository.getThreadRepository();
         return threadRepository.getThreads(userID);
     }
 
+    public static ArrayList<Thread> getLatestThreads() {
+        ThreadRepository threadRepository = ThreadRepository.getThreadRepository();
+        return threadRepository.getLatestThreads();
+    }
 }

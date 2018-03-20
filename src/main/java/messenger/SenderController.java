@@ -27,9 +27,14 @@ public class SenderController {
     public void sendToAll(Message message, ArrayList<Peer> receivers) {
         if (!receivers.isEmpty()) {
             for (Peer receiver : receivers) {
-                send(message, receiver);
+                Message clonedMessage = null;
+                try {
+                    clonedMessage = (Message) message.clone();
+                } catch (CloneNotSupportedException e) {
+                    e.printStackTrace();
+                }
+                send(clonedMessage, receiver);
             }
         }
     }
-
 }

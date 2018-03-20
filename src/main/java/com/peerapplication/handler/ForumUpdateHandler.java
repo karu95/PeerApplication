@@ -3,10 +3,22 @@ package com.peerapplication.handler;
 import message.ForumUpdateMessage;
 import message.Message;
 import messenger.Handler;
+import messenger.Peer;
 
 public class ForumUpdateHandler extends Handler {
 
-    public ForumUpdateHandler() {
+    private static ForumUpdateHandler forumUpdateHandler;
+
+    private ForumUpdateHandler() {
+    }
+
+    public static ForumUpdateHandler getForumUpdateHandler() {
+        if (forumUpdateHandler == null) {
+            synchronized (ForumUpdateHandler.class) {
+                forumUpdateHandler = new ForumUpdateHandler();
+            }
+        }
+        return forumUpdateHandler;
     }
 
     public static void requestUpdate(ForumUpdateMessage forumUpdateMessage) {
@@ -22,7 +34,7 @@ public class ForumUpdateHandler extends Handler {
     }
 
     @Override
-    public void handleFailedMesssage(Message message) {
+    public void handleFailedMessage(Message message, Peer peer) {
 
     }
 }

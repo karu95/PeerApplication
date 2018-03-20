@@ -19,7 +19,7 @@ public class PeerHandler {
     private static ReadWriteLock knownPeersLock = new ReentrantReadWriteLock();
     private static ReceiverController receiverController;
     private static SenderController senderController = new SenderController();
-    private static Peer bs = new Peer(1, "192.168.8.100", 25025);
+    private static Peer bs = new Peer(1, "192.168.8.102", 25025);
     private static HeartBeatHandler heartBeatHandler = new HeartBeatHandler();
     private static ExecutorService heartbeatExecutor = Executors.newSingleThreadExecutor();
     private static ExecutorService serverWorker = Executors.newSingleThreadExecutor();
@@ -32,6 +32,15 @@ public class PeerHandler {
     static void handle(Message message) {
         if (handlers.containsKey(message.getTitle())) {
             handlers.get(message.getTitle()).handle(message);
+        } else {
+            System.out.println(message.getTitle());
+            System.out.println("Unknown message");
+        }
+    }
+
+    static void handleFailedMessage(Message message, Peer peer) {
+        if (handlers.containsKey(message.getTitle())) {
+            handlers.get(message.getTitle()).handleFailedMessage(message, peer);
         }
     }
 
@@ -45,6 +54,7 @@ public class PeerHandler {
             return;
         } else {
             for (Peer peer : knownPeers) {
+                System.out.println("Peer ID " + peer.getUserID());
                 peers.put(peer.getUserID(), peer);
             }
         }
@@ -52,6 +62,7 @@ public class PeerHandler {
         PeerHandler.knownPeers = peers;
         knownPeersWriteUnlock();
         KnownPeerHandler.sendJoinMessageToAll();
+        KnownPeerHandler.requestPeerInfo();
     }
 
     static void addKnownPeer(Peer peer) {
@@ -82,12 +93,12 @@ public class PeerHandler {
 
     public static void setup(int port) {
         PeerHandler.userPort = port;
+        System.out.println("Listening on " + port);
         receiverController = new ReceiverController(userPort);
         PeerHandler.userAddress = getLocalIPAddress();
         serverWorker.execute(receiverController);
-        KnownPeerHandler knownPeerHandler = new KnownPeerHandler();
-        registerHandler("JoinMessage", knownPeerHandler);
-        registerHandler("PeerInfoMessage", knownPeerHandler);
+        registerHandler("JoinMessage", KnownPeerHandler.getKnownPeerHandler());
+        registerHandler("PeerInfoMessage", KnownPeerHandler.getKnownPeerHandler());
     }
 
     static String getLocalIPAddress() {
@@ -111,6 +122,7 @@ public class PeerHandler {
                         continue;
                     }
                     inetAddress = inet_addr;
+                    userAddress = inet_addr.getHostAddress();
                     System.out.println(
                             "  address: " + inet_addr.getHostAddress() +
                                     "/" + addr.getNetworkPrefixLength()

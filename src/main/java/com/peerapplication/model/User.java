@@ -91,7 +91,9 @@ public class User implements Serializable {
     }
 
     public void getUserWithImage(int userID) throws IOException {
-        getUser(userID);
+        if (userID != this.userID) {
+            getUser(userID);
+        }
         if (!imageURL.isEmpty()) {
             setUserImage(ImageIO.read(new File("/" + System.getProperty("user.dir") +
                     "/images/" + String.valueOf(getUserID()))));

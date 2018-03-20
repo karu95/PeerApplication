@@ -5,7 +5,7 @@ import messenger.PeerHandler;
 
 import java.io.Serializable;
 
-public abstract class Message implements Serializable {
+public abstract class Message implements Cloneable, Serializable {
 
     protected String title;
     private int senderID;
@@ -72,5 +72,9 @@ public abstract class Message implements Serializable {
 
     public void setSenderID(int senderID) {
         this.senderID = senderID;
+    }
+
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 }
