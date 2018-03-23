@@ -14,6 +14,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import message.LogoutMessage;
 import message.Message;
@@ -24,6 +25,12 @@ import java.util.Date;
 import java.util.ResourceBundle;
 
 public class HomeController implements Initializable, UIUpdater {
+
+    @FXML
+    private ScrollPane scrollPaneOuter;
+
+    @FXML
+    private AnchorPane anchorPaneInner;
 
     @FXML
     private TabPane homeTabs;

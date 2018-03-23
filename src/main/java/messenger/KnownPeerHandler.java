@@ -3,7 +3,6 @@ package messenger;
 import message.JoinMessage;
 import message.Message;
 import message.PeerInfoMessage;
-import message.RequestStatusMessage;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -70,17 +69,19 @@ public class KnownPeerHandler extends Handler {
             HashMap<Integer, Peer> knownPeers = (HashMap<Integer, Peer>) PeerHandler.getKnownPeers().clone();
             Peer peer = knownPeers.get(peerInfoMessage.getSenderID());
             knownPeers.remove(peerInfoMessage.getSenderID());
-            RequestStatusMessage requestStatusMessage = new RequestStatusMessage();
-            requestStatusMessage.setStatus("ProcessedRequest");
-            PeerHandler.getSenderController().send(requestStatusMessage, peer);
+            PeerInfoMessage peerDetailMessage = new PeerInfoMessage();
+            peerDetailMessage.setStatus("ProcessedRequest");
+            PeerHandler.getSenderController().send(peerDetailMessage, peer);
         } else if (peerInfoMessage.getStatus().equals("ProcessedRequest")) {
             HashMap<Integer, Peer> knownPeers = peerInfoMessage.getKnownPeers();
-            for (Map.Entry peer : knownPeers.entrySet()) {
-                if (PeerHandler.getKnownPeers().containsKey(peer.getKey())) {
-                    continue;
-                } else {
-                    PeerHandler.addKnownPeer((Peer) peer.getValue());
-                    sendJoinMessage((Peer) peer.getValue());
+            if (!knownPeers.isEmpty()) {
+                for (Map.Entry peer : knownPeers.entrySet()) {
+                    if (PeerHandler.getKnownPeers().containsKey(peer.getKey())) {
+                        continue;
+                    } else {
+                        PeerHandler.addKnownPeer((Peer) peer.getValue());
+                        sendJoinMessage((Peer) peer.getValue());
+                    }
                 }
             }
             System.out.println("@KnownPeerHandler - peerinfo message processed");

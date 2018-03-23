@@ -1,6 +1,5 @@
 package messenger;
 
-import com.peerapplication.util.SystemUser;
 import message.HeartBeatMessage;
 
 public class HeartBeatHandler implements Runnable {
@@ -15,10 +14,9 @@ public class HeartBeatHandler implements Runnable {
     public void run() {
         while (!stop) {
             HeartBeatMessage heartBeatMessage = new HeartBeatMessage();
-            heartBeatMessage.setSenderID(SystemUser.getSystemUserID());
             PeerHandler.getSenderController().send(heartBeatMessage, PeerHandler.getBS());
             try {
-                Thread.sleep(120000);
+                Thread.sleep(500);
             } catch (InterruptedException e) {
                 continue;
             }

@@ -56,7 +56,7 @@ public class Main extends Application {
 
     public static void main(String[] args) {
 
-        int port = 25037;
+        int port = 25036;
         if (args.length > 1) {
             port = Integer.parseInt(args[1]);
         }

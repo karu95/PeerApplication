@@ -68,5 +68,6 @@ public class UserHandler extends Handler {
 
     @Override
     public void handleFailedMessage(Message message, Peer peer) {
+        super.handleFailedMessage(message, peer);
     }
 }

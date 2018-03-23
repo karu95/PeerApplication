@@ -26,7 +26,6 @@ public class BSHandler extends Handler {
     }
 
     public static void login(LoginMessage loginMessage) {
-        loginMessage.setTimestamp(new Date(System.currentTimeMillis()).getTime());
         PeerHandler.getSenderController().send(loginMessage, PeerHandler.getBS());
         System.out.println("Login Sent!");
     }
