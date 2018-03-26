@@ -3,10 +3,12 @@ package com.peerapplication.repository;
 import com.peerapplication.model.User;
 import com.peerapplication.util.DBConnection;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
@@ -68,5 +70,30 @@ public class UserRepository {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public ArrayList<User> getLatestUsers(long timestamp) {
+        Connection connection = dbConn.getConnection();
+        ArrayList<User> latestUsers = new ArrayList<>();
+        String query = "SELECT * FROM users WHERE register_time>= ?";
+        try {
+            PreparedStatement psmt = connection.prepareStatement(query);
+            psmt.setLong(1, timestamp);
+            readWriteLock.readLock().lock();
+            ResultSet rs = psmt.executeQuery();
+            readWriteLock.readLock().unlock();
+            while (rs.next()) {
+                User user = new User(rs.getInt("user_id"), rs.getString("user_name"), rs.getString("email"));
+                user.setImageURL(rs.getString("image"));
+                user.setRegisterTime(rs.getLong("register_time"));
+                user.getUserWithImage(user.getUserID());
+                latestUsers.add(user);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return latestUsers;
     }
 }

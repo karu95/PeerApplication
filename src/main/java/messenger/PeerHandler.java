@@ -20,8 +20,7 @@ public class PeerHandler {
     private static ReceiverController receiverController;
     private static SenderController senderController = new SenderController();
     private static Peer bs = new Peer(1, "192.168.8.102", 25025);
-    private static HeartBeatHandler heartBeatHandler = new HeartBeatHandler();
-    private static ExecutorService heartbeatExecutor = Executors.newSingleThreadExecutor();
+    private static HeartBeatHandler heartBeatHandler = HeartBeatHandler.getHeartBeatHandler();
     private static ExecutorService serverWorker = Executors.newSingleThreadExecutor();
     private static HashMap<String, Handler> handlers = new HashMap<>();
 
@@ -140,7 +139,6 @@ public class PeerHandler {
 
     public static void startHeartBeat() {
         heartBeatHandler.start();
-        heartbeatExecutor.execute(heartBeatHandler);
     }
 
     public static void stopHeartBeat() {

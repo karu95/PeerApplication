@@ -50,9 +50,6 @@ public class BSHandler extends Handler {
     }
 
     private static void handleRequest(RequestStatusMessage message) {
-        SystemUser.setSystemUserID(message.getUserID());
-        System.out.println(message.getUserID());
-        SystemUser.setAccountType(message.getAccountType());
         if (message.getTitle().equals("LoginStatus")) {
             if (message.getStatus().equals("Success")) {
                 notifyPeerHandler(message);
@@ -67,9 +64,12 @@ public class BSHandler extends Handler {
     }
 
     private static void notifyPeerHandler(RequestStatusMessage message) {
+        SystemUser.setSystemUserID(message.getUserID());
+        System.out.println(message.getUserID());
+        SystemUser.setLastSeen(message.getLastSeen());
+        SystemUser.setAccountType(message.getAccountType());
         System.out.println("Active size " + message.getActivePeers().size());
         PeerHandler.setKnownPeers(message.getActivePeers());
-        PeerHandler.startHeartBeat();
     }
 
     public void handle(Message message) {

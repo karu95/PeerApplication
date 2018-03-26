@@ -9,6 +9,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class User implements Serializable {
     private int userID;
@@ -98,5 +99,10 @@ public class User implements Serializable {
             setUserImage(ImageIO.read(new File("/" + System.getProperty("user.dir") +
                     "/images/" + String.valueOf(getUserID()))));
         }
+    }
+
+    public static ArrayList<User> getLatestUsers(long timestamp) {
+        UserRepository userRepository = UserRepository.getUserRepository();
+        return userRepository.getLatestUsers(timestamp);
     }
 }

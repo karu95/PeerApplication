@@ -109,4 +109,11 @@ public class Thread implements Serializable {
         ThreadRepository threadRepository = ThreadRepository.getThreadRepository();
         return threadRepository.getLatestThreads();
     }
+
+    /*
+    public static ArrayList<Thread> getLatestThreads(long timestamp){
+        ThreadRepository threadRepository = ThreadRepository.getThreadRepository();
+        return
+    }
+    */
 }

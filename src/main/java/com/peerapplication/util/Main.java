@@ -92,7 +92,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent parent = FXMLLoader.load(getClass().getResource("/views/login.fxml"));
+        Parent parent = FXMLLoader.load(getClass().getResource("/views/homepage.fxml"));
         Scene scene = new Scene(parent, 1035, 859);
         primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
@@ -101,6 +101,7 @@ public class Main extends Application {
                 System.exit(0);
             }
         });
+        primaryStage.setResizable(false);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Login");
         primaryStage.show();

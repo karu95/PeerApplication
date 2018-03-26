@@ -8,8 +8,8 @@ import java.util.ArrayList;
 
 public class ForumUpdateMessage extends Message {
 
-    private int requesterID;
     private String status;
+    private long lastSeen;
     private ArrayList<Thread> latestThreads;
     private ArrayList<User> registeredUsers;
     private ArrayList<Answer> latestAnswers;
@@ -60,11 +60,11 @@ public class ForumUpdateMessage extends Message {
         this.status = status;
     }
 
-    public int getRequesterID() {
-        return requesterID;
+    public long getLastSeen() {
+        return lastSeen;
     }
 
-    public void setRequesterID(int requesterID) {
-        this.requesterID = requesterID;
+    public void setLastSeen(long lastSeen) {
+        this.lastSeen = lastSeen;
     }
 }

@@ -21,6 +21,7 @@ public class SenderController {
     public void send(Message message, Peer peer) {
         message.setReceiverAddress(peer.getPeerAddress());
         message.setReceiverPort(peer.getPeerPort());
+        message.setReceiverID(peer.getUserID());
         message.setTimestamp(new Date(System.currentTimeMillis()).getTime());
         Sender sender = new Sender(message, peer);
         senderService.execute(sender);
