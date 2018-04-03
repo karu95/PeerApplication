@@ -67,9 +67,12 @@ public class KnownPeerHandler extends Handler {
         System.out.println(peerInfoMessage.getStatus());
         if (peerInfoMessage.getStatus().equals("Request")) {
             HashMap<Integer, Peer> knownPeers = (HashMap<Integer, Peer>) PeerHandler.getKnownPeers().clone();
-            Peer peer = knownPeers.get(peerInfoMessage.getSenderID());
+            PeerHandler.knownPeersReadLock();
+            Peer peer = PeerHandler.getKnownPeers().get(peerInfoMessage.getSenderID());
+            PeerHandler.knownPeersReadUnlock();
             knownPeers.remove(peerInfoMessage.getSenderID());
             PeerInfoMessage peerDetailMessage = new PeerInfoMessage();
+            peerDetailMessage.setKnownPeers(knownPeers);
             peerDetailMessage.setStatus("ProcessedRequest");
             PeerHandler.getSenderController().send(peerDetailMessage, peer);
         } else if (peerInfoMessage.getStatus().equals("ProcessedRequest")) {

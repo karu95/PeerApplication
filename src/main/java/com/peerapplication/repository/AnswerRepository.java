@@ -4,10 +4,7 @@ import com.peerapplication.model.Answer;
 import com.peerapplication.model.Vote;
 import com.peerapplication.util.DBConnection;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
@@ -68,6 +65,10 @@ public class AnswerRepository {
             saveStatement.execute();
             readWriteLock.writeLock().unlock();
         } catch (SQLException e) {
+            if (e instanceof SQLIntegrityConstraintViolationException) {
+                System.out.println("Duplicate Answer");
+                return;
+            }
             e.printStackTrace();
         }
     }
@@ -115,5 +116,30 @@ public class AnswerRepository {
             e.printStackTrace();
         }
         return count;
+    }
+
+    public ArrayList<Answer> getLatestAnswers(long timestamp) {
+        ArrayList<Answer> latestAnswers = new ArrayList<>();
+        Connection connection = dbConn.getConnection();
+        String latestAnswersQuery = "SELECT * FROM answer WHERE posted_time > ? ORDER BY posted_time ASC";
+        try {
+            PreparedStatement latestAnsStmt = connection.prepareStatement(latestAnswersQuery);
+            latestAnsStmt.setLong(1, timestamp);
+            readWriteLock.readLock().lock();
+            ResultSet rs = latestAnsStmt.executeQuery();
+            readWriteLock.readLock().unlock();
+            while (rs.next()) {
+                Answer answer = new Answer();
+                answer.setAnswerID(rs.getString("answer_id"));
+                answer.setDescription(rs.getString("description"));
+                answer.setThreadID(rs.getString("related_thread"));
+                answer.setTimestamp(rs.getLong("posted_time"));
+                answer.setPostedUserID(rs.getInt("posted_user"));
+                latestAnswers.add(answer);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return latestAnswers;
     }
 }

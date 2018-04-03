@@ -56,7 +56,7 @@ public class Main extends Application {
 
     public static void main(String[] args) {
 
-        int port = 25036;
+        int port = 25032;
         if (args.length > 1) {
             port = Integer.parseInt(args[1]);
         }
@@ -92,7 +92,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent parent = FXMLLoader.load(getClass().getResource("/views/homepage.fxml"));
+        Parent parent = FXMLLoader.load(getClass().getResource("/views/login.fxml"));
         Scene scene = new Scene(parent, 1035, 859);
         primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override

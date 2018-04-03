@@ -98,12 +98,13 @@ public class ThreadRepository {
         return threads;
     }
 
-    public ArrayList<Thread> getLatestThreads() {
+    public ArrayList<Thread> getLatestThreads(long timestamp) {
         ArrayList<Thread> threads = new ArrayList<>();
         Connection connection = dbConnection.getConnection();
-        String getThreadsQuery = "SELECT thread_id, title, posted_user, posted_time FROM thread ORDER BY posted_time DESC";
+        String getThreadsQuery = "SELECT * FROM thread WHERE posted_time = ? ORDER BY posted_time ASC";
         try {
             PreparedStatement getLatestThreadsPsmt = connection.prepareStatement(getThreadsQuery);
+            getLatestThreadsPsmt.setLong(1, timestamp);
             readWriteLock.readLock().lock();
             ResultSet rs = getLatestThreadsPsmt.executeQuery();
             readWriteLock.readLock().unlock();
@@ -113,6 +114,7 @@ public class ThreadRepository {
                 thread.setTitle(rs.getString("title"));
                 thread.setUserID(rs.getInt("posted_user"));
                 thread.setTimestamp(rs.getLong("posted_time"));
+                thread.setDescription(rs.getString("description"));
                 threads.add(thread);
             }
         } catch (SQLException e) {

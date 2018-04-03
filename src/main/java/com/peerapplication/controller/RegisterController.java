@@ -1,5 +1,6 @@
 package com.peerapplication.controller;
 
+import com.peerapplication.handler.UserHandler;
 import com.peerapplication.model.User;
 import com.peerapplication.util.SystemUser;
 import com.peerapplication.validator.UserValidator;
@@ -63,7 +64,7 @@ public class RegisterController implements Initializable {
             }
             user.setRegisterTime(new Date(System.currentTimeMillis()).getTime());
             user.saveUser();
-
+            UserHandler.postUser(user);
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/homepage.fxml"));
             Parent root = loader.load();
             HomeController controller = loader.getController();

@@ -91,7 +91,7 @@ public class Thread implements Serializable {
         Tag.saveTags(tags, threadID);
     }
 
-    public void getThread(String threadID){
+    public void getThread(String threadID) {
         ThreadRepository threadRepository = ThreadRepository.getThreadRepository();
         threadRepository.getThread(threadID, this);
         if (threadID.equals(this.threadID)) {
@@ -105,15 +105,16 @@ public class Thread implements Serializable {
         return threadRepository.getThreads(userID);
     }
 
-    public static ArrayList<Thread> getLatestThreads() {
+    public static ArrayList<Thread> getLatestThreads(long timestamp) {
         ThreadRepository threadRepository = ThreadRepository.getThreadRepository();
-        return threadRepository.getLatestThreads();
+        return threadRepository.getLatestThreads(timestamp);
     }
 
-    /*
-    public static ArrayList<Thread> getLatestThreads(long timestamp){
-        ThreadRepository threadRepository = ThreadRepository.getThreadRepository();
-        return
+    public static void saveThreads(ArrayList<Thread> threads) {
+        if (!threads.isEmpty()) {
+            for (Thread thread : threads) {
+                thread.saveThread();
+            }
+        }
     }
-    */
 }

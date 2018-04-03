@@ -67,9 +67,11 @@ public class BSHandler extends Handler {
         SystemUser.setSystemUserID(message.getUserID());
         System.out.println(message.getUserID());
         SystemUser.setLastSeen(message.getLastSeen());
+        System.out.println(new Date(message.getLastSeen()));
         SystemUser.setAccountType(message.getAccountType());
         System.out.println("Active size " + message.getActivePeers().size());
         PeerHandler.setKnownPeers(message.getActivePeers());
+        PeerHandler.startHeartBeat();
     }
 
     public void handle(Message message) {

@@ -82,6 +82,9 @@ public class TagRepository {
                     updateTaggedTableStmt.setString(1, tag.getTag());
                     updateTaggedTableStmt.setString(2, threadID);
                 } catch (SQLException e) {
+                    if (e instanceof SQLIntegrityConstraintViolationException) {
+                        return;
+                    }
                     e.printStackTrace();
                 }
             }

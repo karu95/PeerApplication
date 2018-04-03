@@ -1,6 +1,9 @@
 package com.peerapplication.handler;
 
+import com.peerapplication.model.Answer;
+import com.peerapplication.model.Thread;
 import com.peerapplication.model.User;
+import com.peerapplication.model.Vote;
 import com.peerapplication.util.SystemUser;
 import message.ForumUpdateMessage;
 import message.Message;
@@ -42,11 +45,26 @@ public class ForumUpdateHandler extends Handler {
 
     private static void handleUpdate(ForumUpdateMessage forumUpdateMessage) {
         if (forumUpdateMessage.getStatus().equals("Request")) {
-            ForumUpdateMessage processedRequest = new ForumUpdateMessage();
-            processedRequest.setStatus("Processed Request");
-            processedRequest.setRegisteredUsers(User.getLatestUsers(forumUpdateMessage.getLastSeen()));
+            if (PeerHandler.getKnownPeers().containsKey(forumUpdateMessage.getSenderID())) {
+                ForumUpdateMessage processedRequest = new ForumUpdateMessage();
+                processedRequest.setStatus("Processed Request");
+                processedRequest.setRegisteredUsers(User.getLatestUsers(forumUpdateMessage.getLastSeen()));
+                processedRequest.setLatestThreads(Thread.getLatestThreads(forumUpdateMessage.getLastSeen()));
+                processedRequest.setLatestAnswers(Answer.getLatestAnswers(forumUpdateMessage.getLastSeen()));
+                processedRequest.setLatestVotes(Vote.getLatestVotes(forumUpdateMessage.getLastSeen()));
+                PeerHandler.getSenderController().send(processedRequest, PeerHandler.getKnownPeers().get(forumUpdateMessage.getSenderID()));
+                System.out.println("Request Processed");
+            } else {
+                System.out.println("Invalid user!");
+            }
         } else if (forumUpdateMessage.getStatus().equals("Processed Request")) {
-
+            System.out.println("Processed request received");
+            User.saveUsers(forumUpdateMessage.getRegisteredUsers());
+            Thread.saveThreads(forumUpdateMessage.getLatestThreads());
+            Answer.saveAnswers(forumUpdateMessage.getLatestAnswers());
+            Vote.saveVotes(forumUpdateMessage.getLatestVotes());
+            forumUpdated();
+            System.out.println("Forum updated");
         }
     }
 
@@ -62,16 +80,20 @@ public class ForumUpdateHandler extends Handler {
 
     public static void checkForumUpdate() {
         if (!forumUpdated) {
-            try {
-                forumUpdated.wait();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            synchronized (forumUpdated) {
+                try {
+                    forumUpdated.wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
 
     private static void forumUpdated() {
-        forumUpdated = true;
-        forumUpdated.notifyAll();
+        synchronized (forumUpdated) {
+            forumUpdated = true;
+            forumUpdated.notifyAll();
+        }
     }
 }

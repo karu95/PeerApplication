@@ -1,5 +1,6 @@
 package messenger;
 
+import com.peerapplication.util.SystemUser;
 import message.Message;
 
 import java.util.ArrayList;
@@ -22,6 +23,9 @@ public class SenderController {
         message.setReceiverAddress(peer.getPeerAddress());
         message.setReceiverPort(peer.getPeerPort());
         message.setReceiverID(peer.getUserID());
+        message.setSenderID(SystemUser.getSystemUserID());
+        message.setSenderAddress(PeerHandler.getUserAddress());
+        message.setSenderPort(PeerHandler.getUserPort());
         message.setTimestamp(new Date(System.currentTimeMillis()).getTime());
         Sender sender = new Sender(message, peer);
         senderService.execute(sender);

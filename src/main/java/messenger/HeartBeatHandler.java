@@ -35,7 +35,7 @@ public class HeartBeatHandler extends Handler {
                     HeartBeatMessage heartBeatMessage = new HeartBeatMessage();
                     PeerHandler.getSenderController().send(heartBeatMessage, PeerHandler.getBS());
                     try {
-                        Thread.sleep(120000);
+                        Thread.sleep(1000);
                     } catch (InterruptedException e) {
                         continue;
                     }

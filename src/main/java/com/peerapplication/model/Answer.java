@@ -103,4 +103,17 @@ public class Answer implements Serializable {
         AnswerRepository answerRepo = AnswerRepository.getAnswerRepository();
         answerRepo.saveAnswer(this);
     }
+
+    public static ArrayList<Answer> getLatestAnswers(long timestamp) {
+        AnswerRepository answerRepository = AnswerRepository.getAnswerRepository();
+        return answerRepository.getLatestAnswers(timestamp);
+    }
+
+    public static void saveAnswers(ArrayList<Answer> answers) {
+        if (!answers.isEmpty()) {
+            for (Answer answer : answers) {
+                answer.saveAnswer();
+            }
+        }
+    }
 }

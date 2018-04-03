@@ -1,6 +1,7 @@
 package message;
 
 import com.peerapplication.model.Answer;
+import com.peerapplication.model.Thread;
 import com.peerapplication.model.User;
 import com.peerapplication.model.Vote;
 

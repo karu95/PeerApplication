@@ -3,10 +3,7 @@ package com.peerapplication.repository;
 import com.peerapplication.model.Vote;
 import com.peerapplication.util.DBConnection;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
@@ -65,6 +62,10 @@ public class VoteRepository {
             pstmt.execute();
             readWriteLock.writeLock().unlock();
         } catch (SQLException e) {
+            if (e instanceof SQLIntegrityConstraintViolationException) {
+                System.out.println("Duplicate Vote");
+                return;
+            }
             e.printStackTrace();
         }
     }
@@ -88,5 +89,28 @@ public class VoteRepository {
             e.printStackTrace();
         }
         return votes;
+    }
+
+    public ArrayList<Vote> getLatestVotes(long timestamp) {
+        ArrayList<Vote> latestVotes = new ArrayList<>();
+        Connection connection = dbConnection.getConnection();
+        String latestVotesQuery = "SELECT * FROM voted WHERE voted_time > ? ORDER BY voted_time ASC";
+        try {
+            PreparedStatement latestVotesStmt = connection.prepareStatement(latestVotesQuery);
+            latestVotesStmt.setLong(1, timestamp);
+            readWriteLock.readLock().lock();
+            ResultSet rs = latestVotesStmt.executeQuery();
+            readWriteLock.readLock().unlock();
+            while (rs.next()) {
+                Vote vote = new Vote();
+                vote.setAnswerID(rs.getString("answer_id"));
+                vote.setUserID(rs.getInt("user_id"));
+                vote.setVotedTime(rs.getLong("voted_time"));
+                latestVotes.add(vote);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return latestVotes;
     }
 }

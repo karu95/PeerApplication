@@ -2,6 +2,7 @@ package com.peerapplication.model;
 
 
 import com.peerapplication.repository.UserRepository;
+import com.peerapplication.util.ImagePack;
 import net.coobird.thumbnailator.Thumbnails;
 
 import javax.imageio.ImageIO;
@@ -15,7 +16,7 @@ public class User implements Serializable {
     private int userID;
     private String name;
     private String email;
-    private BufferedImage userImage;
+    private ImagePack userImage;
     private String imageURL;
     private long registerTime;
 
@@ -54,11 +55,11 @@ public class User implements Serializable {
     }
 
     public BufferedImage getUserImage() {
-        return userImage;
+        return userImage.getImage();
     }
 
     public void setUserImage(BufferedImage userImage) {
-        this.userImage = userImage;
+        this.userImage = new ImagePack(userImage);
     }
 
     public String getImageURL() {
@@ -86,7 +87,7 @@ public class User implements Serializable {
         UserRepository userRepository = UserRepository.getUserRepository();
         userRepository.saveUser(this);
         if (userImage != null) {
-            Thumbnails.of(userImage).scale(0.8).outputFormat("jpg").toFile(new File("/" +
+            Thumbnails.of(userImage.getImage()).scale(0.8).outputFormat("jpg").toFile(new File("/" +
                     System.getProperty("user.dir") + "/images/" + String.valueOf(getUserID())));
         }
     }
@@ -96,7 +97,7 @@ public class User implements Serializable {
             getUser(userID);
         }
         if (!imageURL.isEmpty()) {
-            setUserImage(ImageIO.read(new File("/" + System.getProperty("user.dir") +
+            this.userImage = new ImagePack(ImageIO.read(new File("/" + System.getProperty("user.dir") +
                     "/images/" + String.valueOf(getUserID()))));
         }
     }
@@ -104,5 +105,45 @@ public class User implements Serializable {
     public static ArrayList<User> getLatestUsers(long timestamp) {
         UserRepository userRepository = UserRepository.getUserRepository();
         return userRepository.getLatestUsers(timestamp);
+    }
+
+    public static void saveUsers(ArrayList<User> users) {
+        if (!users.isEmpty()) {
+            for (User user : users) {
+                try {
+                    user.saveUser();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        boolean equal = true;
+        User user = (User) object;
+        if (this.userID != user.getUserID()) {
+            equal = false;
+            System.out.println(1);
+        } else if (!this.name.equals(user.getName())) {
+            equal = false;
+            System.out.println(2);
+        } else if (!this.email.equals(user.getEmail())) {
+            equal = false;
+            System.out.println(3);
+        } else if (!this.imageURL.equals(user.getImageURL())) {
+            equal = false;
+            System.out.println(4);
+        } else if (this.registerTime != user.getRegisterTime()) {
+            equal = false;
+            System.out.println(5);
+        } else if (userImage != null) {
+            if (!(userImage.equals(user.userImage))) {
+                equal = false;
+                System.out.println(6);
+            }
+        }
+        return equal;
     }
 }

@@ -56,4 +56,17 @@ public class Vote implements Serializable {
     public void setVotedTime(long votedTime) {
         this.votedTime = votedTime;
     }
+
+    public static ArrayList<Vote> getLatestVotes(long timestamp) {
+        VoteRepository voteRepository = VoteRepository.getVoteRepository();
+        return voteRepository.getLatestVotes(timestamp);
+    }
+
+    public static void saveVotes(ArrayList<Vote> votes) {
+        if (!votes.isEmpty()) {
+            for (Vote vote : votes) {
+                vote.saveVote();
+            }
+        }
+    }
 }

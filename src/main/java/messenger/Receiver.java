@@ -30,8 +30,10 @@ public class Receiver implements Runnable {
             });
             os.close();
         } catch (IOException e) {
+            e.printStackTrace();
             return;
         } catch (ClassNotFoundException e) {
+            e.printStackTrace();
             return;
         }
     }

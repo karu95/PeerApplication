@@ -49,9 +49,10 @@ public class Sender implements Runnable {
                 senderSocket.close();
             } catch (IOException e) {
                 if (e instanceof ConnectException) {
-                    System.out.println("Passed to peerhanlder");
+                    System.out.println("message failed" + message.getTitle());
                     PeerHandler.handleFailedMessage(message, peer);
                 }
+
             } catch (ClassNotFoundException ex) {
 
             }

@@ -4,10 +4,7 @@ import com.peerapplication.model.User;
 import com.peerapplication.util.DBConnection;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
@@ -56,18 +53,32 @@ public class UserRepository {
 
     public void saveUser(User user) {
         Connection connection = dbConn.getConnection();
-        String statement = "INSERT INTO users(user_id, user_name, email, register_time, image) VALUES (?, ?, ?, ?, ?)";
+        String insertStatement = "INSERT INTO users(user_name, email, register_time, image, user_id) VALUES (?, ?, ?, ?, ?)";
+        String updateStatement = "UPDATE users SET user_name=?, email=?, register_time=?, image=? WHERE user_id=?";
         try {
-            PreparedStatement stmt = connection.prepareStatement(statement);
-            stmt.setInt(1, user.getUserID());
-            stmt.setString(2, user.getName());
-            stmt.setString(3, user.getEmail());
-            stmt.setLong(4, user.getRegisterTime());
-            stmt.setString(5, user.getImageURL());
+            User user1 = new User();
+            user1.getUser(user.getUserID());
+            PreparedStatement stmt = null;
+            if (user1.getUserID() == user.getUserID()) {
+                stmt = connection.prepareStatement(updateStatement);
+                System.out.println("User Updated");
+            } else {
+                stmt = connection.prepareStatement(insertStatement);
+                System.out.println("User inserted!");
+            }
+            stmt.setInt(5, user.getUserID());
+            stmt.setString(1, user.getName());
+            stmt.setString(2, user.getEmail());
+            stmt.setLong(3, user.getRegisterTime());
+            stmt.setString(4, user.getImageURL());
             readWriteLock.writeLock().lock();
             stmt.execute();
             readWriteLock.writeLock().unlock();
         } catch (SQLException e) {
+            if (e instanceof SQLIntegrityConstraintViolationException) {
+                System.out.println("Duplicate User");
+                return;
+            }
             e.printStackTrace();
         }
     }
@@ -75,7 +86,7 @@ public class UserRepository {
     public ArrayList<User> getLatestUsers(long timestamp) {
         Connection connection = dbConn.getConnection();
         ArrayList<User> latestUsers = new ArrayList<>();
-        String query = "SELECT * FROM users WHERE register_time>= ?";
+        String query = "SELECT * FROM users WHERE register_time>= ? ORDER BY register_time ASC";
         try {
             PreparedStatement psmt = connection.prepareStatement(query);
             psmt.setLong(1, timestamp);

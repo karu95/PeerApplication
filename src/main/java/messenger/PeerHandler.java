@@ -19,7 +19,7 @@ public class PeerHandler {
     private static ReadWriteLock knownPeersLock = new ReentrantReadWriteLock();
     private static ReceiverController receiverController;
     private static SenderController senderController = new SenderController();
-    private static Peer bs = new Peer(1, "192.168.8.102", 25025);
+    private static Peer bs = new Peer(1, "192.168.8.100", 25025);
     private static HeartBeatHandler heartBeatHandler = HeartBeatHandler.getHeartBeatHandler();
     private static ExecutorService serverWorker = Executors.newSingleThreadExecutor();
     private static HashMap<String, Handler> handlers = new HashMap<>();
@@ -31,9 +31,11 @@ public class PeerHandler {
     static void handle(Message message) {
         if (handlers.containsKey(message.getTitle())) {
             handlers.get(message.getTitle()).handle(message);
+        } else if (message.getTitle().equals("HeartBeatSuccess")) {
+
         } else {
             System.out.println(message.getTitle());
-            System.out.println("Unknown message");
+            System.out.println("UnknownMessage");
         }
     }
 
@@ -138,7 +140,7 @@ public class PeerHandler {
     }
 
     public static void startHeartBeat() {
-        heartBeatHandler.start();
+        heartBeatHandler.startHeartBeat();
     }
 
     public static void stopHeartBeat() {
