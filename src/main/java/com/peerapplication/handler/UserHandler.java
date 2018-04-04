@@ -35,7 +35,9 @@ public class UserHandler extends Handler {
         System.out.println("Posting user");
         UserInfoMessage userInfoMessage = new UserInfoMessage();
         userInfoMessage.setUser(user);
+        PeerHandler.knownPeersReadLock();
         PeerHandler.getSenderController().sendToAll(userInfoMessage, new ArrayList<>(PeerHandler.getKnownPeers().values()));
+        PeerHandler.knownPeersReadUnlock();
         System.out.println("User posted!");
     }
 
@@ -67,11 +69,14 @@ public class UserHandler extends Handler {
         handleLock.writeLock().unlock();
     }
 
-    public void handle(Message userMessage) {
-        try {
-            UserHandler.handleUser((UserInfoMessage) userMessage);
-        } catch (IOException e) {
-            e.printStackTrace();
+    @Override
+    public void handle(Message message) {
+        if (message instanceof UserInfoMessage) {
+            try {
+                UserHandler.handleUser((UserInfoMessage) message);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 

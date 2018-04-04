@@ -71,11 +71,12 @@ public class BSHandler extends Handler {
         SystemUser.setAccountType(message.getAccountType());
         System.out.println("Active size " + message.getActivePeers().size());
         PeerHandler.setKnownPeers(message.getActivePeers());
-        PeerHandler.startHeartBeat();
     }
 
     public void handle(Message message) {
-        BSHandler.handleRequest((RequestStatusMessage) message);
+        if (message instanceof BSMessage) {
+            BSHandler.handleRequest((RequestStatusMessage) message);
+        }
     }
 
     @Override

@@ -69,7 +69,9 @@ public class ForumUpdateHandler extends Handler {
     }
 
     public void handle(Message message) {
-        ForumUpdateHandler.handleUpdate((ForumUpdateMessage) message);
+        if (message instanceof ForumUpdateMessage) {
+            ForumUpdateHandler.handleUpdate((ForumUpdateMessage) message);
+        }
     }
 
     @Override
@@ -93,7 +95,9 @@ public class ForumUpdateHandler extends Handler {
     private static void forumUpdated() {
         synchronized (forumUpdated) {
             forumUpdated = true;
+            PeerHandler.startHeartBeat();
             forumUpdated.notifyAll();
+            System.out.println("Forum Updated");
         }
     }
 }

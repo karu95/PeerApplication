@@ -33,7 +33,9 @@ public class ThreadHandler extends Handler {
         System.out.println("Posting thread");
         ThreadMessage threadMessage = new ThreadMessage();
         threadMessage.setThread(thread);
+        PeerHandler.knownPeersReadLock();
         PeerHandler.getSenderController().sendToAll(threadMessage, new ArrayList<>(PeerHandler.getKnownPeers().values()));
+        PeerHandler.knownPeersReadUnlock();
         System.out.println("Thread posted");
     }
 
@@ -43,6 +45,7 @@ public class ThreadHandler extends Handler {
         Thread thread = new Thread();
         thread.getThread(threadMessage.getThread().getThreadID());
         if (!(thread.getThreadID().equals(threadMessage.getThread().getThreadID()))) {
+            System.out.println("New Thread");
             threadMessage.getThread().saveThread();
             ArrayList<Peer> receivers = new ArrayList<>();
             PeerHandler.knownPeersReadUnlock();
@@ -64,7 +67,9 @@ public class ThreadHandler extends Handler {
 
     @Override
     public void handle(Message message) {
-        ThreadHandler.handleThread((ThreadMessage) message);
+        if (message instanceof ThreadMessage) {
+            ThreadHandler.handleThread((ThreadMessage) message);
+        }
     }
 
     @Override
