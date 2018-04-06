@@ -88,7 +88,7 @@ public class UserRepository {
     public ArrayList<User> getLatestUsers(long timestamp) {
         Connection connection = dbConn.getConnection();
         ArrayList<User> latestUsers = new ArrayList<>();
-        String query = "SELECT * FROM users WHERE register_time>= ? ORDER BY register_time ASC";
+        String query = "SELECT * FROM users WHERE last_update_time>= ? ORDER BY last_update_time ASC";
         try {
             PreparedStatement psmt = connection.prepareStatement(query);
             psmt.setLong(1, timestamp);

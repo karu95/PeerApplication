@@ -1,12 +1,19 @@
 package com.peerapplication.controller;
 
+import com.peerapplication.model.User;
+import com.peerapplication.util.UIUpdater;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import message.Message;
 
-public class ViewUserController {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class ViewUserController implements Initializable, UIUpdater {
 
     @FXML
     private TabPane homeTabs;
@@ -81,4 +88,17 @@ public class ViewUserController {
 
     }
 
+    @Override
+    public void updateUI(Message message) {
+
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
+    }
+
+    public void init(User user) {
+
+    }
 }

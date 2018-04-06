@@ -116,4 +116,9 @@ public class Answer implements Serializable {
             }
         }
     }
+
+    public static int getAnswerCountForThread(String threadID) {
+        AnswerRepository answerRepository = AnswerRepository.getAnswerRepository();
+        return answerRepository.getAnswerCountForThread(threadID);
+    }
 }

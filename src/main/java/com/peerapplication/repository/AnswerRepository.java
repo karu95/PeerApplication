@@ -76,7 +76,7 @@ public class AnswerRepository {
     public ArrayList<Answer> getAnswers(String threadID) {
         ArrayList<Answer> answers = new ArrayList<>();
         Connection connection = dbConn.getConnection();
-        String getAnswersQuery = "SELECT * FROM answer WHERE related_thread=?";
+        String getAnswersQuery = "SELECT * FROM answer WHERE related_thread=? ORDER BY posted_time ASC";
         try {
             PreparedStatement getStatement = connection.prepareStatement(getAnswersQuery);
             getStatement.setString(1, threadID);
@@ -97,6 +97,25 @@ public class AnswerRepository {
             e.printStackTrace();
         }
         return answers;
+    }
+
+    public int getAnswerCountForThread(String threadID) {
+        int count = 0;
+        Connection connection = dbConn.getConnection();
+        String countQuery = "SELECT COUNT(*) AS cnt FROM answer WHERE related_thread=?";
+        try {
+            PreparedStatement countStatement = connection.prepareStatement(countQuery);
+            countStatement.setString(1, threadID);
+            readWriteLock.readLock().lock();
+            ResultSet rs = countStatement.executeQuery();
+            readWriteLock.readLock().unlock();
+            while (rs.next()) {
+                count = rs.getInt("cnt");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return count;
     }
 
     public int getAnswerCount(int userID) {

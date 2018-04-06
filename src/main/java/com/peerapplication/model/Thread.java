@@ -13,6 +13,7 @@ public class Thread implements Serializable {
     private ArrayList<Tag> tags;
     private ArrayList<Answer> answers;
     private int userID;
+    private int answerCount;
 
     public Thread() {
     }
@@ -91,12 +92,21 @@ public class Thread implements Serializable {
         Tag.saveTags(tags, threadID);
     }
 
-    public void getThread(String threadID) {
-        ThreadRepository threadRepository = ThreadRepository.getThreadRepository();
-        threadRepository.getThread(threadID, this);
+    public void getCompleteThread(String threadID) {
+        getThread(threadID);
         if (threadID.equals(this.threadID)) {
             tags = Tag.getTags(threadID);
             answers = Answer.getAnswers(threadID);
+        }
+    }
+
+    public void getThread(String threadID) {
+        if (!threadID.equals(this.threadID)) {
+            ThreadRepository threadRepository = ThreadRepository.getThreadRepository();
+            threadRepository.getThread(threadID, this);
+        }
+        if (threadID.equals(this.threadID)) {
+            this.answerCount = Answer.getAnswerCountForThread(threadID);
         }
     }
 
@@ -116,5 +126,17 @@ public class Thread implements Serializable {
                 thread.saveThread();
             }
         }
+    }
+
+    public static void getThreadPartially(String threadID) {
+
+    }
+
+    public int getAnswerCount() {
+        return answerCount;
+    }
+
+    public void setAnswerCount(int answerCount) {
+        this.answerCount = answerCount;
     }
 }

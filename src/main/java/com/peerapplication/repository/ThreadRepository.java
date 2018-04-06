@@ -76,7 +76,7 @@ public class ThreadRepository {
     public ArrayList<Thread> getThreads(int userID) {
         ArrayList<Thread> threads = new ArrayList<>();
         Connection connection = dbConnection.getConnection();
-        String getThreadsQuery = "SELECT * FROM thread WHERE posted_user=?";
+        String getThreadsQuery = "SELECT * FROM thread WHERE posted_user=? ORDER BY posted_time DESC ";
         try {
             PreparedStatement getThreadsPsmt = connection.prepareStatement(getThreadsQuery);
             getThreadsPsmt.setInt(1, userID);

@@ -43,7 +43,7 @@ public class ThreadHandler extends Handler {
         System.out.println("thread message received");
         threadHandleLock.writeLock().lock();
         Thread thread = new Thread();
-        thread.getThread(threadMessage.getThread().getThreadID());
+        thread.getCompleteThread(threadMessage.getThread().getThreadID());
         if (!(thread.getThreadID().equals(threadMessage.getThread().getThreadID()))) {
             System.out.println("New Thread");
             threadMessage.getThread().saveThread();

@@ -19,7 +19,7 @@
                         onMouseClicked="#saveAnswer" prefHeight="25.0" prefWidth="129.0" text="Answer"/>
                 <ScrollPane layoutX="38.0" layoutY="32.0" prefHeight="463.0" prefWidth="912.0">
                     <content>
-                        <AnchorPane fx:id="aPaneThread" prefWidth="910.0">
+                        <AnchorPane fx:id="aPaneThread" prefHeight="45.0" prefWidth="880.0">
                             <children>
                                 <Text fx:id="txtThreadHeader" layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE"
                                       strokeWidth="0.0" text="Text" wrappingWidth="881.13671875"

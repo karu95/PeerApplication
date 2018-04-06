@@ -4,12 +4,14 @@ import com.peerapplication.model.Answer;
 import com.peerapplication.model.Thread;
 import com.peerapplication.util.UIUpdater;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import message.Message;
 
 import java.net.URL;
@@ -105,15 +107,25 @@ public class ViewThreadController implements Initializable, UIUpdater {
     public void init(Thread thread) {
         txtThreadHeader.setText(thread.getTitle());
         Text txtThreadDetail = new Text();
-        txtThreadDetail.setLayoutX(txtThreadHeader.getLayoutX());
-        txtThreadDetail.setLayoutY(txtThreadHeader.getLayoutY() + txtThreadHeader.getBoundsInLocal().getHeight() + 15);
-        txtThreadDetail.setText("By " + thread.getUserID() + " on " + new Date(thread.getTimestamp()));
+        Hyperlink userLink = new Hyperlink();
+        userLink.setText("Click Me!");
+        userLink.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                System.out.println("Link Clicked!");
+            }
+        });
+        txtThreadDetail.setText("Posted on " + new Date(thread.getTimestamp()) + " by");
+        TextFlow threadFlow = new TextFlow(txtThreadDetail, userLink);
+        threadFlow.setLayoutX(txtThreadHeader.getLayoutX());
+        threadFlow.setLayoutY(txtThreadHeader.getLayoutY() + txtThreadHeader.getBoundsInLocal().getHeight());
         Text txtThreadDescription = new Text();
         txtThreadDescription.setText(thread.getDescription());
         txtThreadDescription.setWrappingWidth(txtThreadHeader.getWrappingWidth());
         txtThreadDescription.setLayoutX(txtThreadHeader.getLayoutX());
-        txtThreadDescription.setLayoutY(txtThreadDetail.getLayoutY() + txtThreadDetail.getBoundsInLocal().getHeight() + 15);
-        aPaneThread.getChildren().add(txtThreadDetail);
+        txtThreadDescription.setLayoutY(threadFlow.getLayoutY() + threadFlow.getBoundsInLocal().getHeight() + 20);
+        System.out.println(threadFlow.getLayoutY());
+        aPaneThread.getChildren().add(threadFlow);
         aPaneThread.getChildren().add(txtThreadDescription);
         previousText = txtThreadDescription;
     }
@@ -121,15 +133,22 @@ public class ViewThreadController implements Initializable, UIUpdater {
     private void addAnswer(Answer answer) {
         Text txtAnswerDetail = new Text();
         Text txtAnswerDesc = new Text();
-        txtAnswerDetail.setText("Answered by " + answer.getPostedUserID() + " on " + new Date(answer.getTimestamp()));
-        txtAnswerDetail.setLayoutX(txtThreadHeader.getLayoutX());
-        txtAnswerDetail.setLayoutY(previousText.getLayoutY() + previousText.getBoundsInLocal().getHeight() + 15);
-        txtAnswerDetail.setWrappingWidth(txtThreadHeader.getWrappingWidth());
-        aPaneThread.getChildren().add(txtAnswerDetail);
-        previousText = txtAnswerDetail;
+        txtAnswerDetail.setText("Answered on " + new Date(answer.getTimestamp()) + " by");
+        Hyperlink userLink = new Hyperlink();
+        userLink.setText("Username");
+        userLink.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                System.out.println("Answer User" + new Date(answer.getTimestamp()));
+            }
+        });
+        TextFlow answerFlow = new TextFlow(txtAnswerDetail, userLink);
+        answerFlow.setLayoutX(txtThreadHeader.getLayoutX());
+        answerFlow.setLayoutY(previousText.getLayoutY() + previousText.getBoundsInLocal().getHeight());
+        aPaneThread.getChildren().add(answerFlow);
         txtAnswerDesc.setText(answer.getDescription());
         txtAnswerDesc.setLayoutX(txtThreadHeader.getLayoutX());
-        txtAnswerDesc.setLayoutY(previousText.getLayoutY() + previousText.getBoundsInLocal().getHeight() + 5);
+        txtAnswerDesc.setLayoutY(answerFlow.getLayoutY() + answerFlow.getBoundsInLocal().getHeight() + 20);
         txtAnswerDesc.setWrappingWidth(txtThreadHeader.getWrappingWidth());
         aPaneThread.getChildren().add(txtAnswerDesc);
         previousText = txtAnswerDesc;

@@ -158,6 +158,8 @@ public class HomeController implements Initializable, UIUpdater {
                 System.out.println("LatestThread");
             }
         });
+
+
     }
 
     @Override
