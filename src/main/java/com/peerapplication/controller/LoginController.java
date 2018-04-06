@@ -99,7 +99,7 @@ public class LoginController implements Initializable, UIUpdater {
                     Stage stage = (Stage) btnRegister.getScene().getWindow();
                     try {
                         User user = new User();
-                        user.getUser(SystemUser.getSystemUserID());
+                        user.getUserWithImage(SystemUser.getSystemUserID());
                         System.out.println(SystemUser.getSystemUserID() + "here");
                         System.out.println(user.getUserID() + "here");
                         FXMLLoader loader;

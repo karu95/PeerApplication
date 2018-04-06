@@ -20,6 +20,7 @@ public class TableRepository {
                 "user_name VARCHAR (30)," +
                 "email VARCHAR(30)," +
                 "register_time BIGINT," +
+                "last_update_time BIGINT" +
                 "image VARCHAR (30))";
         String threadTableStmt = "CREATE TABLE thread (" +
                 "thread_id VARCHAR (20) PRIMARY KEY," +

@@ -45,6 +45,7 @@ public class UserRepository {
                 user.setEmail(rs.getString("email"));
                 user.setImageURL(rs.getString("image"));
                 user.setRegisterTime(rs.getLong("register_time"));
+                user.setLastProfileUpdate(rs.getLong("last_update_time"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -53,8 +54,8 @@ public class UserRepository {
 
     public void saveUser(User user) {
         Connection connection = dbConn.getConnection();
-        String insertStatement = "INSERT INTO users(user_name, email, register_time, image, user_id) VALUES (?, ?, ?, ?, ?)";
-        String updateStatement = "UPDATE users SET user_name=?, email=?, register_time=?, image=? WHERE user_id=?";
+        String insertStatement = "INSERT INTO users(user_name, email, register_time, image, last_update_time, user_id) VALUES (?, ?, ?, ?, ?, ?)";
+        String updateStatement = "UPDATE users SET user_name=?, email=?, register_time=?, image=?, last_update_time=? WHERE user_id=?";
         try {
             User user1 = new User();
             user1.getUser(user.getUserID());
@@ -66,7 +67,8 @@ public class UserRepository {
                 stmt = connection.prepareStatement(insertStatement);
                 System.out.println("User inserted!");
             }
-            stmt.setInt(5, user.getUserID());
+            stmt.setInt(6, user.getUserID());
+            stmt.setLong(5, user.getLastProfileUpdate());
             stmt.setString(1, user.getName());
             stmt.setString(2, user.getEmail());
             stmt.setLong(3, user.getRegisterTime());
@@ -97,6 +99,7 @@ public class UserRepository {
                 User user = new User(rs.getInt("user_id"), rs.getString("user_name"), rs.getString("email"));
                 user.setImageURL(rs.getString("image"));
                 user.setRegisterTime(rs.getLong("register_time"));
+                user.setLastProfileUpdate(rs.getLong("last_update_time"));
                 user.getUserWithImage(user.getUserID());
                 latestUsers.add(user);
             }

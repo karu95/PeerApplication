@@ -1,19 +1,25 @@
 package com.peerapplication.controller;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.MenuButton;
-import javafx.scene.control.MenuItem;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
-
-import java.io.IOException;
 
 public class PostThreadController {
+
+    @FXML
+    private TextField txtTitle;
+
+    @FXML
+    private TextArea txtDescription;
+
+    @FXML
+    private Button btnPost;
+
+    @FXML
+    private TextField txtTags;
+
+    @FXML
+    private Label statusLabel;
 
     @FXML
     private Label lblHeading;
@@ -25,9 +31,6 @@ public class PostThreadController {
     private Button btnThreads;
 
     @FXML
-    private Button btnPost;
-
-    @FXML
     private MenuButton btnMenu;
 
     @FXML
@@ -37,11 +40,8 @@ public class PostThreadController {
     private MenuItem menuItemLogout;
 
     @FXML
-    void btnHomeClicked(MouseEvent event) throws IOException {
-        Stage threadStage = (Stage) btnHome.getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("/views/homepage.fxml"));
-        threadStage.setScene(new Scene(root, 1035, 859));
-        threadStage.show();
+    void btnHomeClicked(MouseEvent event) {
+
     }
 
     @FXML

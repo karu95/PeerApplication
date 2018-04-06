@@ -1,7 +1,6 @@
 package com.peerapplication.util;
 
 import com.peerapplication.handler.*;
-import com.peerapplication.repository.TableRepository;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -11,8 +10,6 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import messenger.PeerHandler;
-
-import java.io.File;
 
 
 public class Main extends Application {
@@ -55,7 +52,7 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
-
+/*
         int port = 25032;
         if (args.length > 1) {
             port = Integer.parseInt(args[1]);
@@ -70,6 +67,7 @@ public class Main extends Application {
         }
 
         registerHandlers();
+        */
         launch(args);
 
     }
@@ -92,7 +90,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent parent = FXMLLoader.load(getClass().getResource("/views/login.fxml"));
+        Parent parent = FXMLLoader.load(getClass().getResource("/views/viewthread.fxml"));
         Scene scene = new Scene(parent, 1035, 859);
         primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override

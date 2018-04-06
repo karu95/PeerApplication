@@ -5,6 +5,7 @@ import com.peerapplication.model.User;
 import com.peerapplication.util.SystemUser;
 import com.peerapplication.util.UIUpdater;
 import javafx.application.Platform;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -32,10 +33,7 @@ public class HomeController implements Initializable, UIUpdater {
     private Tab latestThreadTab;
 
     @FXML
-    private Pagination paginationLtstThreads;
-
-    @FXML
-    private TableView<?> threadTable;
+    private TableView<?> latestThreadsTable;
 
     @FXML
     private TableColumn<?, ?> colAnswersLatest;
@@ -47,31 +45,22 @@ public class HomeController implements Initializable, UIUpdater {
     private Tab myThreadTab;
 
     @FXML
-    private Pagination paginationMyThreads;
-
-    @FXML
     private TableView<?> myThreadsTable;
 
     @FXML
-    private TableColumn<?, ?> colAnswersMyTh;
+    private TableColumn<?, ?> colAnswerMyThreads;
 
     @FXML
-    private TableColumn<?, ?> colTitleMyTh;
+    private TableColumn<?, ?> colTitleMyThreads;
 
     @FXML
     private Tab notificationTab;
 
     @FXML
-    private Pagination paginationNotifications;
+    private TableView<?> notificationsTable;
 
     @FXML
-    private TableView<?> notificationTable;
-
-    @FXML
-    private TableColumn<?, ?> colAnswersNotification;
-
-    @FXML
-    private TableColumn<?, ?> colTitleNotification;
+    private TableColumn<?, ?> colNotifications;
 
     @FXML
     private ImageView userImage;
@@ -181,6 +170,7 @@ public class HomeController implements Initializable, UIUpdater {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
+                userImage.setImage(SwingFXUtils.toFXImage(user.getUserImage(), null));
                 lblName.setText(user.getName());
                 lblRegDate.setText("Joined on " + String.valueOf(new Date(user.getRegisterTime())));
             }

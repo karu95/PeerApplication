@@ -3,14 +3,38 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 <?import java.lang.String?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-            minWidth="-Infinity"
-            prefHeight="859.0" prefWidth="1035.0" xmlns="http://javafx.com/javafx/8.0.141"
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="859.0"
+            prefWidth="1035.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.peerapplication.controller.ViewThreadController">
     <children>
         <AnchorPane layoutX="29.0" layoutY="64.0" minHeight="681.0" minWidth="995.0" AnchorPane.leftAnchor="20.0"
-                    AnchorPane.rightAnchor="20.0"/>
+                    AnchorPane.rightAnchor="20.0">
+            <children>
+                <TextArea fx:id="txtAreaAnswer" layoutX="42.0" layoutY="516.0" prefHeight="107.0" prefWidth="912.0"
+                          promptText="Wanna Answer?"/>
+                <Button fx:id="btnAnswer" layoutX="434.0" layoutY="642.0" mnemonicParsing="false"
+                        onMouseClicked="#saveAnswer" prefHeight="25.0" prefWidth="129.0" text="Answer"/>
+                <ScrollPane layoutX="38.0" layoutY="32.0" prefHeight="463.0" prefWidth="912.0">
+                    <content>
+                        <AnchorPane fx:id="aPaneThread" prefWidth="910.0">
+                            <children>
+                                <Text fx:id="txtThreadHeader" layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE"
+                                      strokeWidth="0.0" text="Text" wrappingWidth="881.13671875"
+                                      AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0"
+                                      AnchorPane.topAnchor="15.0">
+                                    <font>
+                                        <Font size="20.0"/>
+                                    </font>
+                                </Text>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </ScrollPane>
+            </children>
+        </AnchorPane>
         <HBox layoutX="58.0" layoutY="24.0" styleClass="my-drop-down-menu" stylesheets="@../css/navigationbar.css"
               AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="24.0">
             <children>

@@ -19,6 +19,7 @@ public class User implements Serializable {
     private ImagePack userImage;
     private String imageURL;
     private long registerTime;
+    private long lastProfileUpdate;
 
     public User() {
     }
@@ -145,5 +146,13 @@ public class User implements Serializable {
             }
         }
         return equal;
+    }
+
+    public long getLastProfileUpdate() {
+        return lastProfileUpdate;
+    }
+
+    public void setLastProfileUpdate(long lastProfileUpdate) {
+        this.lastProfileUpdate = lastProfileUpdate;
     }
 }

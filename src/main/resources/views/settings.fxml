@@ -1,9 +1,90 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.AnchorPane?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml"
-            xmlns="http://javafx.com/javafx"
-            fx:controller="views.Settings"
-            prefHeight="400.0" prefWidth="600.0">
-
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import java.lang.String?>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="859.0"
+            prefWidth="1035.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.peerapplication.controller.SettingsController">
+    <children>
+        <AnchorPane layoutX="29.0" layoutY="64.0" minHeight="681.0" minWidth="995.0" AnchorPane.leftAnchor="20.0"
+                    AnchorPane.rightAnchor="20.0">
+            <children>
+                <AnchorPane layoutX="158.0" layoutY="97.0" prefHeight="488.0" prefWidth="671.0">
+                    <children>
+                        <ImageView fx:id="userImage" fitHeight="182.0" fitWidth="190.0" layoutX="106.0" layoutY="50.0"
+                                   onMouseClicked="#selectImage" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../images/malecostume-512.png"/>
+                            </image>
+                        </ImageView>
+                        <TextField fx:id="txtName" layoutX="82.0" layoutY="284.0" prefHeight="31.0" prefWidth="232.0"
+                                   promptText="Nick Name"/>
+                        <TextField fx:id="txtEmail" layoutX="82.0" layoutY="339.0" prefHeight="31.0" prefWidth="232.0"
+                                   promptText="E-Mail Address"/>
+                        <Button fx:id="btnUpdate" layoutX="82.0" layoutY="392.0" mnemonicParsing="false"
+                                onMouseClicked="#register" prefHeight="31.0" prefWidth="232.0" text="Update Profile"/>
+                        <Label fx:id="statusLabelUser" alignment="CENTER" layoutX="83.0" layoutY="252.0"
+                               prefHeight="17.0" prefWidth="232.0" text="Click on image to upload your photo"/>
+                        <PasswordField fx:id="txtOldPwd" layoutX="377.0" layoutY="135.0" prefHeight="31.0"
+                                       prefWidth="232.0" promptText="Old Password"/>
+                        <PasswordField fx:id="txtNewPwd" layoutX="377.0" layoutY="190.0" prefHeight="31.0"
+                                       prefWidth="232.0" promptText="New Password"/>
+                        <PasswordField fx:id="txtCnrmPwd" layoutX="377.0" layoutY="245.0" prefHeight="31.0"
+                                       prefWidth="232.0" promptText="Confirm Password"/>
+                        <Button fx:id="btnChangePwd" layoutX="377.0" layoutY="298.0" mnemonicParsing="false"
+                                prefHeight="31.0" prefWidth="232.0" text="Change Password"/>
+                        <Separator layoutX="346.0" layoutY="70.0" orientation="VERTICAL" prefHeight="365.0"
+                                   prefWidth="1.0"/>
+                        <Label fx:id="statusLabelPwd" alignment="CENTER" layoutX="377.0" layoutY="97.0"
+                               prefHeight="17.0" prefWidth="232.0"/>
+                    </children>
+                </AnchorPane>
+            </children>
+        </AnchorPane>
+        <HBox layoutX="58.0" layoutY="24.0" styleClass="my-drop-down-menu" stylesheets="@../css/navigationbar.css"
+              AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="24.0">
+            <children>
+                <Label fx:id="lblHeading" minHeight="40.0" minWidth="190.0" onMouseClicked="#headingClicked"
+                       prefHeight="40.0" prefWidth="501.0" styleClass="heading-label" text="ONLINE FORUM">
+                    <HBox.margin>
+                        <Insets/>
+                    </HBox.margin>
+                </Label>
+                <ButtonBar buttonMinWidth="20.0" minHeight="40.0" minWidth="732.0">
+                    <buttons>
+                        <Button fx:id="btnHome" accessibleRole="MENU_BUTTON" layoutX="978.0" layoutY="14.0"
+                                mnemonicParsing="false" onMouseClicked="#btnHomeClicked" text="Home"/>
+                        <Button fx:id="btnThreads" layoutX="912.0" layoutY="14.0" mnemonicParsing="false"
+                                onMouseClicked="#btnThreadsClicked" text="Threads"/>
+                        <MenuButton fx:id="btnMenu" mnemonicParsing="false" styleClass="my-drop-down-menu">
+                            <items>
+                                <MenuItem fx:id="menuItemSettings" mnemonicParsing="false" onAction="#openSettings"
+                                          style="-fx-graphic: url('http://icons.iconarchive.com/icons/martz90/circle/16/settings-icon.png');"
+                                          text="Settings">
+                                    <styleClass>
+                                        <String fx:value="my-drop-down-menu-list-item"/>
+                                        <String fx:value="my-drop-down-menu-list-item:hover"/>
+                                    </styleClass>
+                                </MenuItem>
+                                <MenuItem fx:id="menuItemLogout" mnemonicParsing="false" onAction="#logout"
+                                          style="-fx-graphic: url('http://icons.iconarchive.com/icons/icons8/windows-8/16/User-Interface-Logout-icon.png');"
+                                          text="Logout">
+                                    <styleClass>
+                                        <String fx:value="my-drop-down-menu-list-item"/>
+                                        <String fx:value="my-drop-down-menu-list-item:hover"/>
+                                    </styleClass>
+                                </MenuItem>
+                            </items>
+                        </MenuButton>
+                    </buttons>
+                </ButtonBar>
+            </children>
+        </HBox>
+        <VBox layoutX="186.0" layoutY="768.0" prefHeight="91.0" prefWidth="1035.0" AnchorPane.bottomAnchor="0.0"
+              AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"/>
+    </children>
 </AnchorPane>
