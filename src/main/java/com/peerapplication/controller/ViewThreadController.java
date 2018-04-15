@@ -94,14 +94,6 @@ public class ViewThreadController implements Initializable, UIUpdater {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Thread thread = new Thread();
-        thread.setTitle("How to get width and height of the javafx.scene.text.Text control? [duplicate] sdhakshdkashdkjk hjsakhasjkfhjk haklasjlkjklsjvskljkl \n jlkjdsklfjsdlkj lksjdljfsdklj klsjvlksdjklj kljskglsdkj");
-        thread.setUserID(10005000);
-        thread.setDescription("As in the subject - how one can get width and height of the " +
-                "javafx.scene.text.Text control? This question refers to an example situation, where one " +
-                "want to create background for the Text in a form of javafx.scene.shape.Rectangle, whose size depends on the size of Text.");
-        thread.setTimestamp((new Date(System.currentTimeMillis())).getTime());
-        init(thread);
     }
 
     public void init(Thread thread) {

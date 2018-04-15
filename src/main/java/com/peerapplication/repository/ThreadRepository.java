@@ -15,6 +15,11 @@ public class ThreadRepository {
     private DBConnection dbConnection;
     private ReadWriteLock readWriteLock;
 
+    private ThreadRepository() {
+        dbConnection = DBConnection.getDBConnection();
+        readWriteLock = new ReentrantReadWriteLock();
+    }
+
     public static ThreadRepository getThreadRepository() {
         if (threadRepository == null) {
             synchronized (ThreadRepository.class) {
@@ -22,11 +27,6 @@ public class ThreadRepository {
             }
         }
         return threadRepository;
-    }
-
-    private ThreadRepository() {
-        dbConnection = DBConnection.getDBConnection();
-        readWriteLock = new ReentrantReadWriteLock();
     }
 
     public void getThread(String threadID, Thread thread) {
@@ -101,7 +101,7 @@ public class ThreadRepository {
     public ArrayList<Thread> getLatestThreads(long timestamp) {
         ArrayList<Thread> threads = new ArrayList<>();
         Connection connection = dbConnection.getConnection();
-        String getThreadsQuery = "SELECT * FROM thread WHERE posted_time = ? ORDER BY posted_time ASC";
+        String getThreadsQuery = "SELECT * FROM thread WHERE posted_time = ? ORDER BY posted_time DESC";
         try {
             PreparedStatement getLatestThreadsPsmt = connection.prepareStatement(getThreadsQuery);
             getLatestThreadsPsmt.setLong(1, timestamp);

@@ -29,16 +29,6 @@ public class VoteHandler extends Handler {
         return voteHandler;
     }
 
-    public void postVote(Vote vote) {
-        System.out.println("Posting Vote");
-        VoteMessage voteMessage = new VoteMessage();
-        voteMessage.setVote(vote);
-        PeerHandler.knownPeersReadLock();
-        PeerHandler.getSenderController().sendToAll(voteMessage, new ArrayList<>(PeerHandler.getKnownPeers().values()));
-        PeerHandler.knownPeersReadUnlock();
-        System.out.println("Vote posted!");
-    }
-
     private static void handleVote(VoteMessage voteMessage) {
         System.out.println("Handling Vote");
         voteHandleLock.writeLock().lock();
@@ -64,6 +54,16 @@ public class VoteHandler extends Handler {
         }
         voteHandleLock.writeLock().unlock();
 
+    }
+
+    public void postVote(Vote vote) {
+        System.out.println("Posting Vote");
+        VoteMessage voteMessage = new VoteMessage();
+        voteMessage.setVote(vote);
+        PeerHandler.knownPeersReadLock();
+        PeerHandler.getSenderController().sendToAll(voteMessage, new ArrayList<>(PeerHandler.getKnownPeers().values()));
+        PeerHandler.knownPeersReadUnlock();
+        System.out.println("Vote posted!");
     }
 
     @Override

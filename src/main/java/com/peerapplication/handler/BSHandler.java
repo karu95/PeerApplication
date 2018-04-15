@@ -82,7 +82,6 @@ public class BSHandler extends Handler {
     @Override
     public void handleFailedMessage(Message message, Peer peer) {
         super.handleFailedMessage(message, peer);
-        System.out.println("Failed Message : " + message.getTitle());
-        System.out.println("No Network Connection");
+        System.out.println("Unable to connect BS");
     }
 }

@@ -26,7 +26,8 @@
                         <TextField fx:id="txtEmail" layoutX="82.0" layoutY="339.0" prefHeight="31.0" prefWidth="232.0"
                                    promptText="E-Mail Address"/>
                         <Button fx:id="btnUpdate" layoutX="82.0" layoutY="392.0" mnemonicParsing="false"
-                                onMouseClicked="#register" prefHeight="31.0" prefWidth="232.0" text="Update Profile"/>
+                                onMouseClicked="#updateSettings" prefHeight="31.0" prefWidth="232.0"
+                                text="Update Profile"/>
                         <Label fx:id="statusLabelUser" alignment="CENTER" layoutX="83.0" layoutY="252.0"
                                prefHeight="17.0" prefWidth="232.0" text="Click on image to upload your photo"/>
                         <PasswordField fx:id="txtOldPwd" layoutX="377.0" layoutY="135.0" prefHeight="31.0"
@@ -36,7 +37,8 @@
                         <PasswordField fx:id="txtCnrmPwd" layoutX="377.0" layoutY="245.0" prefHeight="31.0"
                                        prefWidth="232.0" promptText="Confirm Password"/>
                         <Button fx:id="btnChangePwd" layoutX="377.0" layoutY="298.0" mnemonicParsing="false"
-                                prefHeight="31.0" prefWidth="232.0" text="Change Password"/>
+                                onMouseClicked="#changePassword" prefHeight="31.0" prefWidth="232.0"
+                                text="Change Password"/>
                         <Separator layoutX="346.0" layoutY="70.0" orientation="VERTICAL" prefHeight="365.0"
                                    prefWidth="1.0"/>
                         <Label fx:id="statusLabelPwd" alignment="CENTER" layoutX="377.0" layoutY="97.0"

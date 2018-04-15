@@ -15,6 +15,11 @@ public class TagRepository {
     private DBConnection dbConnection;
     private ReadWriteLock readWriteLock;
 
+    private TagRepository() {
+        dbConnection = DBConnection.getDBConnection();
+        readWriteLock = new ReentrantReadWriteLock();
+    }
+
     public static TagRepository getTagRepository() {
         if (tagRepository == null) {
             synchronized (TagRepository.class) {
@@ -22,11 +27,6 @@ public class TagRepository {
             }
         }
         return tagRepository;
-    }
-
-    private TagRepository() {
-        dbConnection = DBConnection.getDBConnection();
-        readWriteLock = new ReentrantReadWriteLock();
     }
 
     public ArrayList<Tag> getTags(String threadID) {

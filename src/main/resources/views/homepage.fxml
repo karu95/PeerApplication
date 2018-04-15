@@ -27,8 +27,6 @@
                                                    AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="50.0"
                                                    AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="46.0">
                                             <columns>
-                                                <TableColumn fx:id="colAnswersLatest" editable="false" prefWidth="75.0"
-                                                             sortable="false" text="Answers"/>
                                                 <TableColumn fx:id="colTitleLatest" editable="false" maxWidth="-1.0"
                                                              minWidth="600.0" prefWidth="-1.0" sortable="false"
                                                              text="Title"/>
@@ -45,8 +43,6 @@
                                         <TableView fx:id="myThreadsTable" editable="true" layoutX="50.0" layoutY="46.0"
                                                    prefHeight="551.0" prefWidth="676.0">
                                             <columns>
-                                                <TableColumn fx:id="colAnswerMyThreads" editable="false"
-                                                             prefWidth="75.0" sortable="false" text="Answers"/>
                                                 <TableColumn fx:id="colTitleMyThreads" editable="false" maxWidth="-1.0"
                                                              minWidth="600.0" prefWidth="-1.0" sortable="false"
                                                              text="Title"/>
@@ -82,11 +78,11 @@
                 </ImageView>
                 <Label fx:id="lblName" alignment="CENTER" layoutX="14.0" layoutY="231.0" prefHeight="32.0"
                        prefWidth="190.0" style="-fx-background-color: darkgray;" text="User001"/>
-                <Label fx:id="lblPostedThreads" layoutX="14.0" layoutY="275.0" prefHeight="32.0" prefWidth="190.0"
+                <Label fx:id="lblPostedThreads" layoutX="14.0" layoutY="362.0" prefHeight="32.0" prefWidth="190.0"
                        style="-fx-background-color: darkgray;" text="Posted Threads :"/>
-                <Label fx:id="lblAnsweredThreads" layoutX="14.0" layoutY="318.0" prefHeight="32.0" prefWidth="190.0"
-                       style="-fx-background-color: darkgray;" text="Answered Threads :"/>
-                <Label fx:id="lblRegDate" layoutX="14.0" layoutY="362.0" prefHeight="32.0" prefWidth="190.0"
+                <Label fx:id="lblEmail" layoutX="14.0" layoutY="275.0" prefHeight="32.0" prefWidth="190.0"
+                       style="-fx-background-color: darkgray;" text="Email :"/>
+                <Label fx:id="lblRegDate" layoutX="14.0" layoutY="320.0" prefHeight="32.0" prefWidth="190.0"
                        style="-fx-background-color: darkgray;" text="Since">
                     <font>
                         <Font size="11.0"/>

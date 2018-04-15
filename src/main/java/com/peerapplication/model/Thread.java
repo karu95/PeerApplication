@@ -13,13 +13,30 @@ public class Thread implements Serializable {
     private ArrayList<Tag> tags;
     private ArrayList<Answer> answers;
     private int userID;
-    private int answerCount;
 
     public Thread() {
     }
 
     public Thread(String title) {
         this.title = title;
+    }
+
+    public static ArrayList<Thread> getUserThreads(int userID) {
+        ThreadRepository threadRepository = ThreadRepository.getThreadRepository();
+        return threadRepository.getThreads(userID);
+    }
+
+    public static ArrayList<Thread> getLatestThreads(long timestamp) {
+        ThreadRepository threadRepository = ThreadRepository.getThreadRepository();
+        return threadRepository.getLatestThreads(timestamp);
+    }
+
+    public static void saveThreads(ArrayList<Thread> threads) {
+        if (!threads.isEmpty()) {
+            for (Thread thread : threads) {
+                thread.saveThread();
+            }
+        }
     }
 
     public ArrayList<Answer> getAnswers() {
@@ -105,38 +122,5 @@ public class Thread implements Serializable {
             ThreadRepository threadRepository = ThreadRepository.getThreadRepository();
             threadRepository.getThread(threadID, this);
         }
-        if (threadID.equals(this.threadID)) {
-            this.answerCount = Answer.getAnswerCountForThread(threadID);
-        }
-    }
-
-    public static ArrayList<Thread> getUserThreads(int userID) {
-        ThreadRepository threadRepository = ThreadRepository.getThreadRepository();
-        return threadRepository.getThreads(userID);
-    }
-
-    public static ArrayList<Thread> getLatestThreads(long timestamp) {
-        ThreadRepository threadRepository = ThreadRepository.getThreadRepository();
-        return threadRepository.getLatestThreads(timestamp);
-    }
-
-    public static void saveThreads(ArrayList<Thread> threads) {
-        if (!threads.isEmpty()) {
-            for (Thread thread : threads) {
-                thread.saveThread();
-            }
-        }
-    }
-
-    public static void getThreadPartially(String threadID) {
-
-    }
-
-    public int getAnswerCount() {
-        return answerCount;
-    }
-
-    public void setAnswerCount(int answerCount) {
-        this.answerCount = answerCount;
     }
 }

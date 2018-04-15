@@ -3,6 +3,7 @@ package com.peerapplication.model;
 
 import com.peerapplication.repository.UserRepository;
 import com.peerapplication.util.ImagePack;
+import com.peerapplication.util.SystemUser;
 import net.coobird.thumbnailator.Thumbnails;
 
 import javax.imageio.ImageIO;
@@ -30,6 +31,22 @@ public class User implements Serializable {
         this.name = name;
     }
 
+    public static ArrayList<User> getLatestUsers(long timestamp) {
+        UserRepository userRepository = UserRepository.getUserRepository();
+        return userRepository.getLatestUsers(timestamp);
+    }
+
+    public static void saveUsers(ArrayList<User> users) {
+        if (!users.isEmpty()) {
+            for (User user : users) {
+                try {
+                    user.saveUser();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
 
     public String getEmail() {
         return email;
@@ -89,7 +106,7 @@ public class User implements Serializable {
         userRepository.saveUser(this);
         if (userImage != null) {
             Thumbnails.of(userImage.getImage()).scale(0.8).outputFormat("jpg").toFile(new File("/" +
-                    System.getProperty("user.dir") + "/images/" + String.valueOf(getUserID())));
+                    System.getProperty("user.dir") + SystemUser.getImageLocation() + String.valueOf(getUserID())));
         }
     }
 
@@ -100,23 +117,6 @@ public class User implements Serializable {
         if (!imageURL.isEmpty()) {
             this.userImage = new ImagePack(ImageIO.read(new File("/" + System.getProperty("user.dir") +
                     "/images/" + String.valueOf(getUserID()))));
-        }
-    }
-
-    public static ArrayList<User> getLatestUsers(long timestamp) {
-        UserRepository userRepository = UserRepository.getUserRepository();
-        return userRepository.getLatestUsers(timestamp);
-    }
-
-    public static void saveUsers(ArrayList<User> users) {
-        if (!users.isEmpty()) {
-            for (User user : users) {
-                try {
-                    user.saveUser();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
         }
     }
 

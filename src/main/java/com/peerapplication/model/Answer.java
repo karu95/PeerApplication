@@ -34,9 +34,22 @@ public class Answer implements Serializable {
         return answerRepository.getAnswers(threadID);
     }
 
-    public static int getAnswerCount(int userID){
+    public static int getAnswerCount(int userID) {
         AnswerRepository answerRepository = AnswerRepository.getAnswerRepository();
         return answerRepository.getAnswerCount(userID);
+    }
+
+    public static ArrayList<Answer> getLatestAnswers(long timestamp) {
+        AnswerRepository answerRepository = AnswerRepository.getAnswerRepository();
+        return answerRepository.getLatestAnswers(timestamp);
+    }
+
+    public static void saveAnswers(ArrayList<Answer> answers) {
+        if (!answers.isEmpty()) {
+            for (Answer answer : answers) {
+                answer.saveAnswer();
+            }
+        }
     }
 
     public String getAnswerID() {
@@ -102,23 +115,5 @@ public class Answer implements Serializable {
     public void saveAnswer() {
         AnswerRepository answerRepo = AnswerRepository.getAnswerRepository();
         answerRepo.saveAnswer(this);
-    }
-
-    public static ArrayList<Answer> getLatestAnswers(long timestamp) {
-        AnswerRepository answerRepository = AnswerRepository.getAnswerRepository();
-        return answerRepository.getLatestAnswers(timestamp);
-    }
-
-    public static void saveAnswers(ArrayList<Answer> answers) {
-        if (!answers.isEmpty()) {
-            for (Answer answer : answers) {
-                answer.saveAnswer();
-            }
-        }
-    }
-
-    public static int getAnswerCountForThread(String threadID) {
-        AnswerRepository answerRepository = AnswerRepository.getAnswerRepository();
-        return answerRepository.getAnswerCountForThread(threadID);
     }
 }

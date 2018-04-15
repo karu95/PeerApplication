@@ -96,13 +96,12 @@ public class PeerHandler {
         PeerHandler.userPort = port;
         System.out.println("Listening on " + port);
         receiverController = new ReceiverController(userPort);
-        PeerHandler.userAddress = getLocalIPAddress();
         serverWorker.execute(receiverController);
         registerHandler("JoinMessage", KnownPeerHandler.getKnownPeerHandler());
         registerHandler("PeerInfoMessage", KnownPeerHandler.getKnownPeerHandler());
     }
 
-    static String getLocalIPAddress() {
+    private static String getLocalIPAddress() {
         InetAddress inetAddress = null;
         try {
             for (
@@ -123,7 +122,6 @@ public class PeerHandler {
                         continue;
                     }
                     inetAddress = inet_addr;
-                    userAddress = inet_addr.getHostAddress();
                     System.out.println(
                             "  address: " + inet_addr.getHostAddress() +
                                     "/" + addr.getNetworkPrefixLength()
@@ -137,6 +135,19 @@ public class PeerHandler {
             return inetAddress.getHostAddress();
         }
         return "No network Connection!";
+    }
+
+    public static boolean checkConnection() {
+        String localIPAddress = getLocalIPAddress();
+        if (!localIPAddress.equals("No network Connection!")) {
+            if (userAddress == null) {
+                userAddress = localIPAddress;
+                return true;
+            } else if (userAddress.equals(localIPAddress)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public static void startHeartBeat() {

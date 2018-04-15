@@ -101,7 +101,7 @@ public class Main extends Application {
         });
         primaryStage.setResizable(false);
         primaryStage.setScene(scene);
-        primaryStage.setTitle("Login");
+        primaryStage.setTitle("BS Information");
         primaryStage.show();
     }
 }

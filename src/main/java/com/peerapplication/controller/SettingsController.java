@@ -82,12 +82,17 @@ public class SettingsController {
     }
 
     @FXML
-    void register(MouseEvent event) {
+    void updateSettings(MouseEvent event) {
 
     }
 
     @FXML
     void selectImage(MouseEvent event) {
+
+    }
+
+    @FXML
+    void changePassword(MouseEvent event) {
 
     }
 

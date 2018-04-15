@@ -1,10 +1,12 @@
 package com.peerapplication.controller;
 
-import com.peerapplication.handler.BSHandler;
+import com.peerapplication.model.Notification;
+import com.peerapplication.model.Thread;
 import com.peerapplication.model.User;
-import com.peerapplication.util.SystemUser;
 import com.peerapplication.util.UIUpdater;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -16,11 +18,11 @@ import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import message.LogoutMessage;
 import message.Message;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.ResourceBundle;
 
@@ -33,34 +35,28 @@ public class HomeController implements Initializable, UIUpdater {
     private Tab latestThreadTab;
 
     @FXML
-    private TableView<?> latestThreadsTable;
+    private TableView<Thread> latestThreadsTable;
 
     @FXML
-    private TableColumn<?, ?> colAnswersLatest;
-
-    @FXML
-    private TableColumn<?, ?> colTitleLatest;
+    private TableColumn<Thread, String> colTitleLatest;
 
     @FXML
     private Tab myThreadTab;
 
     @FXML
-    private TableView<?> myThreadsTable;
+    private TableView<Thread> myThreadsTable;
 
     @FXML
-    private TableColumn<?, ?> colAnswerMyThreads;
-
-    @FXML
-    private TableColumn<?, ?> colTitleMyThreads;
+    private TableColumn<Thread, String> colTitleMyThreads;
 
     @FXML
     private Tab notificationTab;
 
     @FXML
-    private TableView<?> notificationsTable;
+    private TableView<Notification> notificationsTable;
 
     @FXML
-    private TableColumn<?, ?> colNotifications;
+    private TableColumn<Notification, String> colNotifications;
 
     @FXML
     private ImageView userImage;
@@ -72,7 +68,7 @@ public class HomeController implements Initializable, UIUpdater {
     private Label lblPostedThreads;
 
     @FXML
-    private Label lblAnsweredThreads;
+    private Label lblEmail;
 
     @FXML
     private Label lblRegDate;
@@ -100,34 +96,37 @@ public class HomeController implements Initializable, UIUpdater {
 
     private User user;
 
+    private ObservableList<Thread> latestThreads;
+
+    private ObservableList<Thread> myThreads;
+
     @FXML
     void btnHomeClicked(MouseEvent event) {
-
+        Stage stage = (Stage) btnPostThread.getScene().getWindow();
+        NavigationBar.openHome(stage);
     }
 
     @FXML
     void btnThreadsClicked(MouseEvent event) {
-
+        Stage stage = (Stage) btnPostThread.getScene().getWindow();
+        NavigationBar.openThreads(stage);
     }
 
     @FXML
     void headingClicked(MouseEvent event) {
-
+        btnHomeClicked(event);
     }
 
     @FXML
     void logout(ActionEvent event) throws IOException {
-        LogoutMessage logoutMessage = new LogoutMessage(SystemUser.getSystemUserID());
-        BSHandler.logout(logoutMessage);
         Stage stage = (Stage) btnPostThread.getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("/views/login.fxml"));
-        stage.setScene(new Scene(root, 1035, 859));
-        stage.show();
+        NavigationBar.logout(stage);
     }
 
     @FXML
     void openSettings(ActionEvent event) {
-
+        Stage stage = (Stage) btnPostThread.getScene().getWindow();
+        NavigationBar.openSettings(stage);
     }
 
     @FXML
@@ -159,6 +158,16 @@ public class HomeController implements Initializable, UIUpdater {
             }
         });
 
+        latestThreads = FXCollections.observableArrayList(Thread.getLatestThreads(0));
+        myThreads = FXCollections.observableArrayList(Thread.getUserThreads(user.getUserID()));
+
+        if (notificationTab.isSelected()) {
+
+        } else if (myThreadTab.isSelected()) {
+
+        } else if (latestThreadTab.isSelected()) {
+
+        }
 
     }
 
@@ -174,7 +183,9 @@ public class HomeController implements Initializable, UIUpdater {
             public void run() {
                 userImage.setImage(SwingFXUtils.toFXImage(user.getUserImage(), null));
                 lblName.setText(user.getName());
-                lblRegDate.setText("Joined on " + String.valueOf(new Date(user.getRegisterTime())));
+                lblRegDate.setText("Joined on " + String.valueOf(new SimpleDateFormat("yyyy-MM-dd").format(new Date(user.getRegisterTime()))));
+                lblPostedThreads.setText(String.valueOf(Thread.getUserThreads(user.getUserID())));
+                lblEmail.setText(user.getEmail());
             }
         });
     }

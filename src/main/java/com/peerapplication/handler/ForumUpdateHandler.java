@@ -68,18 +68,6 @@ public class ForumUpdateHandler extends Handler {
         }
     }
 
-    public void handle(Message message) {
-        if (message instanceof ForumUpdateMessage) {
-            ForumUpdateHandler.handleUpdate((ForumUpdateMessage) message);
-        }
-    }
-
-    @Override
-    public void handleFailedMessage(Message message, Peer peer) {
-        super.handleFailedMessage(message, peer);
-        requestUpdate();
-    }
-
     public static void checkForumUpdate() {
         if (!forumUpdated) {
             synchronized (forumUpdated) {
@@ -99,5 +87,17 @@ public class ForumUpdateHandler extends Handler {
             forumUpdated.notifyAll();
             System.out.println("Forum Updated");
         }
+    }
+
+    public void handle(Message message) {
+        if (message instanceof ForumUpdateMessage) {
+            ForumUpdateHandler.handleUpdate((ForumUpdateMessage) message);
+        }
+    }
+
+    @Override
+    public void handleFailedMessage(Message message, Peer peer) {
+        super.handleFailedMessage(message, peer);
+        requestUpdate();
     }
 }

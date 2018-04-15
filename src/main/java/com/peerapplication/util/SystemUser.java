@@ -4,6 +4,7 @@ public class SystemUser {
     private static int systemUserID;
     private static int accountType;
     private static long lastSeen;
+    private static String imageLocation;
 
     public static int getAccountType() {
         return accountType;
@@ -27,5 +28,12 @@ public class SystemUser {
 
     public static void setLastSeen(long lastSeen) {
         SystemUser.lastSeen = lastSeen;
+    }
+
+    public static String getImageLocation() {
+        if (imageLocation == null) {
+            imageLocation = "/images" + String.valueOf(systemUserID) + "/";
+        }
+        return imageLocation;
     }
 }
