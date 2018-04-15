@@ -5,9 +5,8 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 <?import java.lang.String?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-            minWidth="-Infinity"
-            prefHeight="859.0" prefWidth="1035.0" xmlns="http://javafx.com/javafx/8.0.141"
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="859.0"
+            prefWidth="1035.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.peerapplication.controller.PostThreadController">
     <children>
         <AnchorPane layoutX="29.0" layoutY="64.0" minHeight="681.0" minWidth="995.0" AnchorPane.leftAnchor="20.0"
@@ -65,7 +64,7 @@
                                 onMouseClicked="#btnThreadsClicked" text="Threads"/>
                         <MenuButton fx:id="btnMenu" mnemonicParsing="false" styleClass="my-drop-down-menu">
                             <items>
-                                <MenuItem fx:id="menuItemSettings" mnemonicParsing="false"
+                                <MenuItem fx:id="menuItemSettings" mnemonicParsing="false" onAction="#openSettings"
                                           style="-fx-graphic: url('http://icons.iconarchive.com/icons/martz90/circle/16/settings-icon.png');"
                                           text="Settings">
                                     <styleClass>
@@ -73,7 +72,7 @@
                                         <String fx:value="my-drop-down-menu-list-item:hover"/>
                                     </styleClass>
                                 </MenuItem>
-                                <MenuItem fx:id="menuItemLogout" mnemonicParsing="false"
+                                <MenuItem fx:id="menuItemLogout" mnemonicParsing="false" onAction="#logout"
                                           style="-fx-graphic: url('http://icons.iconarchive.com/icons/icons8/windows-8/16/User-Interface-Logout-icon.png');"
                                           text="Logout">
                                     <styleClass>

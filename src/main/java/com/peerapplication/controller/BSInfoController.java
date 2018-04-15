@@ -1,10 +1,8 @@
 package com.peerapplication.controller;
 
+import com.peerapplication.util.ControllerUtility;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -43,11 +41,7 @@ public class BSInfoController implements Initializable {
             PeerHandler.getBS().setPeerAddress(ipAddress);
             PeerHandler.getBS().setPeerPort(port);
             Stage primaryStage = (Stage) btnConnect.getScene().getWindow();
-            Parent parent = FXMLLoader.load(getClass().getResource("/views/login.fxml"));
-            Scene scene = new Scene(parent, 1035, 859);
-            primaryStage.setScene(scene);
-            primaryStage.setTitle("Login");
-            primaryStage.show();
+            ControllerUtility.login(primaryStage);
         }
     }
 

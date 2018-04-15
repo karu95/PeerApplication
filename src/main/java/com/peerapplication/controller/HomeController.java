@@ -3,6 +3,7 @@ package com.peerapplication.controller;
 import com.peerapplication.model.Notification;
 import com.peerapplication.model.Thread;
 import com.peerapplication.model.User;
+import com.peerapplication.util.ControllerUtility;
 import com.peerapplication.util.UIUpdater;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -103,13 +104,13 @@ public class HomeController implements Initializable, UIUpdater {
     @FXML
     void btnHomeClicked(MouseEvent event) {
         Stage stage = (Stage) btnPostThread.getScene().getWindow();
-        NavigationBar.openHome(stage);
+        ControllerUtility.openHome(stage);
     }
 
     @FXML
-    void btnThreadsClicked(MouseEvent event) {
+    void btnThreadsClicked(MouseEvent event) throws IOException {
         Stage stage = (Stage) btnPostThread.getScene().getWindow();
-        NavigationBar.openThreads(stage);
+        ControllerUtility.openThreads(stage);
     }
 
     @FXML
@@ -120,13 +121,13 @@ public class HomeController implements Initializable, UIUpdater {
     @FXML
     void logout(ActionEvent event) throws IOException {
         Stage stage = (Stage) btnPostThread.getScene().getWindow();
-        NavigationBar.logout(stage);
+        ControllerUtility.logout(stage);
     }
 
     @FXML
     void openSettings(ActionEvent event) {
         Stage stage = (Stage) btnPostThread.getScene().getWindow();
-        NavigationBar.openSettings(stage);
+        ControllerUtility.openSettings(stage);
     }
 
     @FXML

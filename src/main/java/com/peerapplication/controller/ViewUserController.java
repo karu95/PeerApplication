@@ -75,7 +75,7 @@ public class ViewUserController implements Initializable, UIUpdater {
 
     @FXML
     void headingClicked(MouseEvent event) {
-
+        btnHomeClicked(event);
     }
 
     @FXML

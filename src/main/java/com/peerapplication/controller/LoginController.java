@@ -2,10 +2,7 @@ package com.peerapplication.controller;
 
 import com.peerapplication.handler.BSHandler;
 import com.peerapplication.model.User;
-import com.peerapplication.util.Main;
-import com.peerapplication.util.PasswordEncrypter;
-import com.peerapplication.util.SystemUser;
-import com.peerapplication.util.UIUpdater;
+import com.peerapplication.util.*;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -105,13 +102,7 @@ public class LoginController implements Initializable, UIUpdater {
                         FXMLLoader loader;
                         System.out.println(user.getName());
                         if (user.getUserID() == SystemUser.getSystemUserID()) {
-                            loader = new FXMLLoader(getClass().getResource("/views/homepage.fxml"));
-                            Parent root = loader.load();
-                            HomeController controller = loader.getController();
-                            controller.init(user);
-                            Scene scene = new Scene(root, 1035, 859);
-                            stage.setTitle("Home");
-                            stage.setScene(scene);
+                            ControllerUtility.openHome(stage);
                         } else {
                             loader = new FXMLLoader(getClass().getResource("/views/register.fxml"));
                             Parent root = loader.load();

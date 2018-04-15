@@ -2,13 +2,11 @@ package com.peerapplication.controller;
 
 import com.peerapplication.handler.UserHandler;
 import com.peerapplication.model.User;
+import com.peerapplication.util.ControllerUtility;
 import com.peerapplication.util.SystemUser;
 import com.peerapplication.validator.UserValidator;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -25,6 +23,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Date;
 import java.util.ResourceBundle;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class RegisterController implements Initializable {
 
@@ -64,15 +64,15 @@ public class RegisterController implements Initializable {
             }
             user.setRegisterTime(new Date(System.currentTimeMillis()).getTime());
             user.saveUser();
-            UserHandler.postUser(user);
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/homepage.fxml"));
-            Parent root = loader.load();
-            HomeController controller = loader.getController();
-            controller.init(user);
+            ExecutorService userService = Executors.newSingleThreadExecutor();
+            userService.execute(new Runnable() {
+                @Override
+                public void run() {
+                    UserHandler.postUser(user);
+                }
+            });
             Stage stage = (Stage) btnRegister.getScene().getWindow();
-            Scene scene = new Scene(root, 1035, 859);
-            stage.setTitle("Home");
-            stage.setScene(scene);
+            ControllerUtility.openHome(stage);
         } else {
             statusLabel.setText(validity);
         }
@@ -86,7 +86,6 @@ public class RegisterController implements Initializable {
             Image image = new Image(file.toURI().toString());
             userImage.setImage(image);
         }
-
     }
 
     @Override

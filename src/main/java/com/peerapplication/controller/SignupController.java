@@ -1,6 +1,7 @@
 package com.peerapplication.controller;
 
 import com.peerapplication.handler.BSHandler;
+import com.peerapplication.util.ControllerUtility;
 import com.peerapplication.util.Main;
 import com.peerapplication.util.PasswordEncrypter;
 import com.peerapplication.util.UIUpdater;
@@ -87,10 +88,7 @@ public class SignupController implements Initializable, UIUpdater {
     @FXML
     void openLogin(MouseEvent event) throws IOException {
         Stage stage = (Stage) btnLogin.getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("/views/login.fxml"));
-        Scene scene = new Scene(root, 1035, 859);
-        stage.setTitle("Login");
-        stage.setScene(scene);
+        ControllerUtility.login(stage);
     }
 
 

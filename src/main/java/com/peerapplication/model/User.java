@@ -39,11 +39,7 @@ public class User implements Serializable {
     public static void saveUsers(ArrayList<User> users) {
         if (!users.isEmpty()) {
             for (User user : users) {
-                try {
-                    user.saveUser();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                user.saveUser();
             }
         }
     }
@@ -101,22 +97,30 @@ public class User implements Serializable {
         userRepo.getUser(userID, this);
     }
 
-    public void saveUser() throws IOException {
+    public void saveUser() {
         UserRepository userRepository = UserRepository.getUserRepository();
         userRepository.saveUser(this);
         if (userImage != null) {
-            Thumbnails.of(userImage.getImage()).scale(0.8).outputFormat("jpg").toFile(new File("/" +
-                    System.getProperty("user.dir") + SystemUser.getImageLocation() + String.valueOf(getUserID())));
+            try {
+                Thumbnails.of(userImage.getImage()).scale(0.8).outputFormat("jpg").toFile(new File("/" +
+                        System.getProperty("user.dir") + SystemUser.getImageLocation() + String.valueOf(getUserID())));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
-    public void getUserWithImage(int userID) throws IOException {
+    public void getUserWithImage(int userID) {
         if (userID != this.userID) {
             getUser(userID);
         }
         if (!imageURL.isEmpty()) {
-            this.userImage = new ImagePack(ImageIO.read(new File("/" + System.getProperty("user.dir") +
-                    "/images/" + String.valueOf(getUserID()))));
+            try {
+                this.userImage = new ImagePack(ImageIO.read(new File("/" + System.getProperty("user.dir") +
+                        "/images/" + String.valueOf(getUserID()))));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 

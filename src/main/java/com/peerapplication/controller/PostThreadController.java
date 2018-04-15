@@ -3,13 +3,12 @@ package com.peerapplication.controller;
 import com.peerapplication.handler.ThreadHandler;
 import com.peerapplication.model.Tag;
 import com.peerapplication.model.Thread;
+import com.peerapplication.util.ControllerUtility;
 import com.peerapplication.util.IDGenerator;
 import com.peerapplication.util.SystemUser;
 import com.peerapplication.validator.ThreadValidator;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
@@ -58,17 +57,31 @@ public class PostThreadController {
 
     @FXML
     void btnHomeClicked(MouseEvent event) {
-
+        Stage stage = (Stage) btnPost.getScene().getWindow();
+        ControllerUtility.openHome(stage);
     }
 
     @FXML
-    void btnThreadsClicked(MouseEvent event) {
-
+    void btnThreadsClicked(MouseEvent event) throws IOException {
+        Stage stage = (Stage) btnPost.getScene().getWindow();
+        ControllerUtility.openThreads(stage);
     }
 
     @FXML
     void headingClicked(MouseEvent event) {
+        btnHomeClicked(event);
+    }
 
+    @FXML
+    void logout(ActionEvent event) throws IOException {
+        Stage stage = (Stage) btnPost.getScene().getWindow();
+        ControllerUtility.logout(stage);
+    }
+
+    @FXML
+    void openSettings(ActionEvent event) {
+        Stage stage = (Stage) btnPost.getScene().getWindow();
+        ControllerUtility.openSettings(stage);
     }
 
     @FXML
@@ -96,15 +109,8 @@ public class PostThreadController {
                         ThreadHandler.postThread(thread);
                     }
                 });
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/viewthread.fxml"));
-                Parent parent = loader.load();
-                ViewThreadController viewThreadController = loader.getController();
-                viewThreadController.init(thread);
-                Scene scene = new Scene(parent, 1035, 859);
                 Stage stage = (Stage) btnPost.getScene().getWindow();
-                stage.setScene(scene);
-                stage.setTitle("View Thread");
-                stage.show();
+                ControllerUtility.viewThread(stage, thread);
             }
         } else {
             statusLabel.setText(validity);
