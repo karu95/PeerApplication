@@ -11,8 +11,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import message.Message;
-import message.ThreadMessage;
-import message.UserInfoMessage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -27,7 +25,13 @@ public class ViewUserController implements Initializable, UIUpdater {
     private Tab myThreadTab;
 
     @FXML
-    private ListView<?> lstPostedThreads;
+    private TableView<?> postedThreadsTable;
+
+    @FXML
+    private TableColumn<?, ?> colAnswers;
+
+    @FXML
+    private TableColumn<?, ?> colTitle;
 
     @FXML
     private ImageView userImage;
@@ -93,19 +97,14 @@ public class ViewUserController implements Initializable, UIUpdater {
         ControllerUtility.openSettings(stage);
     }
 
+    @FXML
+    void openThread(MouseEvent event) {
+
+    }
+
     @Override
     public void updateUI(Message message) {
-        if (message instanceof UserInfoMessage) {
-            UserInfoMessage userInfoMessage = (UserInfoMessage) message;
-            if (userInfoMessage.getUser().getUserID() == user.getUserID()) {
 
-            }
-        } else if (message instanceof ThreadMessage) {
-            ThreadMessage threadMessage = (ThreadMessage) message;
-            if (threadMessage.getThread().getUserID() == user.getUserID()) {
-
-            }
-        }
     }
 
     @Override
@@ -115,5 +114,6 @@ public class ViewUserController implements Initializable, UIUpdater {
 
     public void init(User user) {
         this.user = user;
+
     }
 }

@@ -1,5 +1,6 @@
 package com.peerapplication.controller;
 
+import com.peerapplication.model.Notification;
 import com.peerapplication.model.Thread;
 import com.peerapplication.model.User;
 import com.peerapplication.util.ControllerUtility;
@@ -17,10 +18,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import message.AnswerMessage;
 import message.Message;
-import message.ThreadMessage;
-import message.VoteMessage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -37,19 +35,28 @@ public class HomeController implements Initializable, UIUpdater {
     private Tab latestThreadTab;
 
     @FXML
-    private ListView<?> lstLatestThreads;
+    private TableView<Thread> latestThreadsTable;
+
+    @FXML
+    private TableColumn<Thread, String> colTitleLatest;
 
     @FXML
     private Tab myThreadTab;
 
     @FXML
-    private ListView<?> lstMyThread;
+    private TableView<Thread> myThreadsTable;
+
+    @FXML
+    private TableColumn<Thread, String> colTitleMyThreads;
 
     @FXML
     private Tab notificationTab;
 
     @FXML
-    private ListView<?> lstNotifications;
+    private TableView<Notification> notificationsTable;
+
+    @FXML
+    private TableColumn<Notification, String> colNotifications;
 
     @FXML
     private ImageView userImage;
@@ -130,6 +137,20 @@ public class HomeController implements Initializable, UIUpdater {
         threadStage.show();
     }
 
+    @FXML
+    void openLatestThread(MouseEvent event) {
+
+    }
+
+    @FXML
+    void openMyThread(MouseEvent event) {
+
+    }
+
+    @FXML
+    void openNotification(MouseEvent event) {
+
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -163,13 +184,7 @@ public class HomeController implements Initializable, UIUpdater {
 
     @Override
     public void updateUI(Message message) {
-        if (message instanceof ThreadMessage) {
 
-        } else if (message instanceof AnswerMessage) {
-
-        } else if (message instanceof VoteMessage) {
-
-        }
     }
 
     public void init(User user) {

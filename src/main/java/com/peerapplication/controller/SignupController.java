@@ -99,27 +99,28 @@ public class SignupController implements Initializable, UIUpdater {
 
     @Override
     public void updateUI(Message message) {
-        RequestStatusMessage reqMessage = (RequestStatusMessage) message;
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                if (!(reqMessage.getStatus().equals("Success"))) {
-                    statusLabel.setText(reqMessage.getStatus());
-                } else {
-                    Stage stage = (Stage) btnLogin.getScene().getWindow();
-                    Parent root = null;
-                    try {
-                        root = FXMLLoader.load(getClass().getResource("/views/register.fxml"));
-                        Scene scene = new Scene(root, 1035, 859);
-                        stage.setTitle("Register");
-                        stage.setScene(scene);
-                    } catch (IOException e) {
-                        e.printStackTrace();
+        if (message instanceof RequestStatusMessage) {
+            RequestStatusMessage reqMessage = (RequestStatusMessage) message;
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    if (!(reqMessage.getStatus().equals("Success"))) {
+                        statusLabel.setText(reqMessage.getStatus());
+                    } else {
+                        Stage stage = (Stage) btnLogin.getScene().getWindow();
+                        Parent root = null;
+                        try {
+                            root = FXMLLoader.load(getClass().getResource("/views/register.fxml"));
+                            Scene scene = new Scene(root, 1035, 859);
+                            stage.setTitle("Register");
+                            stage.setScene(scene);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
-            }
-        });
-
+            });
+        }
     }
 }
 

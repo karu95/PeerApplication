@@ -22,8 +22,16 @@
                             <content>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                     <children>
-                                        <ListView fx:id="lstPostedThreads" layoutX="74.0" layoutY="74.0"
-                                                  prefHeight="495.0" prefWidth="629.0"/>
+                                        <TableView fx:id="postedThreadsTable" editable="true" layoutX="67.0"
+                                                   layoutY="52.0" onMouseClicked="#openThread"
+                                                   AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="50.0"
+                                                   AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="50.0">
+                                            <columns>
+                                                <TableColumn fx:id="colTitle" editable="false" maxWidth="675.0"
+                                                             minWidth="600.0" prefWidth="675.0" sortable="false"
+                                                             text="Title"/>
+                                            </columns>
+                                        </TableView>
                                     </children>
                                 </AnchorPane>
                             </content>

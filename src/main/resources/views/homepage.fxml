@@ -22,8 +22,17 @@
                             <content>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                     <children>
-                                        <ListView fx:id="lstLatestThreads" layoutX="74.0" layoutY="74.0"
-                                                  prefHeight="495.0" prefWidth="629.0"/>
+                                        <TableView fx:id="latestThreadsTable" editable="true" layoutX="50.0"
+                                                   layoutY="46.0" onMouseClicked="#openLatestThread" prefHeight="551.0"
+                                                   prefWidth="676.0" AnchorPane.bottomAnchor="45.0"
+                                                   AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0"
+                                                   AnchorPane.topAnchor="46.0">
+                                            <columns>
+                                                <TableColumn fx:id="colTitleLatest" editable="false" maxWidth="675.0"
+                                                             minWidth="600.0" prefWidth="675.0" sortable="false"
+                                                             text="Title"/>
+                                            </columns>
+                                        </TableView>
                                     </children>
                                 </AnchorPane>
                             </content>
@@ -32,8 +41,14 @@
                             <content>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                     <children>
-                                        <ListView fx:id="lstMyThread" layoutX="74.0" layoutY="74.0" prefHeight="495.0"
-                                                  prefWidth="629.0"/>
+                                        <TableView fx:id="myThreadsTable" editable="true" layoutX="50.0" layoutY="46.0"
+                                                   onMouseClicked="#openMyThread" prefHeight="551.0" prefWidth="676.0">
+                                            <columns>
+                                                <TableColumn fx:id="colTitleMyThreads" editable="false" maxWidth="675.0"
+                                                             minWidth="600.0" prefWidth="675.0" sortable="false"
+                                                             text="Title"/>
+                                            </columns>
+                                        </TableView>
                                     </children>
                                 </AnchorPane>
                             </content>
@@ -42,8 +57,15 @@
                             <content>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                     <children>
-                                        <ListView fx:id="lstNotifications" layoutX="74.0" layoutY="74.0"
-                                                  prefHeight="495.0" prefWidth="629.0"/>
+                                        <TableView fx:id="notificationsTable" editable="true" layoutX="50.0"
+                                                   layoutY="46.0" onMouseClicked="#openNotification" prefHeight="551.0"
+                                                   prefWidth="676.0">
+                                            <columns>
+                                                <TableColumn fx:id="colNotifications" editable="false" maxWidth="675.0"
+                                                             minWidth="600.0" prefWidth="675.0" sortable="false"
+                                                             text="Notifications"/>
+                                            </columns>
+                                        </TableView>
                                     </children>
                                 </AnchorPane>
                             </content>
@@ -58,12 +80,12 @@
                 </ImageView>
                 <Label fx:id="lblName" alignment="CENTER" layoutX="14.0" layoutY="231.0" prefHeight="32.0"
                        prefWidth="190.0" style="-fx-background-color: darkgray;" text="User001"/>
-                <Label fx:id="lblPostedThreads" layoutX="14.0" layoutY="362.0" prefHeight="32.0" prefWidth="190.0"
-                       style="-fx-background-color: darkgray;" text="Posted Threads :"/>
-                <Label fx:id="lblEmail" layoutX="14.0" layoutY="275.0" prefHeight="32.0" prefWidth="190.0"
-                       style="-fx-background-color: darkgray;" text="Email :"/>
-                <Label fx:id="lblRegDate" layoutX="14.0" layoutY="320.0" prefHeight="32.0" prefWidth="190.0"
-                       style="-fx-background-color: darkgray;" text="Since">
+                <Label fx:id="lblPostedThreads" alignment="CENTER" layoutX="14.0" layoutY="362.0" prefHeight="32.0"
+                       prefWidth="190.0" style="-fx-background-color: darkgray;" text="Posted Threads :"/>
+                <Label fx:id="lblEmail" alignment="CENTER" layoutX="14.0" layoutY="275.0" prefHeight="32.0"
+                       prefWidth="190.0" style="-fx-background-color: darkgray;" text="Email :"/>
+                <Label fx:id="lblRegDate" alignment="CENTER" layoutX="14.0" layoutY="320.0" prefHeight="32.0"
+                       prefWidth="190.0" style="-fx-background-color: darkgray;" text="Since">
                     <font>
                         <Font size="11.0"/>
                     </font>

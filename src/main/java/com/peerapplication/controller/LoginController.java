@@ -84,38 +84,38 @@ public class LoginController implements Initializable, UIUpdater {
 
     @Override
     public void updateUI(Message message) {
-
-        Platform.runLater(new Runnable() {
+        if (message instanceof RequestStatusMessage) {
             RequestStatusMessage reqMessage = (RequestStatusMessage) message;
-
-            @Override
-            public void run() {
-                if (!(reqMessage.getStatus().equals("Success"))) {
-                    statusLabel.setText(reqMessage.getStatus());
-                } else {
-                    Stage stage = (Stage) btnRegister.getScene().getWindow();
-                    try {
-                        User user = new User();
-                        user.getUser(SystemUser.getSystemUserID());
-                        System.out.println(SystemUser.getSystemUserID() + "here");
-                        System.out.println(user.getUserID() + "here");
-                        FXMLLoader loader;
-                        System.out.println(user.getName());
-                        if (user.getUserID() == SystemUser.getSystemUserID()) {
-                            ControllerUtility.openHome(stage);
-                        } else {
-                            loader = new FXMLLoader(getClass().getResource("/views/register.fxml"));
-                            Parent root = loader.load();
-                            Scene scene = new Scene(root, 1035, 859);
-                            stage.setTitle("Register");
-                            stage.setScene(scene);
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    if (!(reqMessage.getStatus().equals("Success"))) {
+                        statusLabel.setText(reqMessage.getStatus());
+                    } else {
+                        Stage stage = (Stage) btnRegister.getScene().getWindow();
+                        try {
+                            User user = new User();
+                            user.getUser(SystemUser.getSystemUserID());
+                            System.out.println(SystemUser.getSystemUserID() + "here");
+                            System.out.println(user.getUserID() + "here");
+                            FXMLLoader loader;
+                            System.out.println(user.getName());
+                            if (user.getUserID() == SystemUser.getSystemUserID()) {
+                                ControllerUtility.openHome(stage);
+                            } else {
+                                loader = new FXMLLoader(getClass().getResource("/views/register.fxml"));
+                                Parent root = loader.load();
+                                Scene scene = new Scene(root, 1035, 859);
+                                stage.setTitle("Register");
+                                stage.setScene(scene);
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
                         }
-                    } catch (IOException e) {
-                        e.printStackTrace();
                     }
                 }
-            }
-        });
+            });
+        }
     }
 }
 

@@ -93,10 +93,13 @@ public class ViewThreadController implements Initializable, UIUpdater {
     @Override
     public void updateUI(Message message) {
         if (message instanceof AnswerMessage) {
+            AnswerMessage answerMessage = (AnswerMessage) message;
 
         } else if (message instanceof DeleteThreadMessage) {
+            DeleteThreadMessage deleteThreadMessage = (DeleteThreadMessage) message;
 
         } else if (message instanceof VoteMessage) {
+            VoteMessage voteMessage = (VoteMessage) message;
 
         }
     }
