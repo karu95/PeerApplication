@@ -3,7 +3,6 @@ package com.peerapplication.repository;
 import com.peerapplication.model.User;
 import com.peerapplication.util.DBConnection;
 
-import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.concurrent.locks.ReadWriteLock;
@@ -104,8 +103,6 @@ public class UserRepository {
                 latestUsers.add(user);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
             e.printStackTrace();
         }
         return latestUsers;

@@ -34,7 +34,7 @@
                                        prefWidth="232.0" promptText="Old Password"/>
                         <PasswordField fx:id="txtNewPwd" layoutX="377.0" layoutY="190.0" prefHeight="31.0"
                                        prefWidth="232.0" promptText="New Password"/>
-                        <PasswordField fx:id="txtCnrmPwd" layoutX="377.0" layoutY="245.0" prefHeight="31.0"
+                        <PasswordField fx:id="txtCnfrmPwd" layoutX="377.0" layoutY="245.0" prefHeight="31.0"
                                        prefWidth="232.0" promptText="Confirm Password"/>
                         <Button fx:id="btnChangePwd" layoutX="377.0" layoutY="298.0" mnemonicParsing="false"
                                 onMouseClicked="#changePassword" prefHeight="31.0" prefWidth="232.0"

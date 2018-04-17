@@ -2,8 +2,8 @@ package com.peerapplication.controller;
 
 import com.peerapplication.handler.BSHandler;
 import com.peerapplication.util.ControllerUtility;
-import com.peerapplication.util.Main;
 import com.peerapplication.util.PasswordEncrypter;
+import com.peerapplication.util.UIUpdateHandler;
 import com.peerapplication.util.UIUpdater;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -94,7 +94,7 @@ public class SignupController implements Initializable, UIUpdater {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Main.setRegisterUpdater(this);
+        UIUpdateHandler.setRegisterUpdater(this);
     }
 
     @Override

@@ -79,7 +79,7 @@ public class LoginController implements Initializable, UIUpdater {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Main.setLoginUpdater(this);
+        UIUpdateHandler.setLoginUpdater(this);
     }
 
     @Override
@@ -96,7 +96,7 @@ public class LoginController implements Initializable, UIUpdater {
                     Stage stage = (Stage) btnRegister.getScene().getWindow();
                     try {
                         User user = new User();
-                        user.getUserWithImage(SystemUser.getSystemUserID());
+                        user.getUser(SystemUser.getSystemUserID());
                         System.out.println(SystemUser.getSystemUserID() + "here");
                         System.out.println(user.getUserID() + "here");
                         FXMLLoader loader;

@@ -5,7 +5,18 @@ import org.apache.commons.validator.routines.EmailValidator;
 
 public class UserValidator {
 
-    public UserValidator() {
+    private static UserValidator userValidator;
+
+    public static UserValidator getUserValidator() {
+        if (userValidator == null) {
+            synchronized (UserValidator.class) {
+                userValidator = new UserValidator();
+            }
+        }
+        return userValidator;
+    }
+
+    private UserValidator() {
     }
 
     public String validate(User user) {

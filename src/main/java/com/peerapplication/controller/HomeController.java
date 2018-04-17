@@ -1,12 +1,10 @@
 package com.peerapplication.controller;
 
-import com.peerapplication.model.Notification;
 import com.peerapplication.model.Thread;
 import com.peerapplication.model.User;
 import com.peerapplication.util.ControllerUtility;
 import com.peerapplication.util.UIUpdater;
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
@@ -19,7 +17,10 @@ import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import message.AnswerMessage;
 import message.Message;
+import message.ThreadMessage;
+import message.VoteMessage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -36,28 +37,19 @@ public class HomeController implements Initializable, UIUpdater {
     private Tab latestThreadTab;
 
     @FXML
-    private TableView<Thread> latestThreadsTable;
-
-    @FXML
-    private TableColumn<Thread, String> colTitleLatest;
+    private ListView<?> lstLatestThreads;
 
     @FXML
     private Tab myThreadTab;
 
     @FXML
-    private TableView<Thread> myThreadsTable;
-
-    @FXML
-    private TableColumn<Thread, String> colTitleMyThreads;
+    private ListView<?> lstMyThread;
 
     @FXML
     private Tab notificationTab;
 
     @FXML
-    private TableView<Notification> notificationsTable;
-
-    @FXML
-    private TableColumn<Notification, String> colNotifications;
+    private ListView<?> lstNotifications;
 
     @FXML
     private ImageView userImage;
@@ -159,9 +151,6 @@ public class HomeController implements Initializable, UIUpdater {
             }
         });
 
-        latestThreads = FXCollections.observableArrayList(Thread.getLatestThreads(0));
-        myThreads = FXCollections.observableArrayList(Thread.getUserThreads(user.getUserID()));
-
         if (notificationTab.isSelected()) {
 
         } else if (myThreadTab.isSelected()) {
@@ -174,7 +163,13 @@ public class HomeController implements Initializable, UIUpdater {
 
     @Override
     public void updateUI(Message message) {
+        if (message instanceof ThreadMessage) {
 
+        } else if (message instanceof AnswerMessage) {
+
+        } else if (message instanceof VoteMessage) {
+
+        }
     }
 
     public void init(User user) {

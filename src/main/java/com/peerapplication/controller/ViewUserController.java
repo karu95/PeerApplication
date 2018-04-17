@@ -1,6 +1,7 @@
 package com.peerapplication.controller;
 
 import com.peerapplication.model.User;
+import com.peerapplication.util.ControllerUtility;
 import com.peerapplication.util.UIUpdater;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -8,8 +9,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import message.Message;
+import message.ThreadMessage;
+import message.UserInfoMessage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -22,13 +27,7 @@ public class ViewUserController implements Initializable, UIUpdater {
     private Tab myThreadTab;
 
     @FXML
-    private TableView<?> postedThreadsTable;
-
-    @FXML
-    private TableColumn<?, ?> colAnswers;
-
-    @FXML
-    private TableColumn<?, ?> colTitle;
+    private ListView<?> lstPostedThreads;
 
     @FXML
     private ImageView userImage;
@@ -63,14 +62,18 @@ public class ViewUserController implements Initializable, UIUpdater {
     @FXML
     private MenuItem menuItemLogout;
 
+    private User user;
+
     @FXML
     void btnHomeClicked(MouseEvent event) {
-
+        Stage stage = (Stage) btnHome.getScene().getWindow();
+        ControllerUtility.openHome(stage);
     }
 
     @FXML
-    void btnThreadsClicked(MouseEvent event) {
-
+    void btnThreadsClicked(MouseEvent event) throws IOException {
+        Stage stage = (Stage) btnHome.getScene().getWindow();
+        ControllerUtility.openThreads(stage);
     }
 
     @FXML
@@ -79,18 +82,30 @@ public class ViewUserController implements Initializable, UIUpdater {
     }
 
     @FXML
-    void logout(ActionEvent event) {
-
+    void logout(ActionEvent event) throws IOException {
+        Stage stage = (Stage) btnHome.getScene().getWindow();
+        ControllerUtility.logout(stage);
     }
 
     @FXML
     void openSettings(ActionEvent event) {
-
+        Stage stage = (Stage) btnHome.getScene().getWindow();
+        ControllerUtility.openSettings(stage);
     }
 
     @Override
     public void updateUI(Message message) {
+        if (message instanceof UserInfoMessage) {
+            UserInfoMessage userInfoMessage = (UserInfoMessage) message;
+            if (userInfoMessage.getUser().getUserID() == user.getUserID()) {
 
+            }
+        } else if (message instanceof ThreadMessage) {
+            ThreadMessage threadMessage = (ThreadMessage) message;
+            if (threadMessage.getThread().getUserID() == user.getUserID()) {
+
+            }
+        }
     }
 
     @Override
@@ -99,6 +114,6 @@ public class ViewUserController implements Initializable, UIUpdater {
     }
 
     public void init(User user) {
-
+        this.user = user;
     }
 }

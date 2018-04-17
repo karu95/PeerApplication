@@ -1,7 +1,9 @@
 package com.peerapplication.util;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
+import java.awt.image.Raster;
 import java.io.Serializable;
 import java.util.Arrays;
 
@@ -20,8 +22,7 @@ public class ImagePack implements Serializable {
 
     public BufferedImage getImage() {
         BufferedImage image = new BufferedImage(width, height, imageType);
-        byte[] newImageBytes = ((DataBufferByte) image.getData().getDataBuffer()).getData();
-        System.arraycopy(imageBytes, 0, newImageBytes, 0, imageBytes.length);
+        image.setData(Raster.createRaster(image.getSampleModel(), new DataBufferByte(imageBytes, imageBytes.length), new Point()));
         return image;
     }
 

@@ -1,7 +1,7 @@
 package com.peerapplication.handler;
 
-import com.peerapplication.util.Main;
 import com.peerapplication.util.SystemUser;
+import com.peerapplication.util.UIUpdateHandler;
 import message.*;
 import messenger.Handler;
 import messenger.Peer;
@@ -46,7 +46,8 @@ public class BSHandler extends Handler {
     }
 
     public static void changePassword(PasswordChangeMessage pwChangeMessage) {
-
+        PeerHandler.getSenderController().send(pwChangeMessage, PeerHandler.getBS());
+        System.out.println("PW Change sent!");
     }
 
     private static void handleRequest(RequestStatusMessage message) {
@@ -54,12 +55,15 @@ public class BSHandler extends Handler {
             if (message.getStatus().equals("Success")) {
                 notifyPeerHandler(message);
             }
-            Main.getLoginUpdater().updateUI(message);
+            UIUpdateHandler.informLoginUpdater(message);
         } else if (message.getTitle().equals("RegisterStatus")) {
             if (message.getStatus().equals("Success")) {
                 notifyPeerHandler(message);
             }
-            Main.getRegisterUpdater().updateUI(message);
+            UIUpdateHandler.informRegisterUpdater(message);
+        } else if (message.getTitle().equals("PWChangeStatus")) {
+            UIUpdateHandler.informUserUpdater(message);
+            System.out.println("PW Change status received");
         }
     }
 

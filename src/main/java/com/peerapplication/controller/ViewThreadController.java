@@ -12,7 +12,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import message.AnswerMessage;
+import message.DeleteThreadMessage;
 import message.Message;
+import message.VoteMessage;
 
 import java.net.URL;
 import java.util.Date;
@@ -89,7 +92,13 @@ public class ViewThreadController implements Initializable, UIUpdater {
 
     @Override
     public void updateUI(Message message) {
+        if (message instanceof AnswerMessage) {
 
+        } else if (message instanceof DeleteThreadMessage) {
+
+        } else if (message instanceof VoteMessage) {
+
+        }
     }
 
     @Override

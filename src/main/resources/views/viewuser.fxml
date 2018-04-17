@@ -7,9 +7,8 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 <?import java.lang.String?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-            minWidth="-Infinity"
-            prefHeight="859.0" prefWidth="1035.0" xmlns="http://javafx.com/javafx/8.0.141"
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="859.0"
+            prefWidth="1035.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.peerapplication.controller.ViewUserController">
     <children>
         <AnchorPane layoutX="29.0" layoutY="64.0" minHeight="681.0" minWidth="995.0" AnchorPane.leftAnchor="20.0"
@@ -23,18 +22,8 @@
                             <content>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                     <children>
-                                        <TableView fx:id="postedThreadsTable" editable="true" layoutX="67.0"
-                                                   layoutY="52.0" AnchorPane.bottomAnchor="100.0"
-                                                   AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0"
-                                                   AnchorPane.topAnchor="50.0">
-                                            <columns>
-                                                <TableColumn fx:id="colAnswers" editable="false" prefWidth="75.0"
-                                                             sortable="false" text="Answers"/>
-                                                <TableColumn fx:id="colTitle" editable="false" maxWidth="-1.0"
-                                                             minWidth="600.0" prefWidth="-1.0" sortable="false"
-                                                             text="Title"/>
-                                            </columns>
-                                        </TableView>
+                                        <ListView fx:id="lstPostedThreads" layoutX="74.0" layoutY="74.0"
+                                                  prefHeight="495.0" prefWidth="629.0"/>
                                     </children>
                                 </AnchorPane>
                             </content>

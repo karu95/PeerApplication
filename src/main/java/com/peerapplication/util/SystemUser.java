@@ -1,5 +1,7 @@
 package com.peerapplication.util;
 
+import java.io.File;
+
 public class SystemUser {
     private static int systemUserID;
     private static int accountType;
@@ -32,7 +34,11 @@ public class SystemUser {
 
     public static String getImageLocation() {
         if (imageLocation == null) {
-            imageLocation = "/images" + String.valueOf(systemUserID) + "/";
+            imageLocation = "/" + System.getProperty("user.dir") + "/images" + String.valueOf(systemUserID) + "/";
+            File imageDir = new File(imageLocation);
+            if (!imageDir.exists()) {
+                imageDir.mkdir();
+            }
         }
         return imageLocation;
     }

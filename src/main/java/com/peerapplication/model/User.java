@@ -74,6 +74,7 @@ public class User implements Serializable {
 
     public void setUserImage(BufferedImage userImage) {
         this.userImage = new ImagePack(userImage);
+        System.out.println("User Image set");
     }
 
     public String getImageURL() {
@@ -102,8 +103,8 @@ public class User implements Serializable {
         userRepository.saveUser(this);
         if (userImage != null) {
             try {
-                Thumbnails.of(userImage.getImage()).scale(0.8).outputFormat("jpg").toFile(new File("/" +
-                        System.getProperty("user.dir") + SystemUser.getImageLocation() + String.valueOf(getUserID())));
+                Thumbnails.of(userImage.getImage()).scale(1).outputFormat("jpg").toFile(new File(SystemUser.getImageLocation() + imageURL));
+                System.out.println("User saved");
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -114,10 +115,10 @@ public class User implements Serializable {
         if (userID != this.userID) {
             getUser(userID);
         }
-        if (!imageURL.isEmpty()) {
+        if (imageURL != null) {
             try {
-                this.userImage = new ImagePack(ImageIO.read(new File("/" + System.getProperty("user.dir") +
-                        "/images/" + String.valueOf(getUserID()))));
+                this.userImage = new ImagePack(ImageIO.read(new File(SystemUser.getImageLocation()
+                        + imageURL + ".jpg")));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -150,6 +151,11 @@ public class User implements Serializable {
             }
         }
         return equal;
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 
     public long getLastProfileUpdate() {

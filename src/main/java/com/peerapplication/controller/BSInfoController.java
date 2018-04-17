@@ -66,7 +66,8 @@ public class BSInfoController implements Initializable {
         if (!PeerHandler.checkConnection()) {
             lblStatus.setText("No network connection!");
         }
-        txtBSPort.setText("25030");
+        txtBSIP.setText("192.168.8.101");
+        txtBSPort.setText("25025");
     }
 
 

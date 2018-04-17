@@ -22,16 +22,8 @@
                             <content>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                     <children>
-                                        <TableView fx:id="latestThreadsTable" editable="true" layoutX="50.0"
-                                                   layoutY="46.0" prefHeight="551.0" prefWidth="676.0"
-                                                   AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="50.0"
-                                                   AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="46.0">
-                                            <columns>
-                                                <TableColumn fx:id="colTitleLatest" editable="false" maxWidth="-1.0"
-                                                             minWidth="600.0" prefWidth="-1.0" sortable="false"
-                                                             text="Title"/>
-                                            </columns>
-                                        </TableView>
+                                        <ListView fx:id="lstLatestThreads" layoutX="74.0" layoutY="74.0"
+                                                  prefHeight="495.0" prefWidth="629.0"/>
                                     </children>
                                 </AnchorPane>
                             </content>
@@ -40,14 +32,8 @@
                             <content>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                     <children>
-                                        <TableView fx:id="myThreadsTable" editable="true" layoutX="50.0" layoutY="46.0"
-                                                   prefHeight="551.0" prefWidth="676.0">
-                                            <columns>
-                                                <TableColumn fx:id="colTitleMyThreads" editable="false" maxWidth="-1.0"
-                                                             minWidth="600.0" prefWidth="-1.0" sortable="false"
-                                                             text="Title"/>
-                                            </columns>
-                                        </TableView>
+                                        <ListView fx:id="lstMyThread" layoutX="74.0" layoutY="74.0" prefHeight="495.0"
+                                                  prefWidth="629.0"/>
                                     </children>
                                 </AnchorPane>
                             </content>
@@ -56,14 +42,8 @@
                             <content>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                     <children>
-                                        <TableView fx:id="notificationsTable" editable="true" layoutX="50.0"
-                                                   layoutY="46.0" prefHeight="551.0" prefWidth="676.0">
-                                            <columns>
-                                                <TableColumn fx:id="colNotifications" editable="false" maxWidth="675.0"
-                                                             minWidth="600.0" prefWidth="675.0" sortable="false"
-                                                             text="Notifications"/>
-                                            </columns>
-                                        </TableView>
+                                        <ListView fx:id="lstNotifications" layoutX="74.0" layoutY="74.0"
+                                                  prefHeight="495.0" prefWidth="629.0"/>
                                     </children>
                                 </AnchorPane>
                             </content>

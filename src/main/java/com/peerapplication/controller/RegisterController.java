@@ -63,6 +63,7 @@ public class RegisterController implements Initializable {
                 user.setImageURL(String.valueOf(user.getUserID()));
             }
             user.setRegisterTime(new Date(System.currentTimeMillis()).getTime());
+            user.setLastProfileUpdate(user.getRegisterTime());
             user.saveUser();
             ExecutorService userService = Executors.newSingleThreadExecutor();
             userService.execute(new Runnable() {
@@ -90,7 +91,7 @@ public class RegisterController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        userValidator = new UserValidator();
+        userValidator = UserValidator.getUserValidator();
         fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("JPEG", "*.jpg"),
