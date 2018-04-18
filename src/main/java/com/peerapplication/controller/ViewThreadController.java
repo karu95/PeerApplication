@@ -1,8 +1,14 @@
 package com.peerapplication.controller;
 
+import com.peerapplication.handler.AnswerHandler;
 import com.peerapplication.model.Answer;
 import com.peerapplication.model.Thread;
+import com.peerapplication.model.User;
+import com.peerapplication.util.ControllerUtility;
+import com.peerapplication.util.IDGenerator;
+import com.peerapplication.util.SystemUser;
 import com.peerapplication.util.UIUpdater;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -12,14 +18,19 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import javafx.stage.Stage;
 import message.AnswerMessage;
 import message.DeleteThreadMessage;
 import message.Message;
 import message.VoteMessage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.ResourceBundle;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class ViewThreadController implements Initializable, UIUpdater {
 
@@ -55,37 +66,53 @@ public class ViewThreadController implements Initializable, UIUpdater {
 
     private Text previousText;
 
+    private Stage stage;
+
+    private Thread thread;
+
+    private HashMap<Integer, User> relatedUsers;
+
     @FXML
     void btnHomeClicked(MouseEvent event) {
-
+        ControllerUtility.openHome(stage);
     }
 
     @FXML
-    void btnThreadsClicked(MouseEvent event) {
-
+    void btnThreadsClicked(MouseEvent event) throws IOException {
+        ControllerUtility.openThreads(stage);
     }
 
     @FXML
     void headingClicked(MouseEvent event) {
-
+        btnHomeClicked(event);
     }
 
     @FXML
-    void logout(ActionEvent event) {
-
+    void logout(ActionEvent event) throws IOException {
+        ControllerUtility.logout(stage);
     }
 
     @FXML
     void openSettings(ActionEvent event) {
-
+        ControllerUtility.openSettings(stage);
     }
 
     @FXML
     void saveAnswer(MouseEvent event) {
         Answer answer = new Answer();
-        answer.setDescription(txtAreaAnswer.getText());
-        answer.setPostedUserID(10005000);
         answer.setTimestamp(new Date(System.currentTimeMillis()).getTime());
+        answer.setDescription(txtAreaAnswer.getText());
+        answer.setAnswerID(IDGenerator.generateAnswerID(answer.getTimestamp()));
+        answer.setThreadID(thread.getThreadID());
+        answer.setPostedUserID(SystemUser.getSystemUserID());
+        answer.saveAnswer();
+        ExecutorService answerSender = Executors.newSingleThreadExecutor();
+        answerSender.execute(new Runnable() {
+            @Override
+            public void run() {
+                AnswerHandler.postAnswer(answer);
+            }
+        });
         addAnswer(answer);
         txtAreaAnswer.clear();
     }
@@ -106,17 +133,27 @@ public class ViewThreadController implements Initializable, UIUpdater {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                stage = (Stage) btnAnswer.getScene().getWindow();
+            }
+        });
     }
 
     public void init(Thread thread) {
+        relatedUsers = new HashMap<>();
+        thread.getCompleteThread(thread.getThreadID());
+        this.thread = thread;
+        relatedUsers.putIfAbsent(thread.getUserID(), new User(thread.getUserID()));
         txtThreadHeader.setText(thread.getTitle());
         Text txtThreadDetail = new Text();
         Hyperlink userLink = new Hyperlink();
-        userLink.setText("Click Me!");
+        userLink.setText(relatedUsers.get(thread.getUserID()).getName());
         userLink.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                System.out.println("Link Clicked!");
+                ControllerUtility.viewUser(stage, relatedUsers.get(thread.getUserID()));
             }
         });
         txtThreadDetail.setText("Posted on " + new Date(thread.getTimestamp()) + " by");
@@ -128,10 +165,12 @@ public class ViewThreadController implements Initializable, UIUpdater {
         txtThreadDescription.setWrappingWidth(txtThreadHeader.getWrappingWidth());
         txtThreadDescription.setLayoutX(txtThreadHeader.getLayoutX());
         txtThreadDescription.setLayoutY(threadFlow.getLayoutY() + threadFlow.getBoundsInLocal().getHeight() + 20);
-        System.out.println(threadFlow.getLayoutY());
         aPaneThread.getChildren().add(threadFlow);
         aPaneThread.getChildren().add(txtThreadDescription);
         previousText = txtThreadDescription;
+        for (Answer answer : thread.getAnswers()) {
+            addAnswer(answer);
+        }
     }
 
     private void addAnswer(Answer answer) {
@@ -139,11 +178,16 @@ public class ViewThreadController implements Initializable, UIUpdater {
         Text txtAnswerDesc = new Text();
         txtAnswerDetail.setText("Answered on " + new Date(answer.getTimestamp()) + " by");
         Hyperlink userLink = new Hyperlink();
-        userLink.setText("Username");
+        if (relatedUsers.containsKey(answer.getPostedUserID())) {
+            userLink.setText(relatedUsers.get(answer.getPostedUserID()).getName());
+        } else {
+            relatedUsers.putIfAbsent(answer.getPostedUserID(), new User(answer.getPostedUserID()));
+            userLink.setText(relatedUsers.get(answer.getPostedUserID()).getName());
+        }
         userLink.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                System.out.println("Answer User" + new Date(answer.getTimestamp()));
+                ControllerUtility.viewUser(stage, relatedUsers.get(answer.getPostedUserID()));
             }
         });
         TextFlow answerFlow = new TextFlow(txtAnswerDetail, userLink);

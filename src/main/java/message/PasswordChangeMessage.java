@@ -6,7 +6,7 @@ public class PasswordChangeMessage extends Message implements BSMessage {
     private String newPassword;
     private int userID;
 
-    public PasswordChangeMessage(String title) {
+    public PasswordChangeMessage() {
         super("PWChange");
     }
 

@@ -31,7 +31,7 @@ public class ThreadRepository {
 
     public void getThread(String threadID, Thread thread) {
         Connection connection = dbConnection.getConnection();
-        String getQuery = "SELECT * FROM thread WHERE thread_id=?;";
+        String getQuery = "SELECT * FROM thread WHERE thread_id=?";
         try {
             PreparedStatement getPsmt = connection.prepareStatement(getQuery);
             getPsmt.setString(1, threadID);
@@ -101,7 +101,7 @@ public class ThreadRepository {
     public ArrayList<Thread> getLatestThreads(long timestamp) {
         ArrayList<Thread> threads = new ArrayList<>();
         Connection connection = dbConnection.getConnection();
-        String getThreadsQuery = "SELECT * FROM thread WHERE posted_time = ? ORDER BY posted_time DESC";
+        String getThreadsQuery = "SELECT * FROM thread WHERE posted_time > ? ORDER BY posted_time DESC";
         try {
             PreparedStatement getLatestThreadsPsmt = connection.prepareStatement(getThreadsQuery);
             getLatestThreadsPsmt.setLong(1, timestamp);

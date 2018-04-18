@@ -28,6 +28,7 @@ public class HeartBeatHandler extends Handler {
 
     public void startHeartBeat() {
         ExecutorService heartbeatService = Executors.newSingleThreadExecutor();
+        this.stop = false;
         heartbeatService.execute(new Runnable() {
             @Override
             public void run() {
@@ -46,13 +47,8 @@ public class HeartBeatHandler extends Handler {
 
     public void stop() {
         this.stop = true;
-        System.out.println("Stopped");
+        System.out.println("Heartbeat Stopped");
     }
-
-    public void start() {
-        this.stop = false;
-    }
-
 
     @Override
     public void handle(Message message) {

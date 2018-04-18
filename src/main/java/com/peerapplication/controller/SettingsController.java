@@ -1,9 +1,9 @@
 package com.peerapplication.controller;
 
+import com.peerapplication.handler.BSHandler;
+import com.peerapplication.handler.UserHandler;
 import com.peerapplication.model.User;
-import com.peerapplication.util.ControllerUtility;
-import com.peerapplication.util.UIUpdateHandler;
-import com.peerapplication.util.UIUpdater;
+import com.peerapplication.util.*;
 import com.peerapplication.validator.UserValidator;
 import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
@@ -17,14 +17,21 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import message.Message;
+import message.PasswordChangeMessage;
 import message.RequestStatusMessage;
+import messenger.PeerHandler;
 
 import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
+import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 import java.util.ResourceBundle;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class SettingsController implements Initializable, UIUpdater {
 
@@ -76,6 +83,8 @@ public class SettingsController implements Initializable, UIUpdater {
     @FXML
     private MenuItem menuItemLogout;
 
+    private Stage stage;
+
     private FileChooser fileChooser;
 
     private UserValidator userValidator;
@@ -86,13 +95,11 @@ public class SettingsController implements Initializable, UIUpdater {
 
     @FXML
     void btnHomeClicked(MouseEvent event) {
-        Stage stage = (Stage) btnChangePwd.getScene().getWindow();
         ControllerUtility.openHome(stage);
     }
 
     @FXML
     void btnThreadsClicked(MouseEvent event) throws IOException {
-        Stage stage = (Stage) btnChangePwd.getScene().getWindow();
         ControllerUtility.openThreads(stage);
     }
 
@@ -103,13 +110,11 @@ public class SettingsController implements Initializable, UIUpdater {
 
     @FXML
     void logout(ActionEvent event) throws IOException {
-        Stage stage = (Stage) btnChangePwd.getScene().getWindow();
         ControllerUtility.logout(stage);
     }
 
     @FXML
     void openSettings(ActionEvent event) {
-        Stage stage = (Stage) btnChangePwd.getScene().getWindow();
         ControllerUtility.openSettings(stage);
     }
 
@@ -128,7 +133,15 @@ public class SettingsController implements Initializable, UIUpdater {
             String validity = userValidator.validate(updatedUser);
             if (validity.equals("Success")) {
                 updatedUser.setLastProfileUpdate(new Date(System.currentTimeMillis()).getTime());
-                statusLabelUser.setText("User info. successfully updated!");
+                ExecutorService userUpdater = Executors.newSingleThreadExecutor();
+                PeerHandler.checkConnection();
+                userUpdater.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        UserHandler.postUser(updatedUser);
+                    }
+                });
+                updatedUser.saveUser();
             } else {
                 statusLabelUser.setText(validity);
             }
@@ -139,7 +152,6 @@ public class SettingsController implements Initializable, UIUpdater {
 
     @FXML
     void selectImage(MouseEvent event) throws IOException {
-        Stage stage = (Stage) userImage.getScene().getWindow();
         file = fileChooser.showOpenDialog(stage);
         if (file != null) {
             Image image = new Image(file.toURI().toString());
@@ -149,6 +161,7 @@ public class SettingsController implements Initializable, UIUpdater {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        menuItemSettings.setDisable(true);
         userValidator = UserValidator.getUserValidator();
         fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().addAll(
@@ -159,7 +172,7 @@ public class SettingsController implements Initializable, UIUpdater {
     }
 
     @FXML
-    void changePassword(MouseEvent event) {
+    void changePassword(MouseEvent event) throws UnsupportedEncodingException, NoSuchAlgorithmException {
         String oldPwd = txtOldPwd.getText().trim();
         String newPwd = txtNewPwd.getText().trim();
         String cnfrmPwd = txtCnfrmPwd.getText().trim();
@@ -170,7 +183,13 @@ public class SettingsController implements Initializable, UIUpdater {
                 } else if (newPwd.contains("[-*/|&^+ ]+")) {
                     statusLabelPwd.setText("Password shouldn't contain empty spaces or -*/|&^+ characters!");
                 } else {
+                    PasswordChangeMessage passwordChangeMessage = new PasswordChangeMessage();
+                    passwordChangeMessage.setOldPassword(PasswordEncrypter.SHA1(oldPwd));
+                    passwordChangeMessage.setNewPassword(PasswordEncrypter.SHA1(newPwd));
+                    passwordChangeMessage.setUserID(SystemUser.getSystemUserID());
+                    BSHandler.changePassword(passwordChangeMessage);
                     System.out.println("Success");
+                    statusLabelPwd.setText("Please Wait!");
                 }
             } else {
                 statusLabelPwd.setText("Password doesn't match!");
@@ -181,7 +200,6 @@ public class SettingsController implements Initializable, UIUpdater {
         txtNewPwd.clear();
         txtOldPwd.clear();
         txtCnfrmPwd.clear();
-        statusLabelPwd.setText("Please Wait!");
     }
 
     public void init(User user) {
@@ -189,7 +207,11 @@ public class SettingsController implements Initializable, UIUpdater {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                userImage.setImage(SwingFXUtils.toFXImage(user.getUserImage(), null));
+                stage = (Stage) btnChangePwd.getScene().getWindow();
+                BufferedImage image = user.getUserImage();
+                if (image != null) {
+                    userImage.setImage(SwingFXUtils.toFXImage(image, null));
+                }
                 txtName.setText(user.getName());
                 txtEmail.setText(user.getEmail());
             }

@@ -25,6 +25,10 @@ public class User implements Serializable {
     public User() {
     }
 
+    public User(int userID) {
+        this.getUser(userID);
+    }
+
     public User(int userID, String name, String email) {
         this.userID = userID;
         this.email = email;
@@ -69,7 +73,11 @@ public class User implements Serializable {
     }
 
     public BufferedImage getUserImage() {
-        return userImage.getImage();
+        if (userImage != null) {
+            return userImage.getImage();
+        } else {
+            return null;
+        }
     }
 
     public void setUserImage(BufferedImage userImage) {
@@ -115,7 +123,7 @@ public class User implements Serializable {
         if (userID != this.userID) {
             getUser(userID);
         }
-        if (imageURL != null) {
+        if ((imageURL != null) && (userImage == null)) {
             try {
                 this.userImage = new ImagePack(ImageIO.read(new File(SystemUser.getImageLocation()
                         + imageURL + ".jpg")));

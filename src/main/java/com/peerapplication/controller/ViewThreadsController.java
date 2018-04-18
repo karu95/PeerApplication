@@ -1,14 +1,18 @@
 package com.peerapplication.controller;
 
+import com.peerapplication.util.ControllerUtility;
 import com.peerapplication.util.UIUpdater;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import message.Message;
 import message.ThreadMessage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -44,9 +48,11 @@ public class ViewThreadsController implements UIUpdater, Initializable {
     @FXML
     private MenuItem menuItemLogout;
 
+    private Stage stage;
+
     @FXML
     void btnHomeClicked(MouseEvent event) {
-
+        ControllerUtility.openHome(stage);
     }
 
     @FXML
@@ -56,17 +62,17 @@ public class ViewThreadsController implements UIUpdater, Initializable {
 
     @FXML
     void headingClicked(MouseEvent event) {
-
+        btnHomeClicked(event);
     }
 
     @FXML
-    void logout(ActionEvent event) {
-
+    void logout(ActionEvent event) throws IOException {
+        ControllerUtility.logout(stage);
     }
 
     @FXML
     void openSettings(ActionEvent event) {
-
+        ControllerUtility.openSettings(stage);
     }
 
     @FXML
@@ -88,6 +94,12 @@ public class ViewThreadsController implements UIUpdater, Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        btnThreads.setDisable(true);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                stage = (Stage) btnSearch.getScene().getWindow();
+            }
+        });
     }
 }

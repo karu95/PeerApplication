@@ -7,20 +7,24 @@ import com.peerapplication.util.ControllerUtility;
 import com.peerapplication.util.IDGenerator;
 import com.peerapplication.util.SystemUser;
 import com.peerapplication.validator.ThreadValidator;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import messenger.PeerHandler;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.ResourceBundle;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class PostThreadController {
+public class PostThreadController implements Initializable {
 
     @FXML
     private TextField txtTitle;
@@ -55,15 +59,15 @@ public class PostThreadController {
     @FXML
     private MenuItem menuItemLogout;
 
+    private Stage stage;
+
     @FXML
     void btnHomeClicked(MouseEvent event) {
-        Stage stage = (Stage) btnPost.getScene().getWindow();
         ControllerUtility.openHome(stage);
     }
 
     @FXML
     void btnThreadsClicked(MouseEvent event) throws IOException {
-        Stage stage = (Stage) btnPost.getScene().getWindow();
         ControllerUtility.openThreads(stage);
     }
 
@@ -74,13 +78,11 @@ public class PostThreadController {
 
     @FXML
     void logout(ActionEvent event) throws IOException {
-        Stage stage = (Stage) btnPost.getScene().getWindow();
         ControllerUtility.logout(stage);
     }
 
     @FXML
     void openSettings(ActionEvent event) {
-        Stage stage = (Stage) btnPost.getScene().getWindow();
         ControllerUtility.openSettings(stage);
     }
 
@@ -117,4 +119,13 @@ public class PostThreadController {
         }
     }
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                stage = (Stage) btnPost.getScene().getWindow();
+            }
+        });
+    }
 }

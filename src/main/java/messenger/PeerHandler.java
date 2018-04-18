@@ -51,9 +51,7 @@ public class PeerHandler {
 
     public static void setKnownPeers(ArrayList<Peer> knownPeers) {
         HashMap<Integer, Peer> peers = new HashMap<>();
-        if (knownPeers.isEmpty()) {
-            return;
-        } else {
+        if (!knownPeers.isEmpty()) {
             for (Peer peer : knownPeers) {
                 System.out.println("Peer ID " + peer.getUserID());
                 peers.put(peer.getUserID(), peer);
@@ -97,6 +95,7 @@ public class PeerHandler {
         System.out.println("Listening on " + port);
         receiverController = new ReceiverController(userPort);
         serverWorker.execute(receiverController);
+        userAddress = getLocalIPAddress();
         registerHandler("JoinMessage", KnownPeerHandler.getKnownPeerHandler());
         registerHandler("PeerInfoMessage", KnownPeerHandler.getKnownPeerHandler());
     }

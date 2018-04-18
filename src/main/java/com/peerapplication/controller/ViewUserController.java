@@ -1,19 +1,30 @@
 package com.peerapplication.controller;
 
+import com.peerapplication.model.Thread;
 import com.peerapplication.model.User;
 import com.peerapplication.util.ControllerUtility;
 import com.peerapplication.util.UIUpdater;
+import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import message.Message;
+import message.ThreadMessage;
+import message.UserInfoMessage;
 
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 public class ViewUserController implements Initializable, UIUpdater {
@@ -25,13 +36,10 @@ public class ViewUserController implements Initializable, UIUpdater {
     private Tab myThreadTab;
 
     @FXML
-    private TableView<?> postedThreadsTable;
+    private TableView<Thread> postedThreadsTable;
 
     @FXML
-    private TableColumn<?, ?> colAnswers;
-
-    @FXML
-    private TableColumn<?, ?> colTitle;
+    private TableColumn<Thread, String> colTitle;
 
     @FXML
     private ImageView userImage;
@@ -43,7 +51,7 @@ public class ViewUserController implements Initializable, UIUpdater {
     private Label lblPostedThreads;
 
     @FXML
-    private Label lblAnsweredThreads;
+    private Label lblEmail;
 
     @FXML
     private Label lblRegDate;
@@ -68,15 +76,15 @@ public class ViewUserController implements Initializable, UIUpdater {
 
     private User user;
 
+    private Stage stage;
+
     @FXML
     void btnHomeClicked(MouseEvent event) {
-        Stage stage = (Stage) btnHome.getScene().getWindow();
         ControllerUtility.openHome(stage);
     }
 
     @FXML
     void btnThreadsClicked(MouseEvent event) throws IOException {
-        Stage stage = (Stage) btnHome.getScene().getWindow();
         ControllerUtility.openThreads(stage);
     }
 
@@ -87,33 +95,56 @@ public class ViewUserController implements Initializable, UIUpdater {
 
     @FXML
     void logout(ActionEvent event) throws IOException {
-        Stage stage = (Stage) btnHome.getScene().getWindow();
         ControllerUtility.logout(stage);
     }
 
     @FXML
     void openSettings(ActionEvent event) {
-        Stage stage = (Stage) btnHome.getScene().getWindow();
         ControllerUtility.openSettings(stage);
     }
 
     @FXML
     void openThread(MouseEvent event) {
-
+        Thread thread = postedThreadsTable.getSelectionModel().getSelectedItem();
+        if (thread != null) {
+            ControllerUtility.viewThread(stage, thread);
+        }
     }
 
     @Override
     public void updateUI(Message message) {
+        if (message instanceof UserInfoMessage) {
+            UserInfoMessage userInfoMessage = (UserInfoMessage) message;
 
+        } else if (message instanceof ThreadMessage) {
+            ThreadMessage threadMessage = (ThreadMessage) message;
+
+        }
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                stage = (Stage) btnHome.getScene().getWindow();
+                BufferedImage bfdImage = user.getUserImage();
+                if (bfdImage != null) {
+                    userImage.setImage(SwingFXUtils.toFXImage(bfdImage, null));
+                }
+                lblName.setText(user.getName());
+                lblRegDate.setText("Joined on " + String.valueOf(new SimpleDateFormat("yyyy-MM-dd").format(new Date(user.getRegisterTime()))));
+                lblPostedThreads.setText("Posted Threads : " + String.valueOf(Thread.getUserThreads(user.getUserID()).size()));
+                lblEmail.setText(user.getEmail());
+            }
+        });
     }
 
     public void init(User user) {
         this.user = user;
-
+        this.user.getUserWithImage(user.getUserID());
+        ObservableList<Thread> postedThreads = FXCollections.observableArrayList(Thread.getUserThreads(user.getUserID()));
+        colTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
+        postedThreadsTable.setItems(postedThreads);
     }
 }

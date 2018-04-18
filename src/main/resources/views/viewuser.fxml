@@ -46,12 +46,12 @@
                 </ImageView>
                 <Label fx:id="lblName" alignment="CENTER" layoutX="14.0" layoutY="231.0" prefHeight="32.0"
                        prefWidth="190.0" style="-fx-background-color: darkgray;" text="User001"/>
-                <Label fx:id="lblPostedThreads" layoutX="14.0" layoutY="275.0" prefHeight="32.0" prefWidth="190.0"
-                       style="-fx-background-color: darkgray;" text="Posted Threads :"/>
-                <Label fx:id="lblAnsweredThreads" layoutX="14.0" layoutY="318.0" prefHeight="32.0" prefWidth="190.0"
-                       style="-fx-background-color: darkgray;" text="Answered Threads :"/>
-                <Label fx:id="lblRegDate" layoutX="14.0" layoutY="362.0" prefHeight="32.0" prefWidth="190.0"
-                       style="-fx-background-color: darkgray;" text="Since">
+                <Label fx:id="lblEmail" alignment="CENTER" layoutX="14.0" layoutY="275.0" prefHeight="32.0"
+                       prefWidth="190.0" style="-fx-background-color: darkgray;" text="Email : "/>
+                <Label fx:id="lblRegDate" alignment="CENTER" layoutX="14.0" layoutY="318.0" prefHeight="32.0"
+                       prefWidth="190.0" style="-fx-background-color: darkgray;" text="Since"/>
+                <Label fx:id="lblPostedThreads" alignment="CENTER" layoutX="14.0" layoutY="362.0" prefHeight="32.0"
+                       prefWidth="190.0" style="-fx-background-color: darkgray;" text="Posted Threads :">
                     <font>
                         <Font size="11.0"/>
                     </font>

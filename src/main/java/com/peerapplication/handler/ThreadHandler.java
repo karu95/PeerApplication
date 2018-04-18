@@ -42,9 +42,8 @@ public class ThreadHandler extends Handler {
     private static void handleThread(ThreadMessage threadMessage) {
         System.out.println("thread message received");
         threadHandleLock.writeLock().lock();
-        Thread thread = new Thread();
-        thread.getCompleteThread(threadMessage.getThread().getThreadID());
-        if (!(thread.getThreadID().equals(threadMessage.getThread().getThreadID()))) {
+        Thread thread = new Thread(threadMessage.getThread().getThreadID());
+        if (thread.getThreadID() == null) {
             System.out.println("New Thread");
             threadMessage.getThread().saveThread();
             ArrayList<Peer> receivers = new ArrayList<>();

@@ -2,9 +2,10 @@ package com.peerapplication.model;
 
 import com.peerapplication.repository.TagRepository;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Tag {
+public class Tag implements Serializable {
     private String tag;
 
     public Tag() {
@@ -25,8 +26,10 @@ public class Tag {
     }
 
     public static void saveTags(ArrayList<Tag> tags, String threadID) {
-        TagRepository tagRepository = TagRepository.getTagRepository();
-        tagRepository.saveTags(tags, threadID);
+        if ((tags != null) && (!tags.isEmpty())) {
+            TagRepository tagRepository = TagRepository.getTagRepository();
+            tagRepository.saveTags(tags, threadID);
+        }
     }
 
     public String getTag() {

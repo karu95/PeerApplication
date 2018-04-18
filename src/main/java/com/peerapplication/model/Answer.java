@@ -17,8 +17,9 @@ public class Answer implements Serializable {
     public Answer() {
     }
 
+
     public Answer(String answerID) {
-        this.answerID = answerID;
+        getAnswer(answerID);
     }
 
     public Answer(String answerID, String threadID, String description, ArrayList<Vote> votes, long timestamp) {
@@ -113,7 +114,9 @@ public class Answer implements Serializable {
     }
 
     public void saveAnswer() {
-        AnswerRepository answerRepo = AnswerRepository.getAnswerRepository();
-        answerRepo.saveAnswer(this);
+        if (answerID != null) {
+            AnswerRepository answerRepo = AnswerRepository.getAnswerRepository();
+            answerRepo.saveAnswer(this);
+        }
     }
 }

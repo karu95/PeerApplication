@@ -17,8 +17,8 @@ public class Thread implements Serializable {
     public Thread() {
     }
 
-    public Thread(String title) {
-        this.title = title;
+    public Thread(String threadID) {
+        getThread(threadID);
     }
 
     public static ArrayList<Thread> getUserThreads(int userID) {
@@ -104,16 +104,20 @@ public class Thread implements Serializable {
     }
 
     public void saveThread() {
-        ThreadRepository threadRepository = ThreadRepository.getThreadRepository();
-        threadRepository.saveThread(this);
-        Tag.saveTags(tags, threadID);
+        if (threadID != null) {
+            ThreadRepository threadRepository = ThreadRepository.getThreadRepository();
+            threadRepository.saveThread(this);
+            Tag.saveTags(tags, threadID);
+        }
     }
 
     public void getCompleteThread(String threadID) {
         getThread(threadID);
         if (threadID.equals(this.threadID)) {
             tags = Tag.getTags(threadID);
+            System.out.println("tags length: " + String.valueOf(tags.size()));
             answers = Answer.getAnswers(threadID);
+            System.out.println("Answers length : " + String.valueOf(answers.size()));
         }
     }
 

@@ -1,6 +1,7 @@
 package com.peerapplication.controller;
 
 import com.peerapplication.handler.BSHandler;
+import com.peerapplication.handler.ForumUpdateHandler;
 import com.peerapplication.model.User;
 import com.peerapplication.util.*;
 import javafx.application.Platform;
@@ -86,35 +87,32 @@ public class LoginController implements Initializable, UIUpdater {
     public void updateUI(Message message) {
         if (message instanceof RequestStatusMessage) {
             RequestStatusMessage reqMessage = (RequestStatusMessage) message;
-            Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
-                    if (!(reqMessage.getStatus().equals("Success"))) {
+            if (!(reqMessage.getStatus().equals("Success"))) {
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
                         statusLabel.setText(reqMessage.getStatus());
-                    } else {
+                    }
+                });
+            } else {
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
                         Stage stage = (Stage) btnRegister.getScene().getWindow();
                         try {
-                            User user = new User();
-                            user.getUser(SystemUser.getSystemUserID());
-                            System.out.println(SystemUser.getSystemUserID() + "here");
-                            System.out.println(user.getUserID() + "here");
-                            FXMLLoader loader;
-                            System.out.println(user.getName());
+                            User user = new User(SystemUser.getSystemUserID());
+                            ForumUpdateHandler.requestUpdate();
                             if (user.getUserID() == SystemUser.getSystemUserID()) {
                                 ControllerUtility.openHome(stage);
                             } else {
-                                loader = new FXMLLoader(getClass().getResource("/views/register.fxml"));
-                                Parent root = loader.load();
-                                Scene scene = new Scene(root, 1035, 859);
-                                stage.setTitle("Register");
-                                stage.setScene(scene);
+                                ControllerUtility.openRegister(stage);
                             }
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
                     }
-                }
-            });
+                });
+            }
         }
     }
 }

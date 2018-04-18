@@ -33,17 +33,17 @@ public class ControllerUtility {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        User user = new User();
-        user.getUserWithImage(SystemUser.getSystemUserID());
+        User user = new User(SystemUser.getSystemUserID());
         HomeController controller = loader.getController();
         controller.init(user);
         Scene scene = new Scene(parent, 1035, 859);
         stage.setScene(scene);
         stage.setTitle("Welcome : " + user.getName());
+        stage.show();
     }
 
     public static void openThreads(Stage stage) throws IOException {
-        Parent root = FXMLLoader.load(ControllerUtility.class.getResource("/views/login.fxml"));
+        Parent root = FXMLLoader.load(ControllerUtility.class.getResource("/views/viewthreads.fxml"));
         stage.setScene(new Scene(root, 1035, 859));
         stage.setTitle("Threads");
         stage.show();
@@ -105,6 +105,15 @@ public class ControllerUtility {
         }
         Scene scene = new Scene(root, 1035, 859);
         stage.setTitle("Login");
+        stage.setScene(scene);
+    }
+
+    public static void openRegister(Stage stage) throws IOException {
+        FXMLLoader loader;
+        loader = new FXMLLoader(ControllerUtility.class.getResource("/views/register.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root, 1035, 859);
+        stage.setTitle("Register");
         stage.setScene(scene);
     }
 }

@@ -1,16 +1,14 @@
 package com.peerapplication.controller;
 
 import com.peerapplication.handler.BSHandler;
+import com.peerapplication.handler.ForumUpdateHandler;
 import com.peerapplication.util.ControllerUtility;
 import com.peerapplication.util.PasswordEncrypter;
 import com.peerapplication.util.UIUpdateHandler;
 import com.peerapplication.util.UIUpdater;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -108,12 +106,9 @@ public class SignupController implements Initializable, UIUpdater {
                         statusLabel.setText(reqMessage.getStatus());
                     } else {
                         Stage stage = (Stage) btnLogin.getScene().getWindow();
-                        Parent root = null;
+                        ForumUpdateHandler.requestUpdate();
                         try {
-                            root = FXMLLoader.load(getClass().getResource("/views/register.fxml"));
-                            Scene scene = new Scene(root, 1035, 859);
-                            stage.setTitle("Register");
-                            stage.setScene(scene);
+                            ControllerUtility.openRegister(stage);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }

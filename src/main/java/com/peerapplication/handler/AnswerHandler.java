@@ -43,13 +43,12 @@ public class AnswerHandler extends Handler {
     private static void handleAnswer(AnswerMessage answerMessage) {
         System.out.println("Handling answer");
         answerHandleLock.writeLock().lock();
-        Answer answer = new Answer();
-        answer.getAnswer(answerMessage.getAnswer().getAnswerID());
-        if (!(answer.getAnswerID().equals(answerMessage.getAnswer().getAnswerID()))) {
+        Answer answer = new Answer(answerMessage.getAnswer().getAnswerID());
+        if (answer.getAnswerID() == null) {
             System.out.println("New Answer");
             answerMessage.getAnswer().saveAnswer();
             ArrayList<Peer> receivers = new ArrayList<>();
-            PeerHandler.knownPeersReadUnlock();
+            PeerHandler.knownPeersReadLock();
             for (Map.Entry peer : PeerHandler.getKnownPeers().entrySet()) {
                 if (peer.getKey().equals(Integer.valueOf(answerMessage.getAnswer().getPostedUserID()))
                         || peer.getKey().equals(Integer.valueOf(answerMessage.getSenderID()))) {
