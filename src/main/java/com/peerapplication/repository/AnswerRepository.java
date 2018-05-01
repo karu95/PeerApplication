@@ -37,7 +37,6 @@ public class AnswerRepository {
             getStatement.setString(1, answerID);
             readWriteLock.readLock().lock();
             ResultSet rs = getStatement.executeQuery();
-            readWriteLock.readLock().unlock();
             while (rs.next()) {
                 answer.setAnswerID(rs.getString("answer_id"));
                 answer.setDescription(rs.getString("description"));
@@ -47,6 +46,8 @@ public class AnswerRepository {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            readWriteLock.readLock().unlock();
         }
         return answer;
     }
@@ -63,13 +64,14 @@ public class AnswerRepository {
             saveStatement.setString(5, answer.getThreadID());
             readWriteLock.writeLock().lock();
             saveStatement.execute();
-            readWriteLock.writeLock().unlock();
         } catch (SQLException e) {
             if (e instanceof SQLIntegrityConstraintViolationException) {
                 System.out.println("Duplicate Answer");
                 return;
             }
             e.printStackTrace();
+        } finally {
+            readWriteLock.writeLock().unlock();
         }
     }
 
@@ -82,7 +84,6 @@ public class AnswerRepository {
             getStatement.setString(1, threadID);
             readWriteLock.readLock().lock();
             ResultSet rs = getStatement.executeQuery();
-            readWriteLock.readLock().unlock();
             while (rs.next()) {
                 Answer answer = new Answer();
                 answer.setAnswerID(rs.getString("answer_id"));
@@ -90,11 +91,15 @@ public class AnswerRepository {
                 answer.setThreadID(rs.getString("related_thread"));
                 answer.setTimestamp(rs.getLong("posted_time"));
                 answer.setPostedUserID(rs.getInt("posted_user"));
+                System.out.println("Getting Votes");
                 answer.setVotes(Vote.getVotes(answer.getAnswerID()));
+                System.out.println("Votes took");
                 answers.add(answer);
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            readWriteLock.readLock().unlock();
         }
         return answers;
     }
@@ -108,12 +113,13 @@ public class AnswerRepository {
             countStatement.setInt(1, userID);
             readWriteLock.readLock().lock();
             ResultSet rs = countStatement.executeQuery();
-            readWriteLock.readLock().unlock();
             while (rs.next()) {
                 count = rs.getInt("cnt");
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            readWriteLock.readLock().unlock();
         }
         return count;
     }
@@ -127,7 +133,6 @@ public class AnswerRepository {
             latestAnsStmt.setLong(1, timestamp);
             readWriteLock.readLock().lock();
             ResultSet rs = latestAnsStmt.executeQuery();
-            readWriteLock.readLock().unlock();
             while (rs.next()) {
                 Answer answer = new Answer();
                 answer.setAnswerID(rs.getString("answer_id"));
@@ -139,6 +144,8 @@ public class AnswerRepository {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            readWriteLock.readLock().unlock();
         }
         return latestAnswers;
     }

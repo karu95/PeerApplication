@@ -1,6 +1,7 @@
 package com.peerapplication.handler;
 
 import com.peerapplication.model.Thread;
+import com.peerapplication.util.UIUpdateHandler;
 import message.Message;
 import message.ThreadMessage;
 import messenger.Handler;
@@ -46,12 +47,12 @@ public class ThreadHandler extends Handler {
         if (thread.getThreadID() == null) {
             System.out.println("New Thread");
             threadMessage.getThread().saveThread();
+            UIUpdateHandler.informThreadUpdater(threadMessage);
             ArrayList<Peer> receivers = new ArrayList<>();
-            PeerHandler.knownPeersReadUnlock();
+            PeerHandler.knownPeersReadLock();
             for (Map.Entry peer : PeerHandler.getKnownPeers().entrySet()) {
                 if (peer.getKey().equals(Integer.valueOf(threadMessage.getThread().getUserID()))
                         || peer.getKey().equals(Integer.valueOf(threadMessage.getSenderID()))) {
-                    System.out.println("Removed " + ((Peer) peer.getValue()).getUserID());
                     continue;
                 } else {
                     receivers.add((Peer) peer.getValue());

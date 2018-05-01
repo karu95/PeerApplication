@@ -47,7 +47,8 @@ public class UserHandler extends Handler {
         user.getUser(userInfoMessage.getUser().getUserID());
         System.out.println("user info received");
         System.out.println("Sender " + userInfoMessage.getSenderID());
-        if (user.getLastProfileUpdate() != userInfoMessage.getUser().getLastProfileUpdate()) {
+        if ((user.getUserID() != userInfoMessage.getUser().getUserID()) ||
+                (user.getLastProfileUpdate() != userInfoMessage.getUser().getLastProfileUpdate())) {
             PeerHandler.knownPeersReadLock();
             HashMap<Integer, Peer> peers = PeerHandler.getKnownPeers();
             ArrayList<Peer> receivers = new ArrayList<>();

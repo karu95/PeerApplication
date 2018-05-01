@@ -122,7 +122,8 @@ public class SettingsController implements Initializable, UIUpdater {
     void updateSettings(MouseEvent event) throws CloneNotSupportedException, IOException {
         String name = txtName.getText().trim();
         String email = txtEmail.getText().trim();
-        User updatedUser = (User) user.clone();
+        User updatedUser = new User();
+        updatedUser.getUserWithImage(SystemUser.getSystemUserID());
         if (file != null) {
             updatedUser.setUserImage(ImageIO.read(file));
             updatedUser.setImageURL(String.valueOf(user.getUserID()));

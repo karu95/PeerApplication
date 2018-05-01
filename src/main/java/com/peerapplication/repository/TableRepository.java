@@ -46,9 +46,10 @@ public class TableRepository {
                 "related_post VARCHAR(20)," +
                 "FOREIGN KEY (related_user) REFERENCES users(user_id))";
         String votedTable = "CREATE TABLE voted (" +
-                "answer_id VARCHAR (20) PRIMARY KEY," +
+                "answer_id VARCHAR (20)," +
                 "user_id INT," +
                 "voted_time BIGINT," +
+                "PRIMARY KEY(answer_id, user_id)" +
                 "FOREIGN KEY (user_id) REFERENCES users(user_id))";
         String deletedTable = "CREATE TABLE deleted(" +
                 "thread_id VARCHAR(20) PRIMARY KEY," +

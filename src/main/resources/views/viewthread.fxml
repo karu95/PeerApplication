@@ -13,7 +13,7 @@
         <AnchorPane layoutX="29.0" layoutY="64.0" minHeight="681.0" minWidth="995.0" AnchorPane.leftAnchor="20.0"
                     AnchorPane.rightAnchor="20.0">
             <children>
-                <TextArea fx:id="txtAreaAnswer" layoutX="42.0" layoutY="516.0" prefHeight="107.0" prefWidth="912.0"
+                <TextArea fx:id="txtAreaAnswer" layoutX="36.0" layoutY="531.0" prefHeight="91.0" prefWidth="912.0"
                           promptText="Wanna Answer?"/>
                 <Button fx:id="btnAnswer" layoutX="434.0" layoutY="642.0" mnemonicParsing="false"
                         onMouseClicked="#saveAnswer" prefHeight="25.0" prefWidth="129.0" text="Answer"/>
@@ -33,8 +33,10 @@
                         </AnchorPane>
                     </content>
                 </ScrollPane>
-                <Button fx:id="btnDelThread" layoutX="814.0" layoutY="642.0" mnemonicParsing="false" prefHeight="25.0"
+                <Button fx:id="btnDelThread" layoutX="808.0" layoutY="642.0" mnemonicParsing="false" prefHeight="25.0"
                         prefWidth="140.0" text="Delete Thread"/>
+                <Label fx:id="statusLbl" layoutX="38.0" layoutY="506.0" prefHeight="17.0" prefWidth="912.0"
+                       textFill="#eb0808"/>
             </children>
         </AnchorPane>
         <HBox layoutX="58.0" layoutY="24.0" styleClass="my-drop-down-menu" stylesheets="@../css/navigationbar.css"

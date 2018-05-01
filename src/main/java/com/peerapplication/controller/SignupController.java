@@ -92,6 +92,7 @@ public class SignupController implements Initializable, UIUpdater {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        UIUpdateHandler.refreshUpdater();
         UIUpdateHandler.setRegisterUpdater(this);
     }
 

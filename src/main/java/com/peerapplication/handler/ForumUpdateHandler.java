@@ -89,7 +89,7 @@ public class ForumUpdateHandler extends Handler {
             PeerHandler.startHeartBeat();
             System.out.println("Heart");
             System.out.println("Forum Updated");
-            forumUpdated.notify();
+            forumUpdated.notifyAll();
         }
     }
 

@@ -1,6 +1,7 @@
 package com.peerapplication.controller;
 
 import com.peerapplication.util.ControllerUtility;
+import com.peerapplication.util.UIUpdateHandler;
 import com.peerapplication.util.UIUpdater;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -89,11 +90,14 @@ public class ViewThreadsController implements UIUpdater, Initializable {
     public void updateUI(Message message) {
         if (message instanceof ThreadMessage) {
             ThreadMessage threadMessage = (ThreadMessage) message;
+
         }
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        UIUpdateHandler.refreshUpdater();
+        UIUpdateHandler.setThreadUpdater(this);
         btnThreads.setDisable(true);
         Platform.runLater(new Runnable() {
             @Override

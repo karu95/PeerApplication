@@ -37,7 +37,6 @@ public class ThreadRepository {
             getPsmt.setString(1, threadID);
             readWriteLock.readLock().lock();
             ResultSet rs = getPsmt.executeQuery();
-            readWriteLock.readLock().unlock();
             while (rs.next()) {
                 thread.setThreadID(rs.getString("thread_id"));
                 thread.setTitle(rs.getString("title"));
@@ -47,6 +46,8 @@ public class ThreadRepository {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            readWriteLock.readLock().unlock();
         }
     }
 
@@ -62,14 +63,14 @@ public class ThreadRepository {
             saveQueryPsmt.setLong(5, thread.getTimestamp());
             readWriteLock.writeLock().lock();
             saveQueryPsmt.execute();
-            readWriteLock.writeLock().unlock();
         } catch (SQLException e) {
             if (e instanceof SQLIntegrityConstraintViolationException) {
                 System.out.println("Duplicate Thread");
-                return;
             } else {
                 e.printStackTrace();
             }
+        } finally {
+            readWriteLock.writeLock().unlock();
         }
     }
 
@@ -82,7 +83,6 @@ public class ThreadRepository {
             getThreadsPsmt.setInt(1, userID);
             readWriteLock.readLock().lock();
             ResultSet rs = getThreadsPsmt.executeQuery();
-            readWriteLock.readLock().unlock();
             while (rs.next()) {
                 Thread thread = new Thread();
                 thread.setThreadID(rs.getString("thread_id"));
@@ -94,6 +94,8 @@ public class ThreadRepository {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            readWriteLock.readLock().unlock();
         }
         return threads;
     }
@@ -107,7 +109,6 @@ public class ThreadRepository {
             getLatestThreadsPsmt.setLong(1, timestamp);
             readWriteLock.readLock().lock();
             ResultSet rs = getLatestThreadsPsmt.executeQuery();
-            readWriteLock.readLock().unlock();
             while (rs.next()) {
                 Thread thread = new Thread();
                 thread.setThreadID(rs.getString("thread_id"));
@@ -119,6 +120,8 @@ public class ThreadRepository {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            readWriteLock.readLock().unlock();
         }
         return threads;
     }

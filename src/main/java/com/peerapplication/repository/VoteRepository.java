@@ -38,7 +38,6 @@ public class VoteRepository {
             pstmt.setInt(2, userID);
             readWriteLock.readLock().lock();
             ResultSet rs = pstmt.executeQuery();
-            readWriteLock.readLock().unlock();
             while (rs.next()) {
                 vote.setAnswerID(rs.getString("answer_id"));
                 vote.setUserID(rs.getInt("user_id"));
@@ -46,6 +45,8 @@ public class VoteRepository {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            readWriteLock.readLock().unlock();
         }
         return vote;
     }
@@ -60,13 +61,14 @@ public class VoteRepository {
             pstmt.setLong(3, vote.getVotedTime());
             readWriteLock.writeLock().lock();
             pstmt.execute();
-            readWriteLock.writeLock().unlock();
         } catch (SQLException e) {
             if (e instanceof SQLIntegrityConstraintViolationException) {
                 System.out.println("Duplicate Vote");
                 return;
             }
             e.printStackTrace();
+        } finally {
+            readWriteLock.writeLock().unlock();
         }
     }
 
@@ -77,9 +79,10 @@ public class VoteRepository {
         try {
             PreparedStatement getStatement = connection.prepareStatement(getVotesQuery);
             getStatement.setString(1, answerID);
+            System.out.println("Here");
             readWriteLock.readLock().lock();
             ResultSet rs = getStatement.executeQuery();
-            readWriteLock.readLock().unlock();
+            System.out.println("Vote Query ran");
             while (rs.next()) {
                 Vote vote = new Vote();
                 vote.getVote(answerID, rs.getInt("user_id"));
@@ -87,6 +90,8 @@ public class VoteRepository {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            readWriteLock.readLock().unlock();
         }
         return votes;
     }
@@ -100,7 +105,6 @@ public class VoteRepository {
             latestVotesStmt.setLong(1, timestamp);
             readWriteLock.readLock().lock();
             ResultSet rs = latestVotesStmt.executeQuery();
-            readWriteLock.readLock().unlock();
             while (rs.next()) {
                 Vote vote = new Vote();
                 vote.setAnswerID(rs.getString("answer_id"));
@@ -110,6 +114,8 @@ public class VoteRepository {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            readWriteLock.readLock().unlock();
         }
         return latestVotes;
     }

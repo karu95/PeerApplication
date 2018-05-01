@@ -161,11 +161,6 @@ public class User implements Serializable {
         return equal;
     }
 
-    @Override
-    public Object clone() throws CloneNotSupportedException {
-        return super.clone();
-    }
-
     public long getLastProfileUpdate() {
         return lastProfileUpdate;
     }

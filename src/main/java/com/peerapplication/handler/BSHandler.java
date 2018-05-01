@@ -37,9 +37,9 @@ public class BSHandler extends Handler {
     }
 
     public static void logout(LogoutMessage logoutMessage) {
+        PeerHandler.stopHeartBeat();
         logoutMessage.setTimestamp(new Date(System.currentTimeMillis()).getTime());
         PeerHandler.getSenderController().send(logoutMessage, PeerHandler.getBS());
-        PeerHandler.stopHeartBeat();
         PeerHandler.getKnownPeers().clear();
         SystemUser.setAccountType(0);
         SystemUser.setSystemUserID(0);
@@ -71,7 +71,7 @@ public class BSHandler extends Handler {
         SystemUser.setSystemUserID(message.getUserID());
         System.out.println(message.getUserID());
         SystemUser.setLastSeen(message.getLastSeen());
-        System.out.println(new Date(message.getLastSeen()));
+        System.out.println("Last seen on " + new Date(message.getLastSeen()));
         SystemUser.setAccountType(message.getAccountType());
         System.out.println("Active size " + message.getActivePeers().size());
         PeerHandler.setKnownPeers(message.getActivePeers());

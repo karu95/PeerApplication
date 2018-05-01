@@ -10,10 +10,12 @@ public class HeartBeatHandler extends Handler {
 
     private static HeartBeatHandler heartBeatHandler;
 
+    private Object stopLock;
     private boolean stop;
 
     private HeartBeatHandler() {
         this.stop = false;
+        stopLock = new Object();
     }
 
     public static HeartBeatHandler getHeartBeatHandler() {
@@ -28,13 +30,21 @@ public class HeartBeatHandler extends Handler {
 
     public void startHeartBeat() {
         ExecutorService heartbeatService = Executors.newSingleThreadExecutor();
-        this.stop = false;
+        synchronized (stopLock) {
+            this.stop = false;
+        }
         heartbeatService.execute(new Runnable() {
             @Override
             public void run() {
-                while (!stop) {
-                    HeartBeatMessage heartBeatMessage = new HeartBeatMessage();
-                    PeerHandler.getSenderController().send(heartBeatMessage, PeerHandler.getBS());
+                while (true) {
+                    synchronized (stopLock) {
+                        if (!stop) {
+                            HeartBeatMessage heartBeatMessage = new HeartBeatMessage();
+                            PeerHandler.getSenderController().send(heartBeatMessage, PeerHandler.getBS());
+                        } else {
+                            break;
+                        }
+                    }
                     try {
                         Thread.sleep(1000);
                     } catch (InterruptedException e) {
@@ -46,8 +56,10 @@ public class HeartBeatHandler extends Handler {
     }
 
     public void stop() {
-        this.stop = true;
-        System.out.println("Heartbeat Stopped");
+        synchronized (stopLock) {
+            this.stop = true;
+            System.out.println("Heartbeat Stopped");
+        }
     }
 
     @Override

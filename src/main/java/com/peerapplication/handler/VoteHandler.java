@@ -1,6 +1,7 @@
 package com.peerapplication.handler;
 
 import com.peerapplication.model.Vote;
+import com.peerapplication.util.UIUpdateHandler;
 import message.Message;
 import message.VoteMessage;
 import messenger.Handler;
@@ -37,8 +38,9 @@ public class VoteHandler extends Handler {
         if (!((vote.getUserID() == voteMessage.getVote().getUserID())
                 && (vote.getAnswerID().equals(voteMessage.getVote().getAnswerID())))) {
             voteMessage.getVote().saveVote();
+            UIUpdateHandler.informVoteUpdater(voteMessage);
             ArrayList<Peer> receivers = new ArrayList<>();
-            PeerHandler.knownPeersReadUnlock();
+            PeerHandler.knownPeersReadLock();
             for (Map.Entry peer : PeerHandler.getKnownPeers().entrySet()) {
                 if (peer.getKey().equals(Integer.valueOf(voteMessage.getVote().getUserID()))
                         || peer.getKey().equals(Integer.valueOf(voteMessage.getSenderID()))) {

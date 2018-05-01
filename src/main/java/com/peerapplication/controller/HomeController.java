@@ -5,6 +5,7 @@ import com.peerapplication.model.Thread;
 import com.peerapplication.model.User;
 import com.peerapplication.util.ControllerUtility;
 import com.peerapplication.util.SystemUser;
+import com.peerapplication.util.UIUpdateHandler;
 import com.peerapplication.util.UIUpdater;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -162,6 +163,10 @@ public class HomeController implements Initializable, UIUpdater {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        UIUpdateHandler.refreshUpdater();
+        UIUpdateHandler.setThreadUpdater(this);
+        UIUpdateHandler.setAnswerUpdater(this);
+        UIUpdateHandler.setVoteUpdater(this);
         notificationTab.setOnSelectionChanged(ActionEvent -> {
             if (notificationTab.isSelected()) {
                 System.out.println("Notification");
@@ -203,7 +208,12 @@ public class HomeController implements Initializable, UIUpdater {
     public void updateUI(Message message) {
         if (message instanceof ThreadMessage) {
             ThreadMessage threadMessage = (ThreadMessage) message;
-
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    latestThreads.add(0, threadMessage.getThread());
+                }
+            });
         } else if (message instanceof AnswerMessage) {
             AnswerMessage answerMessage = (AnswerMessage) message;
 

@@ -1,6 +1,7 @@
 package com.peerapplication.handler;
 
 import com.peerapplication.model.Answer;
+import com.peerapplication.util.UIUpdateHandler;
 import message.AnswerMessage;
 import message.Message;
 import messenger.Handler;
@@ -47,6 +48,7 @@ public class AnswerHandler extends Handler {
         if (answer.getAnswerID() == null) {
             System.out.println("New Answer");
             answerMessage.getAnswer().saveAnswer();
+            UIUpdateHandler.informAnswerUpdater(answerMessage);
             ArrayList<Peer> receivers = new ArrayList<>();
             PeerHandler.knownPeersReadLock();
             for (Map.Entry peer : PeerHandler.getKnownPeers().entrySet()) {

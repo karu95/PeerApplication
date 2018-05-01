@@ -37,7 +37,6 @@ public class UserRepository {
             stmt.setInt(1, userID);
             readWriteLock.readLock().lock();
             ResultSet rs = stmt.executeQuery();
-            readWriteLock.readLock().unlock();
             while (rs.next()) {
                 user.setUserID(rs.getInt("user_id"));
                 user.setName(rs.getString("user_name"));
@@ -48,6 +47,8 @@ public class UserRepository {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            readWriteLock.readLock().unlock();
         }
     }
 
@@ -74,13 +75,14 @@ public class UserRepository {
             stmt.setString(4, user.getImageURL());
             readWriteLock.writeLock().lock();
             stmt.execute();
-            readWriteLock.writeLock().unlock();
         } catch (SQLException e) {
             if (e instanceof SQLIntegrityConstraintViolationException) {
                 System.out.println("Duplicate User");
                 return;
             }
             e.printStackTrace();
+        } finally {
+            readWriteLock.writeLock().unlock();
         }
     }
 
@@ -93,7 +95,6 @@ public class UserRepository {
             psmt.setLong(1, timestamp);
             readWriteLock.readLock().lock();
             ResultSet rs = psmt.executeQuery();
-            readWriteLock.readLock().unlock();
             while (rs.next()) {
                 User user = new User(rs.getInt("user_id"), rs.getString("user_name"), rs.getString("email"));
                 user.setImageURL(rs.getString("image"));
@@ -104,6 +105,8 @@ public class UserRepository {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            readWriteLock.readLock().unlock();
         }
         return latestUsers;
     }

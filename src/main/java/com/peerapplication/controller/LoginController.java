@@ -80,6 +80,7 @@ public class LoginController implements Initializable, UIUpdater {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        UIUpdateHandler.refreshUpdater();
         UIUpdateHandler.setLoginUpdater(this);
     }
 

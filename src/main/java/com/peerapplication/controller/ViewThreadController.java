@@ -1,13 +1,13 @@
 package com.peerapplication.controller;
 
 import com.peerapplication.handler.AnswerHandler;
+import com.peerapplication.handler.VoteHandler;
 import com.peerapplication.model.Answer;
 import com.peerapplication.model.Thread;
 import com.peerapplication.model.User;
-import com.peerapplication.util.ControllerUtility;
-import com.peerapplication.util.IDGenerator;
-import com.peerapplication.util.SystemUser;
-import com.peerapplication.util.UIUpdater;
+import com.peerapplication.model.Vote;
+import com.peerapplication.util.*;
+import com.peerapplication.validator.AnswerValidator;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -41,6 +41,9 @@ public class ViewThreadController implements Initializable, UIUpdater {
     private Button btnAnswer;
 
     @FXML
+    private Label statusLbl;
+
+    @FXML
     private AnchorPane aPaneThread;
 
     @FXML
@@ -64,6 +67,9 @@ public class ViewThreadController implements Initializable, UIUpdater {
     @FXML
     private MenuItem menuItemLogout;
 
+    @FXML
+    private Button btnDelThread;
+
     private Text previousText;
 
     private Stage stage;
@@ -71,6 +77,8 @@ public class ViewThreadController implements Initializable, UIUpdater {
     private Thread thread;
 
     private HashMap<Integer, User> relatedUsers;
+
+    private HashMap<String, Hyperlink> votes;
 
     @FXML
     void btnHomeClicked(MouseEvent event) {
@@ -105,15 +113,25 @@ public class ViewThreadController implements Initializable, UIUpdater {
         answer.setAnswerID(IDGenerator.generateAnswerID(answer.getTimestamp()));
         answer.setThreadID(thread.getThreadID());
         answer.setPostedUserID(SystemUser.getSystemUserID());
-        answer.saveAnswer();
-        ExecutorService answerSender = Executors.newSingleThreadExecutor();
-        answerSender.execute(new Runnable() {
-            @Override
-            public void run() {
-                AnswerHandler.postAnswer(answer);
-            }
-        });
-        addAnswer(answer);
+        String validity = AnswerValidator.validateAnswer(answer);
+        if (validity.equals("valid")) {
+            answer.saveAnswer();
+            ExecutorService answerSender = Executors.newSingleThreadExecutor();
+            answerSender.execute(new Runnable() {
+                @Override
+                public void run() {
+                    AnswerHandler.postAnswer(answer);
+                }
+            });
+            addAnswer(answer);
+        } else {
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    statusLbl.setText(validity);
+                }
+            });
+        }
         txtAreaAnswer.clear();
     }
 
@@ -121,7 +139,14 @@ public class ViewThreadController implements Initializable, UIUpdater {
     public void updateUI(Message message) {
         if (message instanceof AnswerMessage) {
             AnswerMessage answerMessage = (AnswerMessage) message;
-
+            if (answerMessage.getAnswer().getThreadID().equals(thread.getThreadID())) {
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        addAnswer(answerMessage.getAnswer());
+                    }
+                });
+            }
         } else if (message instanceof DeleteThreadMessage) {
             DeleteThreadMessage deleteThreadMessage = (DeleteThreadMessage) message;
 
@@ -133,6 +158,14 @@ public class ViewThreadController implements Initializable, UIUpdater {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        UIUpdateHandler.refreshUpdater();
+        UIUpdateHandler.setAnswerUpdater(this);
+        UIUpdateHandler.setVoteUpdater(this);
+        if (SystemUser.getAccountType() == 1) {
+            btnDelThread.setDisable(false);
+        } else {
+            btnDelThread.setDisable(true);
+        }
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
@@ -184,16 +217,44 @@ public class ViewThreadController implements Initializable, UIUpdater {
             relatedUsers.putIfAbsent(answer.getPostedUserID(), new User(answer.getPostedUserID()));
             userLink.setText(relatedUsers.get(answer.getPostedUserID()).getName());
         }
-        userLink.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                ControllerUtility.viewUser(stage, relatedUsers.get(answer.getPostedUserID()));
-            }
-        });
+        if (answer.getPostedUserID() != SystemUser.getSystemUserID()) {
+            userLink.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    ControllerUtility.viewUser(stage, relatedUsers.get(answer.getPostedUserID()));
+                }
+            });
+        } else {
+            userLink.setDisable(true);
+        }
         TextFlow answerFlow = new TextFlow(txtAnswerDetail, userLink);
         answerFlow.setLayoutX(txtThreadHeader.getLayoutX());
         answerFlow.setLayoutY(previousText.getLayoutY() + previousText.getBoundsInLocal().getHeight());
+        Hyperlink voteLink = new Hyperlink();
+        voteLink.setText("Voted : " + String.valueOf(answer.getVotes().size()));
+        for (Vote vote : answer.getVotes()) {
+            if (vote.getUserID() == SystemUser.getSystemUserID()) {
+                voteLink.setDisable(true);
+                break;
+            }
+        }
+        voteLink.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                voteLink.setText("Voted : " + String.valueOf(Integer.valueOf(voteLink.getText().substring(8)) + 1));
+                voteLink.setDisable(true);
+                Vote vote = new Vote();
+                vote.setVotedTime(new Date(System.currentTimeMillis()).getTime());
+                vote.setUserID(SystemUser.getSystemUserID());
+                vote.setAnswerID(answer.getAnswerID());
+                vote.saveVote();
+                VoteHandler.getVoteHandler().postVote(vote);
+            }
+        });
+        voteLink.setLayoutX(txtThreadHeader.getLayoutX() + 800);
+        voteLink.setLayoutY(answerFlow.getLayoutY());
         aPaneThread.getChildren().add(answerFlow);
+        aPaneThread.getChildren().add(voteLink);
         txtAnswerDesc.setText(answer.getDescription());
         txtAnswerDesc.setLayoutX(txtThreadHeader.getLayoutX());
         txtAnswerDesc.setLayoutY(answerFlow.getLayoutY() + answerFlow.getBoundsInLocal().getHeight() + 20);

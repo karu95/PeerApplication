@@ -3,6 +3,7 @@ package com.peerapplication.controller;
 import com.peerapplication.model.Thread;
 import com.peerapplication.model.User;
 import com.peerapplication.util.ControllerUtility;
+import com.peerapplication.util.UIUpdateHandler;
 import com.peerapplication.util.UIUpdater;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -78,6 +79,8 @@ public class ViewUserController implements Initializable, UIUpdater {
 
     private Stage stage;
 
+    private ObservableList<Thread> postedThreads;
+
     @FXML
     void btnHomeClicked(MouseEvent event) {
         ControllerUtility.openHome(stage);
@@ -115,15 +118,35 @@ public class ViewUserController implements Initializable, UIUpdater {
     public void updateUI(Message message) {
         if (message instanceof UserInfoMessage) {
             UserInfoMessage userInfoMessage = (UserInfoMessage) message;
-
+            if (userInfoMessage.getUser().getUserID() == user.getUserID()) {
+                this.user = userInfoMessage.getUser();
+                updateInterface();
+            }
         } else if (message instanceof ThreadMessage) {
             ThreadMessage threadMessage = (ThreadMessage) message;
-
+            if (threadMessage.getThread().getUserID() == user.getUserID()) {
+                postedThreads.add(0, threadMessage.getThread());
+            }
         }
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        UIUpdateHandler.refreshUpdater();
+        UIUpdateHandler.setThreadUpdater(this);
+        UIUpdateHandler.setUserInfoUpdater(this);
+        updateInterface();
+    }
+
+    public void init(User user) {
+        this.user = user;
+        this.user.getUserWithImage(user.getUserID());
+        postedThreads = FXCollections.observableArrayList(Thread.getUserThreads(user.getUserID()));
+        colTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
+        postedThreadsTable.setItems(postedThreads);
+    }
+
+    private void updateInterface() {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
@@ -138,13 +161,5 @@ public class ViewUserController implements Initializable, UIUpdater {
                 lblEmail.setText(user.getEmail());
             }
         });
-    }
-
-    public void init(User user) {
-        this.user = user;
-        this.user.getUserWithImage(user.getUserID());
-        ObservableList<Thread> postedThreads = FXCollections.observableArrayList(Thread.getUserThreads(user.getUserID()));
-        colTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
-        postedThreadsTable.setItems(postedThreads);
     }
 }

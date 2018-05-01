@@ -1,5 +1,7 @@
 package messenger;
 
+import com.peerapplication.util.SystemUser;
+import message.BSMessage;
 import message.Message;
 
 import java.net.*;
@@ -29,13 +31,17 @@ public class PeerHandler {
     }
 
     static void handle(Message message) {
-        if (handlers.containsKey(message.getTitle())) {
-            handlers.get(message.getTitle()).handle(message);
-        } else if (message.getTitle().equals("HeartBeatSuccess")) {
+        if ((SystemUser.getSystemUserID() == 0) && (!(message instanceof BSMessage))) {
 
         } else {
-            System.out.println(message.getTitle());
-            System.out.println("UnknownMessage");
+            if (handlers.containsKey(message.getTitle())) {
+                handlers.get(message.getTitle()).handle(message);
+            } else if (message.getTitle().equals("HeartBeatSuccess")) {
+
+            } else {
+                System.out.println(message.getTitle());
+                System.out.println("UnknownMessage");
+            }
         }
     }
 
