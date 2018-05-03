@@ -7,6 +7,7 @@ public class SystemUser {
     private static int accountType;
     private static long lastSeen;
     private static String imageLocation;
+    private static boolean tablesCreated;
 
     public static int getAccountType() {
         return accountType;
@@ -29,7 +30,11 @@ public class SystemUser {
     }
 
     public static void setLastSeen(long lastSeen) {
-        SystemUser.lastSeen = lastSeen;
+        if (!tablesCreated) {
+            SystemUser.lastSeen = lastSeen;
+        } else {
+            SystemUser.lastSeen = 0;
+        }
     }
 
     public static String getImageLocation() {
@@ -41,5 +46,9 @@ public class SystemUser {
             }
         }
         return imageLocation;
+    }
+
+    public static void setTablesCreated(boolean tablesCreated) {
+        SystemUser.tablesCreated = tablesCreated;
     }
 }

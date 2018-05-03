@@ -101,8 +101,8 @@ public class LoginController implements Initializable, UIUpdater {
                     public void run() {
                         Stage stage = (Stage) btnRegister.getScene().getWindow();
                         try {
-                            User user = new User(SystemUser.getSystemUserID());
                             ForumUpdateHandler.requestUpdate();
+                            User user = new User(SystemUser.getSystemUserID());
                             if (user.getUserID() == SystemUser.getSystemUserID()) {
                                 ControllerUtility.openHome(stage);
                             } else {

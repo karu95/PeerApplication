@@ -1,28 +1,21 @@
 package message;
 
+import com.peerapplication.model.DeletedThread;
+
 public class DeleteThreadMessage extends Message {
 
-    private String threadID;
-    private int deletedUser;
+    private DeletedThread deletedThread;
 
     public DeleteThreadMessage() {
         super("DeleteThreadMessage");
     }
 
 
-    public int getDeletedUser() {
-        return deletedUser;
+    public DeletedThread getDeletedThread() {
+        return deletedThread;
     }
 
-    public void setDeletedUser(int deletedUser) {
-        this.deletedUser = deletedUser;
-    }
-
-    public String getThreadID() {
-        return threadID;
-    }
-
-    public void setThreadID(String threadID) {
-        this.threadID = threadID;
+    public void setDeletedThread(DeletedThread deletedThread) {
+        this.deletedThread = deletedThread;
     }
 }

@@ -11,7 +11,9 @@ public class UIUpdateHandler {
     private static UIUpdater voteUpdater;
 
     public static void setRegisterUpdater(UIUpdater registerUpdater) {
-        UIUpdateHandler.registerUpdater = registerUpdater;
+        synchronized (registerUpdater) {
+            UIUpdateHandler.registerUpdater = registerUpdater;
+        }
     }
 
     public static void setLoginUpdater(UIUpdater loginUpdater) {
@@ -39,40 +41,40 @@ public class UIUpdateHandler {
     }
 
     public static void informRegisterUpdater(Message message) {
-        synchronized (registerUpdater) {
-            if (registerUpdater != null) {
+        if (registerUpdater != null) {
+            synchronized (registerUpdater) {
                 registerUpdater.updateUI(message);
             }
         }
     }
 
     public static void informLoginUpdater(Message message) {
-        synchronized (loginUpdater) {
-            if (loginUpdater != null) {
+        if (loginUpdater != null) {
+            synchronized (loginUpdater) {
                 loginUpdater.updateUI(message);
             }
         }
     }
 
     public static void informAnswerUpdater(Message message) {
-        synchronized (answerUpdater) {
-            if (answerUpdater != null) {
+        if (answerUpdater != null) {
+            synchronized (answerUpdater) {
                 answerUpdater.updateUI(message);
             }
         }
     }
 
     public static void informThreadUpdater(Message message) {
-        synchronized (threadUpdater) {
-            if (threadUpdater != null) {
+        if (threadUpdater != null) {
+            synchronized (threadUpdater) {
                 threadUpdater.updateUI(message);
             }
         }
     }
 
     public static void informUserUpdater(Message message) {
-        synchronized (userInfoUpdater) {
-            if (userInfoUpdater != null) {
+        if (userInfoUpdater != null) {
+            synchronized (userInfoUpdater) {
                 userInfoUpdater.updateUI(message);
             }
         }
@@ -85,8 +87,8 @@ public class UIUpdateHandler {
     }
 
     public static void informVoteUpdater(Message message) {
-        synchronized (voteUpdater) {
-            if (voteUpdater != null) {
+        if (voteUpdater != null) {
+            synchronized (voteUpdater) {
                 voteUpdater.updateUI(message);
             }
         }

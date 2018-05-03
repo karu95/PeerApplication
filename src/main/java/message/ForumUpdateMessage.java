@@ -1,9 +1,7 @@
 package message;
 
-import com.peerapplication.model.Answer;
+import com.peerapplication.model.*;
 import com.peerapplication.model.Thread;
-import com.peerapplication.model.User;
-import com.peerapplication.model.Vote;
 
 import java.util.ArrayList;
 
@@ -15,6 +13,7 @@ public class ForumUpdateMessage extends Message {
     private ArrayList<User> registeredUsers;
     private ArrayList<Answer> latestAnswers;
     private ArrayList<Vote> latestVotes;
+    private ArrayList<DeletedThread> deletedThreads;
 
     public ForumUpdateMessage() {
         super("ForumUpdateMessage");
@@ -67,5 +66,13 @@ public class ForumUpdateMessage extends Message {
 
     public void setLastSeen(long lastSeen) {
         this.lastSeen = lastSeen;
+    }
+
+    public ArrayList<DeletedThread> getDeletedThreads() {
+        return deletedThreads;
+    }
+
+    public void setDeletedThreads(ArrayList<DeletedThread> deletedThreads) {
+        this.deletedThreads = deletedThreads;
     }
 }

@@ -93,6 +93,8 @@ public class SettingsController implements Initializable, UIUpdater {
 
     private User user;
 
+    private ExecutorService userUpdater;
+
     @FXML
     void btnHomeClicked(MouseEvent event) {
         ControllerUtility.openHome(stage);
@@ -132,10 +134,8 @@ public class SettingsController implements Initializable, UIUpdater {
         updatedUser.setEmail(email);
         if (!updatedUser.equals(user)) {
             String validity = userValidator.validate(updatedUser);
-            if (validity.equals("Success")) {
+            if (validity.equals("Success") && PeerHandler.checkConnection()) {
                 updatedUser.setLastProfileUpdate(new Date(System.currentTimeMillis()).getTime());
-                ExecutorService userUpdater = Executors.newSingleThreadExecutor();
-                PeerHandler.checkConnection();
                 userUpdater.execute(new Runnable() {
                     @Override
                     public void run() {
@@ -162,6 +162,7 @@ public class SettingsController implements Initializable, UIUpdater {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        userUpdater = Executors.newSingleThreadExecutor();
         menuItemSettings.setDisable(true);
         userValidator = UserValidator.getUserValidator();
         fileChooser = new FileChooser();

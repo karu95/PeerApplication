@@ -90,7 +90,7 @@ public class PostThreadController implements Initializable {
     void post(MouseEvent event) throws IOException {
         Thread thread = new Thread();
         thread.setTimestamp(new Date(System.currentTimeMillis()).getTime());
-        thread.setDescription(txtDescription.getText());
+        thread.setDescription(txtDescription.getText().trim());
         thread.setTitle(txtTitle.getText());
         thread.setUserID(SystemUser.getSystemUserID());
         thread.setThreadID(IDGenerator.generateThreadID(thread.getTimestamp()));
@@ -101,19 +101,17 @@ public class PostThreadController implements Initializable {
         }
         thread.setTags(relatedTags);
         String validity = ThreadValidator.validateThread(thread);
-        if (validity.equals("valid")) {
-            if (PeerHandler.checkConnection()) {
-                thread.saveThread();
-                ExecutorService postThreadService = Executors.newSingleThreadExecutor();
-                postThreadService.execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        ThreadHandler.postThread(thread);
-                    }
-                });
-                Stage stage = (Stage) btnPost.getScene().getWindow();
-                ControllerUtility.viewThread(stage, thread);
-            }
+        if (validity.equals("valid") && PeerHandler.checkConnection()) {
+            thread.saveThread();
+            ExecutorService postThreadService = Executors.newSingleThreadExecutor();
+            postThreadService.execute(new Runnable() {
+                @Override
+                public void run() {
+                    ThreadHandler.postThread(thread);
+                }
+            });
+            Stage stage = (Stage) btnPost.getScene().getWindow();
+            ControllerUtility.viewThread(stage, thread);
         } else {
             statusLabel.setText(validity);
         }

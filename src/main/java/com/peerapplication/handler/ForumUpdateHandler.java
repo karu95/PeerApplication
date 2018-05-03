@@ -1,9 +1,7 @@
 package com.peerapplication.handler;
 
-import com.peerapplication.model.Answer;
+import com.peerapplication.model.*;
 import com.peerapplication.model.Thread;
-import com.peerapplication.model.User;
-import com.peerapplication.model.Vote;
 import com.peerapplication.util.SystemUser;
 import message.ForumUpdateMessage;
 import message.Message;
@@ -50,21 +48,23 @@ public class ForumUpdateHandler extends Handler {
 
     private static void handleUpdate(ForumUpdateMessage forumUpdateMessage) {
         if (forumUpdateMessage.getStatus().equals("Request")) {
-                ForumUpdateMessage processedRequest = new ForumUpdateMessage();
-                processedRequest.setStatus("Processed Request");
+            ForumUpdateMessage processedRequest = new ForumUpdateMessage();
+            processedRequest.setStatus("Processed Request");
             System.out.println(new Date(forumUpdateMessage.getLastSeen()));
-                processedRequest.setRegisteredUsers(User.getLatestUsers(forumUpdateMessage.getLastSeen()));
-                processedRequest.setLatestThreads(Thread.getLatestThreads(forumUpdateMessage.getLastSeen()));
-                processedRequest.setLatestAnswers(Answer.getLatestAnswers(forumUpdateMessage.getLastSeen()));
-                processedRequest.setLatestVotes(Vote.getLatestVotes(forumUpdateMessage.getLastSeen()));
-                PeerHandler.getSenderController().send(processedRequest, PeerHandler.getKnownPeers().get(forumUpdateMessage.getSenderID()));
-                System.out.println("Request Processed");
+            processedRequest.setRegisteredUsers(User.getLatestUsers(forumUpdateMessage.getLastSeen()));
+            processedRequest.setLatestThreads(Thread.getLatestThreads(forumUpdateMessage.getLastSeen()));
+            processedRequest.setLatestAnswers(Answer.getLatestAnswers(forumUpdateMessage.getLastSeen()));
+            processedRequest.setLatestVotes(Vote.getLatestVotes(forumUpdateMessage.getLastSeen()));
+            processedRequest.setDeletedThreads(DeletedThread.getDeletedThreads(forumUpdateMessage.getLastSeen()));
+            PeerHandler.getSenderController().send(processedRequest, PeerHandler.getKnownPeers().get(forumUpdateMessage.getSenderID()));
+            System.out.println("Request Processed");
         } else if (forumUpdateMessage.getStatus().equals("Processed Request")) {
             System.out.println("Processed request received");
             User.saveUsers(forumUpdateMessage.getRegisteredUsers());
             Thread.saveThreads(forumUpdateMessage.getLatestThreads());
             Answer.saveAnswers(forumUpdateMessage.getLatestAnswers());
             Vote.saveVotes(forumUpdateMessage.getLatestVotes());
+            DeletedThread.saveDeletedThreads(forumUpdateMessage.getDeletedThreads());
             forumUpdated();
             System.out.println("Forum updated");
         }

@@ -1,6 +1,7 @@
 package com.peerapplication.repository;
 
 import com.peerapplication.util.DBConnection;
+import com.peerapplication.util.SystemUser;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -22,14 +23,14 @@ public class TableRepository {
                 "register_time BIGINT," +
                 "last_update_time BIGINT," +
                 "image VARCHAR (30))";
-        String threadTableStmt = "CREATE TABLE thread (" +
+        String threadTableStmt = "CREATE TABLE thread(" +
                 "thread_id VARCHAR (20) PRIMARY KEY," +
                 "title VARCHAR(100)," +
                 "description VARCHAR(2000)," +
                 "posted_time BIGINT," +
                 "posted_user INT," +
                 "FOREIGN KEY (posted_user) REFERENCES users(user_id))";
-        String answerTable = "CREATE TABLE answer (" +
+        String answerTable = "CREATE TABLE answer(" +
                 "answer_id VARCHAR (20) PRIMARY KEY," +
                 "description VARCHAR(2000)," +
                 "posted_user INT," +
@@ -39,17 +40,11 @@ public class TableRepository {
                 "FOREIGN KEY (related_thread) REFERENCES thread(thread_id))";
         String tagTable = "CREATE TABLE tag(" +
                 "tag VARCHAR (100) PRIMARY KEY)";
-        String notificationTable = "CREATE TABLE notification(" +
-                "notification_id INT PRIMARY KEY," +
-                "related_user INT," +
-                "notify_status BOOLEAN," +
-                "related_post VARCHAR(20)," +
-                "FOREIGN KEY (related_user) REFERENCES users(user_id))";
-        String votedTable = "CREATE TABLE voted (" +
+        String votedTable = "CREATE TABLE voted(" +
                 "answer_id VARCHAR (20)," +
                 "user_id INT," +
                 "voted_time BIGINT," +
-                "PRIMARY KEY(answer_id, user_id)" +
+                "PRIMARY KEY(answer_id, user_id)," +
                 "FOREIGN KEY (user_id) REFERENCES users(user_id))";
         String deletedTable = "CREATE TABLE deleted(" +
                 "thread_id VARCHAR(20) PRIMARY KEY," +
@@ -69,9 +64,9 @@ public class TableRepository {
             stmt.execute(votedTable);
             stmt.execute(deletedTable);
             stmt.execute(taggedTable);
-            stmt.execute(notificationTable);
             stmt.close();
             connection.close();
+            SystemUser.setTablesCreated(true);
         } catch (SQLException e) {
             if (e.getSQLState().equals("X0Y32")) {
                 System.out.println("Tables created");

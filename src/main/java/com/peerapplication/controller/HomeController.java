@@ -22,10 +22,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import message.AnswerMessage;
-import message.Message;
-import message.ThreadMessage;
-import message.VoteMessage;
+import message.*;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -220,6 +217,10 @@ public class HomeController implements Initializable, UIUpdater {
         } else if (message instanceof VoteMessage) {
             VoteMessage voteMessage = (VoteMessage) message;
 
+        } else if (message instanceof DeleteThreadMessage) {
+            DeleteThreadMessage deleteThreadMessage = (DeleteThreadMessage) message;
+            latestThreads = FXCollections.observableArrayList(Thread.getLatestThreads(0));
+            myThreads = FXCollections.observableArrayList(Thread.getUserThreads(SystemUser.getSystemUserID()));
         }
     }
 

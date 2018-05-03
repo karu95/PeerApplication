@@ -13,6 +13,9 @@ import messenger.PeerHandler;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
 
 public class BSInfoController implements Initializable {
 
@@ -28,6 +31,8 @@ public class BSInfoController implements Initializable {
     @FXML
     private Button btnConnect;
 
+    private ExecutorService connectionTester;
+
     @FXML
     void connect(MouseEvent event) throws IOException {
         int port = Integer.parseInt(txtBSPort.getText().trim());
@@ -40,6 +45,7 @@ public class BSInfoController implements Initializable {
         } else {
             PeerHandler.getBS().setPeerAddress(ipAddress);
             PeerHandler.getBS().setPeerPort(port);
+            PeerHandler.getBS().setUserID(1);
             Stage primaryStage = (Stage) btnConnect.getScene().getWindow();
             ControllerUtility.login(primaryStage);
         }
@@ -63,12 +69,30 @@ public class BSInfoController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        connectionTester = Executors.newSingleThreadExecutor(new ThreadFactory() {
+            @Override
+            public Thread newThread(Runnable r) {
+                Thread thread = Executors.defaultThreadFactory().newThread(r);
+                thread.setDaemon(true);
+                return thread;
+            }
+        });
         if (!PeerHandler.checkConnection()) {
             lblStatus.setText("No network connection!");
+            btnConnect.setDisable(true);
+            connectionTester.execute(new Runnable() {
+                @Override
+                public void run() {
+                    while (true) {
+                        if (PeerHandler.checkConnection()) {
+                            btnConnect.setDisable(false);
+                            break;
+                        }
+                    }
+                }
+            });
         }
         txtBSIP.setText("192.168.8.100");
         txtBSPort.setText("25025");
     }
-
-
 }

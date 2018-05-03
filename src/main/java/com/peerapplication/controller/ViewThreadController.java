@@ -1,11 +1,10 @@
 package com.peerapplication.controller;
 
 import com.peerapplication.handler.AnswerHandler;
+import com.peerapplication.handler.ThreadHandler;
 import com.peerapplication.handler.VoteHandler;
-import com.peerapplication.model.Answer;
+import com.peerapplication.model.*;
 import com.peerapplication.model.Thread;
-import com.peerapplication.model.User;
-import com.peerapplication.model.Vote;
 import com.peerapplication.util.*;
 import com.peerapplication.validator.AnswerValidator;
 import javafx.application.Platform;
@@ -23,12 +22,11 @@ import message.AnswerMessage;
 import message.DeleteThreadMessage;
 import message.Message;
 import message.VoteMessage;
+import messenger.PeerHandler;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -78,7 +76,9 @@ public class ViewThreadController implements Initializable, UIUpdater {
 
     private HashMap<Integer, User> relatedUsers;
 
-    private HashMap<String, Hyperlink> votes;
+    private HashMap<String, Hyperlink> voteLinks;
+
+    private ExecutorService senderService;
 
     @FXML
     void btnHomeClicked(MouseEvent event) {
@@ -106,24 +106,51 @@ public class ViewThreadController implements Initializable, UIUpdater {
     }
 
     @FXML
+    void deleteThread(MouseEvent event) {
+        TextInputDialog confirmDelete = new TextInputDialog();
+        confirmDelete.setTitle("Do you want to delete?");
+        confirmDelete.setHeaderText("Type \"CONFIRM\" to delete.");
+        Optional<String> result = confirmDelete.showAndWait();
+        if (result.isPresent() && result.get().equals("CONFIRM") && PeerHandler.checkConnection()) {
+            DeletedThread deletedThread = new DeletedThread(thread.getThreadID(), SystemUser.getSystemUserID(),
+                    new Date(System.currentTimeMillis()).getTime());
+            deletedThread.deleteThread();
+            senderService.execute(new Runnable() {
+                @Override
+                public void run() {
+                    ThreadHandler.postDeleteThread(deletedThread);
+                }
+            });
+            ControllerUtility.openHome(stage);
+        } else {
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    statusLbl.setText("Thread deletion not completed!");
+                }
+            });
+        }
+    }
+
+    @FXML
     void saveAnswer(MouseEvent event) {
         Answer answer = new Answer();
         answer.setTimestamp(new Date(System.currentTimeMillis()).getTime());
-        answer.setDescription(txtAreaAnswer.getText());
+        answer.setDescription(txtAreaAnswer.getText().trim());
         answer.setAnswerID(IDGenerator.generateAnswerID(answer.getTimestamp()));
         answer.setThreadID(thread.getThreadID());
         answer.setPostedUserID(SystemUser.getSystemUserID());
+        answer.setVotes(new ArrayList<>());
         String validity = AnswerValidator.validateAnswer(answer);
-        if (validity.equals("valid")) {
+        if (validity.equals("valid") && PeerHandler.checkConnection()) {
+            addAnswer(answer);
             answer.saveAnswer();
-            ExecutorService answerSender = Executors.newSingleThreadExecutor();
-            answerSender.execute(new Runnable() {
+            senderService.execute(new Runnable() {
                 @Override
                 public void run() {
                     AnswerHandler.postAnswer(answer);
                 }
             });
-            addAnswer(answer);
         } else {
             Platform.runLater(new Runnable() {
                 @Override
@@ -149,10 +176,18 @@ public class ViewThreadController implements Initializable, UIUpdater {
             }
         } else if (message instanceof DeleteThreadMessage) {
             DeleteThreadMessage deleteThreadMessage = (DeleteThreadMessage) message;
-
+            if (deleteThreadMessage.getDeletedThread().getThreadID().equals(thread.getThreadID())) {
+                ControllerUtility.openHome(stage);
+            }
         } else if (message instanceof VoteMessage) {
             VoteMessage voteMessage = (VoteMessage) message;
-
+            Hyperlink voteLink = voteLinks.get(voteMessage.getVote().getAnswerID());
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    voteLink.setText("Voted : " + String.valueOf(Integer.valueOf(voteLink.getText().substring(8)) + 1));
+                }
+            });
         }
     }
 
@@ -161,6 +196,9 @@ public class ViewThreadController implements Initializable, UIUpdater {
         UIUpdateHandler.refreshUpdater();
         UIUpdateHandler.setAnswerUpdater(this);
         UIUpdateHandler.setVoteUpdater(this);
+        UIUpdateHandler.setThreadUpdater(this);
+        voteLinks = new HashMap<>();
+        senderService = Executors.newSingleThreadExecutor();
         if (SystemUser.getAccountType() == 1) {
             btnDelThread.setDisable(false);
         } else {
@@ -248,11 +286,17 @@ public class ViewThreadController implements Initializable, UIUpdater {
                 vote.setUserID(SystemUser.getSystemUserID());
                 vote.setAnswerID(answer.getAnswerID());
                 vote.saveVote();
-                VoteHandler.getVoteHandler().postVote(vote);
+                senderService.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        VoteHandler.getVoteHandler().postVote(vote);
+                    }
+                });
             }
         });
         voteLink.setLayoutX(txtThreadHeader.getLayoutX() + 800);
         voteLink.setLayoutY(answerFlow.getLayoutY());
+        voteLinks.putIfAbsent(answer.getAnswerID(), voteLink);
         aPaneThread.getChildren().add(answerFlow);
         aPaneThread.getChildren().add(voteLink);
         txtAnswerDesc.setText(answer.getDescription());

@@ -109,11 +109,19 @@ public class ControllerUtility {
     }
 
     public static void openRegister(Stage stage) throws IOException {
-        FXMLLoader loader;
-        loader = new FXMLLoader(ControllerUtility.class.getResource("/views/register.fxml"));
+        FXMLLoader loader = new FXMLLoader(ControllerUtility.class.getResource("/views/register.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root, 1035, 859);
         stage.setTitle("Register");
         stage.setScene(scene);
+    }
+
+    public static void openBSInfoController(Stage stage) throws IOException {
+        FXMLLoader loader = new FXMLLoader((ControllerUtility.class.getResource("/views/bsinfo.fxml")));
+        Parent parent = loader.load();
+        Scene scene = new Scene(parent, 1035, 859);
+        stage.setTitle("Provide BS Info");
+        stage.setScene(scene);
+        stage.show();
     }
 }
