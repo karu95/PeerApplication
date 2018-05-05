@@ -1,6 +1,7 @@
 package com.peerapplication.handler;
 
 import com.peerapplication.model.Answer;
+import com.peerapplication.notifcation.NotificationHandler;
 import com.peerapplication.util.UIUpdateHandler;
 import message.AnswerMessage;
 import message.Message;
@@ -48,13 +49,13 @@ public class AnswerHandler extends Handler {
         if (answer.getAnswerID() == null) {
             System.out.println("New Answer");
             answerMessage.getAnswer().saveAnswer();
+            NotificationHandler.getNotificationHandler().handleAnswer(answerMessage.getAnswer());
             UIUpdateHandler.informAnswerUpdater(answerMessage);
             ArrayList<Peer> receivers = new ArrayList<>();
             PeerHandler.knownPeersReadLock();
             for (Map.Entry peer : PeerHandler.getKnownPeers().entrySet()) {
                 if (peer.getKey().equals(Integer.valueOf(answerMessage.getAnswer().getPostedUserID()))
                         || peer.getKey().equals(Integer.valueOf(answerMessage.getSenderID()))) {
-                    System.out.println("Removed " + ((Peer) peer.getValue()).getUserID());
                     continue;
                 } else {
                     receivers.add((Peer) peer.getValue());

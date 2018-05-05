@@ -1,8 +1,9 @@
 package com.peerapplication.controller;
 
-import com.peerapplication.model.Notification;
 import com.peerapplication.model.Thread;
 import com.peerapplication.model.User;
+import com.peerapplication.notifcation.Notification;
+import com.peerapplication.notifcation.NotificationHandler;
 import com.peerapplication.util.ControllerUtility;
 import com.peerapplication.util.SystemUser;
 import com.peerapplication.util.UIUpdateHandler;
@@ -155,7 +156,9 @@ public class HomeController implements Initializable, UIUpdater {
 
     @FXML
     void openNotification(MouseEvent event) {
-
+        Thread thread = notificationsTable.getSelectionModel().getSelectedItem().getRelatedThread();
+        NotificationHandler.getNotificationHandler().notificationRead(notificationsTable.getSelectionModel().getSelectedItem());
+        ControllerUtility.viewThread(stage, thread);
     }
 
     @Override
@@ -166,7 +169,7 @@ public class HomeController implements Initializable, UIUpdater {
         UIUpdateHandler.setVoteUpdater(this);
         notificationTab.setOnSelectionChanged(ActionEvent -> {
             if (notificationTab.isSelected()) {
-                System.out.println("Notification");
+                System.out.println(NotificationHandler.getNotificationHandler().getNotifications().size());
             }
         });
 
@@ -191,6 +194,9 @@ public class HomeController implements Initializable, UIUpdater {
         myThreads = FXCollections.observableArrayList(Thread.getUserThreads(SystemUser.getSystemUserID()));
         colTitleMyThreads.setCellValueFactory(new PropertyValueFactory<>("title"));
         myThreadsTable.setItems(myThreads);
+
+        colNotifications.setCellValueFactory(new PropertyValueFactory<>("description"));
+        notificationsTable.setItems(NotificationHandler.getNotificationHandler().getNotifications());
 
         if (notificationTab.isSelected()) {
 

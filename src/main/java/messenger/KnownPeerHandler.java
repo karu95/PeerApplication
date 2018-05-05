@@ -11,6 +11,7 @@ import java.util.Map;
 public class KnownPeerHandler extends Handler {
 
     private static KnownPeerHandler knownPeerHandler;
+    private static Object requestWaiter = new Object();
 
     private KnownPeerHandler() {
     }
@@ -29,6 +30,9 @@ public class KnownPeerHandler extends Handler {
             Peer peer = new Peer(joinMessage.getSenderID(), joinMessage.getSenderAddress(), joinMessage.getSenderPort());
             peer.setLastSeen(joinMessage.getTimestamp());
             PeerHandler.addKnownPeer(peer);
+            synchronized (requestWaiter) {
+                requestWaiter.notifyAll();
+            }
             System.out.println("Joined " + peer.getUserID());
         }
     }
@@ -69,12 +73,27 @@ public class KnownPeerHandler extends Handler {
             HashMap<Integer, Peer> knownPeers = (HashMap<Integer, Peer>) PeerHandler.getKnownPeers().clone();
             PeerHandler.knownPeersReadLock();
             Peer peer = PeerHandler.getKnownPeers().get(peerInfoMessage.getSenderID());
-            PeerHandler.knownPeersReadUnlock();
-            knownPeers.remove(peerInfoMessage.getSenderID());
-            PeerInfoMessage peerDetailMessage = new PeerInfoMessage();
-            peerDetailMessage.setKnownPeers(knownPeers);
-            peerDetailMessage.setStatus("ProcessedRequest");
-            PeerHandler.getSenderController().send(peerDetailMessage, peer);
+            long startTime = System.currentTimeMillis();
+            while (((System.currentTimeMillis() - startTime) < 1000) && (peer == null)) {
+                try {
+                    synchronized (requestWaiter) {
+                        requestWaiter.wait(1000);
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                peer = PeerHandler.getKnownPeers().get(peerInfoMessage.getSenderID());
+            }
+            System.out.println("waiting over");
+            if (peer != null) {
+                System.out.println("here");
+                PeerHandler.knownPeersReadUnlock();
+                knownPeers.remove(peerInfoMessage.getSenderID());
+                PeerInfoMessage peerDetailMessage = new PeerInfoMessage();
+                peerDetailMessage.setKnownPeers(knownPeers);
+                peerDetailMessage.setStatus("ProcessedRequest");
+                PeerHandler.getSenderController().send(peerDetailMessage, peer);
+            }
         } else if (peerInfoMessage.getStatus().equals("ProcessedRequest")) {
             HashMap<Integer, Peer> knownPeers = peerInfoMessage.getKnownPeers();
             if (!knownPeers.isEmpty()) {

@@ -101,7 +101,6 @@ public class PeerHandler {
         System.out.println("Listening on " + port);
         receiverController = new ReceiverController(userPort);
         serverWorker.execute(receiverController);
-        userAddress = getLocalIPAddress();
         registerHandler("JoinMessage", KnownPeerHandler.getKnownPeerHandler());
         registerHandler("PeerInfoMessage", KnownPeerHandler.getKnownPeerHandler());
     }
@@ -127,10 +126,6 @@ public class PeerHandler {
                         continue;
                     }
                     inetAddress = inet_addr;
-                    System.out.println(
-                            "  address: " + inet_addr.getHostAddress() +
-                                    "/" + addr.getNetworkPrefixLength()
-                    );
                 }
             }
         } catch (SocketException e) {
@@ -139,12 +134,12 @@ public class PeerHandler {
         if (inetAddress != null) {
             return inetAddress.getHostAddress();
         }
-        return "No network Connection!";
+        return "No";
     }
 
     public static boolean checkConnection() {
         String localIPAddress = getLocalIPAddress();
-        if (!localIPAddress.equals("No network Connection!")) {
+        if (!localIPAddress.equals("No")) {
             if (userAddress == null) {
                 userAddress = localIPAddress;
                 return true;

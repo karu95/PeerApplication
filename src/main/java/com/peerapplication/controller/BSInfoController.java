@@ -1,6 +1,7 @@
 package com.peerapplication.controller;
 
 import com.peerapplication.util.ControllerUtility;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -33,6 +34,8 @@ public class BSInfoController implements Initializable {
 
     private ExecutorService connectionTester;
 
+    private boolean testConnection;
+
     @FXML
     void connect(MouseEvent event) throws IOException {
         int port = Integer.parseInt(txtBSPort.getText().trim());
@@ -47,6 +50,8 @@ public class BSInfoController implements Initializable {
             PeerHandler.getBS().setPeerPort(port);
             PeerHandler.getBS().setUserID(1);
             Stage primaryStage = (Stage) btnConnect.getScene().getWindow();
+            testConnection = false;
+            connectionTester.shutdown();
             ControllerUtility.login(primaryStage);
         }
     }
@@ -69,6 +74,7 @@ public class BSInfoController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        this.testConnection = true;
         connectionTester = Executors.newSingleThreadExecutor(new ThreadFactory() {
             @Override
             public Thread newThread(Runnable r) {
@@ -77,21 +83,35 @@ public class BSInfoController implements Initializable {
                 return thread;
             }
         });
-        if (!PeerHandler.checkConnection()) {
-            lblStatus.setText("No network connection!");
-            btnConnect.setDisable(true);
-            connectionTester.execute(new Runnable() {
-                @Override
-                public void run() {
-                    while (true) {
-                        if (PeerHandler.checkConnection()) {
-                            btnConnect.setDisable(false);
-                            break;
-                        }
+        connectionTester.execute(new Runnable() {
+            @Override
+            public void run() {
+                while (testConnection) {
+                    String error = "";
+                    if (PeerHandler.checkConnection()) {
+                        btnConnect.setDisable(false);
+                        error = "Provide BS Information!";
+                    } else {
+                        btnConnect.setDisable(true);
+                        error = "No network connection!";
+                    }
+                    if (!error.equals(lblStatus.getText())) {
+                        String finalError = error;
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                lblStatus.setText(finalError);
+                            }
+                        });
+                    }
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
                     }
                 }
-            });
-        }
+            }
+        });
         txtBSIP.setText("192.168.8.100");
         txtBSPort.setText("25025");
     }

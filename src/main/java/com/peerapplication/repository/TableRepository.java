@@ -52,8 +52,9 @@ public class TableRepository {
                 "delete_time BIGINT," +
                 "FOREIGN KEY (user_id) REFERENCES users)";
         String taggedTable = "CREATE TABLE tagged(" +
-                "tag VARCHAR(100) PRIMARY KEY," +
+                "tag VARCHAR(100)," +
                 "thread_id VARCHAR(20)," +
+                "PRIMARY KEY(tag, thread_id)" +
                 "FOREIGN KEY (thread_id) REFERENCES thread)";
         try {
             Statement stmt = connection.createStatement();
