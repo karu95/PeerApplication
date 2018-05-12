@@ -84,7 +84,7 @@ public class ViewThreadController implements Initializable, UIUpdater {
 
     @FXML
     void btnThreadsClicked(MouseEvent event) throws IOException {
-        ControllerUtility.openThreads();
+        ControllerUtility.openThreads("");
     }
 
     @FXML
@@ -224,14 +224,16 @@ public class ViewThreadController implements Initializable, UIUpdater {
         for (Tag tag : thread.getTags()) {
             Hyperlink tagLink = new Hyperlink();
             tagLink.setText(tag.getTag());
-            System.out.println(tag.getTag());
             tagLink.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
-
+                    try {
+                        ControllerUtility.openThreads(tagLink.getText());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             });
-            System.out.println("Tag added");
             threadFlow.getChildren().add(tagLink);
         }
         Text txtThreadDescription = new Text();

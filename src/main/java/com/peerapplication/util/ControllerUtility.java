@@ -42,8 +42,11 @@ public class ControllerUtility {
         stage.show();
     }
 
-    public static void openThreads() throws IOException {
-        Parent root = FXMLLoader.load(ControllerUtility.class.getResource("/views/viewthreads.fxml"));
+    public static void openThreads(String tag) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(ControllerUtility.class.getResource("/views/viewthreads.fxml"));
+        Parent root = fxmlLoader.load();
+        ViewThreadsController controller = fxmlLoader.getController();
+        controller.init(tag);
         stage.setScene(new Scene(root, 1035, 859));
         stage.setTitle("Threads");
         stage.show();

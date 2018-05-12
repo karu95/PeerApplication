@@ -36,6 +36,8 @@ public class BSInfoController implements Initializable {
 
     private boolean testConnection;
 
+    private String error;
+
     @FXML
     void connect(MouseEvent event) throws IOException {
         int port = Integer.parseInt(txtBSPort.getText().trim());
@@ -52,6 +54,7 @@ public class BSInfoController implements Initializable {
             Stage primaryStage = (Stage) btnConnect.getScene().getWindow();
             testConnection = false;
             connectionTester.shutdown();
+            PeerHandler.startConnectionTest();
             ControllerUtility.login();
         }
     }
@@ -74,6 +77,7 @@ public class BSInfoController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        error = "";
         this.testConnection = true;
         connectionTester = Executors.newSingleThreadExecutor(new ThreadFactory() {
             @Override
@@ -87,10 +91,11 @@ public class BSInfoController implements Initializable {
             @Override
             public void run() {
                 while (testConnection) {
-                    String error = "";
                     if (PeerHandler.checkConnection()) {
                         btnConnect.setDisable(false);
-                        error = "Provide BS Information!";
+                        if (!error.equals("Unable to connect to BS")) {
+                            error = "Provide BS Information!";
+                        }
                     } else {
                         btnConnect.setDisable(true);
                         error = "No network connection!";
@@ -117,6 +122,7 @@ public class BSInfoController implements Initializable {
     }
 
     public void init() {
+        error = "Unable to connect to BS";
         Platform.runLater(new Runnable() {
             @Override
             public void run() {

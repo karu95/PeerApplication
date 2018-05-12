@@ -68,7 +68,6 @@ public class ThreadRepository {
         } catch (SQLException e) {
             if (e instanceof SQLIntegrityConstraintViolationException) {
                 System.out.println("Duplicate Thread");
-                e.printStackTrace();
             } else {
                 e.printStackTrace();
             }

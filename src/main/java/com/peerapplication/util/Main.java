@@ -13,7 +13,7 @@ import messenger.PeerHandler;
 public class Main extends Application {
 
     public static void main(String[] args) {
-        int port = 25035;
+        int port = 25034;
         if (args.length > 1) {
             port = Integer.parseInt(args[1]);
         }
@@ -37,7 +37,7 @@ public class Main extends Application {
         PeerHandler.registerHandler("PWChangeStatus", BSHandler.getBSHandler());
         PeerHandler.registerHandler("Login", BSHandler.getBSHandler());
         PeerHandler.registerHandler("Register", BSHandler.getBSHandler());
-        PeerHandler.registerHandler("HeartBeatMessage", BSHandler.getBSHandler());
+        PeerHandler.registerHandler("HeartBeatStatus", BSHandler.getBSHandler());
         PeerHandler.registerHandler("Logout", BSHandler.getBSHandler());
     }
 

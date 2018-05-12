@@ -85,7 +85,7 @@ public class ViewUserController implements Initializable, UIUpdater {
 
     @FXML
     void btnThreadsClicked(MouseEvent event) throws IOException {
-        ControllerUtility.openThreads();
+        ControllerUtility.openThreads("");
     }
 
     @FXML

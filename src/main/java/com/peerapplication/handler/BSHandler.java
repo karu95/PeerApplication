@@ -1,7 +1,9 @@
 package com.peerapplication.handler;
 
+import com.peerapplication.util.ControllerUtility;
 import com.peerapplication.util.SystemUser;
 import com.peerapplication.util.UIUpdateHandler;
+import javafx.application.Platform;
 import message.*;
 import messenger.Handler;
 import messenger.Peer;
@@ -64,6 +66,20 @@ public class BSHandler extends Handler {
         } else if (message.getTitle().equals("PWChangeStatus")) {
             UIUpdateHandler.informUserUpdater(message);
             System.out.println("PW Change status received");
+        } else if (message.getTitle().equals("HeartBeatStatus")) {
+            if (message.getStatus().equals("Not Logged In")) {
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        PeerHandler.stopHeartBeat();
+                        PeerHandler.getKnownPeers().clear();
+                        SystemUser.setSystemUserID(0);
+                        SystemUser.setLastSeen(0);
+                        SystemUser.setAccountType(0);
+                        ControllerUtility.login();
+                    }
+                });
+            }
         }
     }
 

@@ -23,7 +23,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import message.*;
+import message.DeleteThreadMessage;
+import message.Message;
+import message.ThreadMessage;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -113,7 +115,7 @@ public class HomeController implements Initializable, UIUpdater {
 
     @FXML
     void btnThreadsClicked(MouseEvent event) throws IOException {
-        ControllerUtility.openThreads();
+        ControllerUtility.openThreads("");
     }
 
     @FXML
@@ -208,12 +210,6 @@ public class HomeController implements Initializable, UIUpdater {
                     latestThreads.add(0, threadMessage.getThread());
                 }
             });
-        } else if (message instanceof AnswerMessage) {
-            AnswerMessage answerMessage = (AnswerMessage) message;
-
-        } else if (message instanceof VoteMessage) {
-            VoteMessage voteMessage = (VoteMessage) message;
-
         } else if (message instanceof DeleteThreadMessage) {
             DeleteThreadMessage deleteThreadMessage = (DeleteThreadMessage) message;
             latestThreads = FXCollections.observableArrayList(Thread.getLatestThreads(0));

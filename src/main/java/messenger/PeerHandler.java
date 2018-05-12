@@ -1,15 +1,21 @@
 package messenger;
 
+import com.peerapplication.util.ControllerUtility;
 import com.peerapplication.util.SystemUser;
+import com.peerapplication.validator.MessageValidator;
+import javafx.application.Platform;
 import message.BSMessage;
 import message.Message;
 
+import java.io.IOException;
 import java.net.*;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
@@ -32,13 +38,15 @@ public class PeerHandler {
 
     static void handle(Message message) {
         if ((SystemUser.getSystemUserID() != 0) || ((message instanceof BSMessage))) {
-            if (handlers.containsKey(message.getTitle())) {
-                handlers.get(message.getTitle()).handle(message);
-            } else if (message.getTitle().equals("HeartBeatSuccess")) {
+            if (MessageValidator.getMessageValidator().validateMessage(message)) {
+                if (handlers.containsKey(message.getTitle())) {
+                    handlers.get(message.getTitle()).handle(message);
+                } else if (message.getTitle().equals("HeartBeatSuccess")) {
 
-            } else {
-                System.out.println(message.getTitle());
-                System.out.println("UnknownMessage");
+                } else {
+                    System.out.println(message.getTitle());
+                    System.out.println("UnknownMessage");
+                }
             }
         } else {
             System.out.println("Not Logged IN");
@@ -126,6 +134,7 @@ public class PeerHandler {
                         continue;
                     }
                     inetAddress = inet_addr;
+                    break;
                 }
             }
         } catch (SocketException e) {
@@ -151,6 +160,7 @@ public class PeerHandler {
         return false;
     }
 
+
     public static void startHeartBeat() {
         heartBeatHandler.startHeartBeat();
     }
@@ -165,6 +175,42 @@ public class PeerHandler {
 
     public static Peer getBS() {
         return bs;
+    }
+
+    public static void startConnectionTest() {
+        Executor connectionTester = Executors.newSingleThreadExecutor(new ThreadFactory() {
+            @Override
+            public Thread newThread(Runnable r) {
+                Thread thread = Executors.defaultThreadFactory().newThread(r);
+                thread.setDaemon(true);
+                return thread;
+            }
+        });
+        connectionTester.execute(new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    if (!PeerHandler.checkConnection()) {
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    ControllerUtility.openBSInfoController(false);
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+                        break;
+                    }
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
     }
 
     public static void knownPeersReadLock() {

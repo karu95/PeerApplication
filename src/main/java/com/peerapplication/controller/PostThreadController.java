@@ -64,7 +64,7 @@ public class PostThreadController implements Initializable {
 
     @FXML
     void btnThreadsClicked(MouseEvent event) throws IOException {
-        ControllerUtility.openThreads();
+        ControllerUtility.openThreads("");
     }
 
     @FXML

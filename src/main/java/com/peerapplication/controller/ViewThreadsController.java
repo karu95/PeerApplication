@@ -78,6 +78,33 @@ public class ViewThreadsController implements UIUpdater, Initializable {
     @FXML
     void search(MouseEvent event) {
         String relatedTagsString = txtSearch.getText().trim();
+        searchThreads(relatedTagsString);
+    }
+
+    @Override
+    public void updateUI(Message message) {
+        if (message instanceof ThreadMessage) {
+            ThreadMessage threadMessage = (ThreadMessage) message;
+            observableList.add(0, threadMessage.getThread());
+        }
+    }
+
+    public void init(String tag) {
+        txtSearch.setText(tag);
+        searchThreads(tag);
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        UIUpdateHandler.refreshUpdater();
+        UIUpdateHandler.setThreadUpdater(this);
+        btnThreads.setDisable(true);
+        observableList = FXCollections.observableArrayList(Thread.getLatestThreads(0));
+        colTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
+        threadTable.setItems(observableList);
+    }
+
+    private void searchThreads(String relatedTagsString) {
         if (relatedTagsString.length() > 0) {
             String[] relatedTags = relatedTagsString.split(",");
             for (int i = 0; i < relatedTags.length; i++) {
@@ -110,23 +137,5 @@ public class ViewThreadsController implements UIUpdater, Initializable {
         } else {
             observableList = FXCollections.observableList(Thread.getLatestThreads(0));
         }
-    }
-
-    @Override
-    public void updateUI(Message message) {
-        if (message instanceof ThreadMessage) {
-            ThreadMessage threadMessage = (ThreadMessage) message;
-
-        }
-    }
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        UIUpdateHandler.refreshUpdater();
-        UIUpdateHandler.setThreadUpdater(this);
-        btnThreads.setDisable(true);
-        observableList = FXCollections.observableArrayList(Thread.getLatestThreads(0));
-        colTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
-        threadTable.setItems(observableList);
     }
 }
