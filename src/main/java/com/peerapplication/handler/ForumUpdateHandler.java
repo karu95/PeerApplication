@@ -2,6 +2,7 @@ package com.peerapplication.handler;
 
 import com.peerapplication.model.*;
 import com.peerapplication.model.Thread;
+import com.peerapplication.notifcation.NotificationHandler;
 import com.peerapplication.util.SystemUser;
 import message.ForumUpdateMessage;
 import message.Message;
@@ -63,7 +64,9 @@ public class ForumUpdateHandler extends Handler {
             User.saveUsers(forumUpdateMessage.getRegisteredUsers());
             Thread.saveThreads(forumUpdateMessage.getLatestThreads());
             Answer.saveAnswers(forumUpdateMessage.getLatestAnswers());
+            NotificationHandler.getNotificationHandler().handleAnswers(forumUpdateMessage.getLatestAnswers());
             Vote.saveVotes(forumUpdateMessage.getLatestVotes());
+            NotificationHandler.getNotificationHandler().handleVotes(forumUpdateMessage.getLatestVotes());
             DeletedThread.saveDeletedThreads(forumUpdateMessage.getDeletedThreads());
             forumUpdated();
             System.out.println("Forum updated");

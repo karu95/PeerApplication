@@ -30,6 +30,7 @@ public class KnownPeerHandler extends Handler {
             Peer peer = new Peer(joinMessage.getSenderID(), joinMessage.getSenderAddress(), joinMessage.getSenderPort());
             peer.setLastSeen(joinMessage.getTimestamp());
             PeerHandler.addKnownPeer(peer);
+            System.out.println("Join Recieved" + peer.getUserID());
             synchronized (requestWaiter) {
                 requestWaiter.notifyAll();
             }
@@ -73,6 +74,7 @@ public class KnownPeerHandler extends Handler {
             HashMap<Integer, Peer> knownPeers = (HashMap<Integer, Peer>) PeerHandler.getKnownPeers().clone();
             PeerHandler.knownPeersReadLock();
             Peer peer = PeerHandler.getKnownPeers().get(peerInfoMessage.getSenderID());
+            PeerHandler.knownPeersReadUnlock();
             long startTime = System.currentTimeMillis();
             while (((System.currentTimeMillis() - startTime) < 1000) && (peer == null)) {
                 try {
@@ -82,12 +84,13 @@ public class KnownPeerHandler extends Handler {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+                PeerHandler.knownPeersReadLock();
                 peer = PeerHandler.getKnownPeers().get(peerInfoMessage.getSenderID());
+                PeerHandler.knownPeersReadUnlock();
             }
             System.out.println("waiting over");
             if (peer != null) {
                 System.out.println("here");
-                PeerHandler.knownPeersReadUnlock();
                 knownPeers.remove(peerInfoMessage.getSenderID());
                 PeerInfoMessage peerDetailMessage = new PeerInfoMessage();
                 peerDetailMessage.setKnownPeers(knownPeers);
@@ -97,12 +100,17 @@ public class KnownPeerHandler extends Handler {
         } else if (peerInfoMessage.getStatus().equals("ProcessedRequest")) {
             HashMap<Integer, Peer> knownPeers = peerInfoMessage.getKnownPeers();
             if (!knownPeers.isEmpty()) {
+                int count = PeerHandler.getKnownPeers().size() / 2;
                 for (Map.Entry peer : knownPeers.entrySet()) {
+                    if (count == 0) {
+                        break;
+                    }
                     if (PeerHandler.getKnownPeers().containsKey(peer.getKey())) {
                         continue;
                     } else {
                         PeerHandler.addKnownPeer((Peer) peer.getValue());
                         sendJoinMessage((Peer) peer.getValue());
+                        count--;
                     }
                 }
             }

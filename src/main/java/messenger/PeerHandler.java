@@ -139,6 +139,7 @@ public class PeerHandler {
 
     public static boolean checkConnection() {
         String localIPAddress = getLocalIPAddress();
+        System.out.println("Connection Check " + localIPAddress);
         if (!localIPAddress.equals("No")) {
             if (userAddress == null) {
                 userAddress = localIPAddress;

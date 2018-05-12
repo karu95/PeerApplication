@@ -104,9 +104,9 @@ public class LoginController implements Initializable, UIUpdater {
                             ForumUpdateHandler.requestUpdate();
                             User user = new User(SystemUser.getSystemUserID());
                             if (user.getUserID() == SystemUser.getSystemUserID()) {
-                                ControllerUtility.openHome(stage);
+                                ControllerUtility.openHome();
                             } else {
-                                ControllerUtility.openRegister(stage);
+                                ControllerUtility.openRegister();
                             }
                         } catch (IOException e) {
                             e.printStackTrace();

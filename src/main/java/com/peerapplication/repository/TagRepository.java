@@ -36,43 +36,53 @@ public class TagRepository {
         try {
             PreparedStatement tagsPsmt = connection.prepareStatement(getTagsQuery);
             tagsPsmt.setString(1, threadID);
+            readWriteLock.readLock().lock();
             ResultSet rs = tagsPsmt.executeQuery();
             while (rs.next()) {
                 relatedTags.add(new Tag(rs.getString("tag")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            readWriteLock.readLock().unlock();
         }
         return relatedTags;
     }
 
-    public ArrayList<Tag> getAllTags() {
+    public ArrayList<String> getRelatedThreads(String[] searchedTags) {
         Connection connection = dbConnection.getConnection();
-        ArrayList<Tag> tags = new ArrayList<>();
-        String getAllQuery = "SELECT * FROM tag";
+        ArrayList<String> threadIDs = new ArrayList<>();
+        String getAllQuery = "SELECT thread_id FROM tagged WHERE tag = ?";
         try {
             PreparedStatement getAllPsmt = connection.prepareStatement(getAllQuery);
-            ResultSet rs = getAllPsmt.executeQuery();
-            while (rs.next()) {
-                tags.add(new Tag(rs.getString("tag")));
+            readWriteLock.readLock().lock();
+            for (String tag : searchedTags) {
+                getAllPsmt.setString(1, tag);
+                ResultSet rs = getAllPsmt.executeQuery();
+                while (rs.next()) {
+                    threadIDs.add(rs.getString("thread_id"));
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            readWriteLock.readLock().unlock();
         }
-        return tags;
+        return threadIDs;
     }
 
     public void saveTags(ArrayList<Tag> tags, String threadID) {
         Connection connection = dbConnection.getConnection();
         String saveQuery = "INSERT INTO tag(tag) VALUES (?)";
         String saveTaggedRelation = "INSERT INTO tagged(tag, thread_id) VALUES (?, ?)";
+        readWriteLock.writeLock().lock();
         for (Tag tag : tags) {
             try {
                 PreparedStatement savePsmt = connection.prepareStatement(saveQuery);
                 savePsmt.setString(1, tag.getTag());
             } catch (SQLException e) {
                 if (e instanceof SQLIntegrityConstraintViolationException) {
-                    return;
+
                 } else {
                     e.printStackTrace();
                 }
@@ -81,13 +91,16 @@ public class TagRepository {
                     PreparedStatement updateTaggedTableStmt = connection.prepareStatement(saveTaggedRelation);
                     updateTaggedTableStmt.setString(1, tag.getTag());
                     updateTaggedTableStmt.setString(2, threadID);
+                    updateTaggedTableStmt.execute();
                 } catch (SQLException e) {
                     if (e instanceof SQLIntegrityConstraintViolationException) {
-                        return;
+                        System.out.println("Integrity Constrsint");
+                    } else {
+                        e.printStackTrace();
                     }
-                    e.printStackTrace();
                 }
             }
         }
+        readWriteLock.writeLock().unlock();
     }
 }

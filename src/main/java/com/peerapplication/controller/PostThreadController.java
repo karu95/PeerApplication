@@ -7,13 +7,11 @@ import com.peerapplication.util.ControllerUtility;
 import com.peerapplication.util.IDGenerator;
 import com.peerapplication.util.SystemUser;
 import com.peerapplication.validator.ThreadValidator;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
 import messenger.PeerHandler;
 
 import java.io.IOException;
@@ -59,16 +57,14 @@ public class PostThreadController implements Initializable {
     @FXML
     private MenuItem menuItemLogout;
 
-    private Stage stage;
-
     @FXML
     void btnHomeClicked(MouseEvent event) {
-        ControllerUtility.openHome(stage);
+        ControllerUtility.openHome();
     }
 
     @FXML
     void btnThreadsClicked(MouseEvent event) throws IOException {
-        ControllerUtility.openThreads(stage);
+        ControllerUtility.openThreads();
     }
 
     @FXML
@@ -78,12 +74,12 @@ public class PostThreadController implements Initializable {
 
     @FXML
     void logout(ActionEvent event) throws IOException {
-        ControllerUtility.logout(stage);
+        ControllerUtility.logout();
     }
 
     @FXML
     void openSettings(ActionEvent event) {
-        ControllerUtility.openSettings(stage);
+        ControllerUtility.openSettings();
     }
 
     @FXML
@@ -97,7 +93,7 @@ public class PostThreadController implements Initializable {
         String[] tags = txtTags.getText().trim().split(",");
         ArrayList<Tag> relatedTags = new ArrayList<>();
         for (int i = 0; i < tags.length; i++) {
-            relatedTags.add(new Tag(tags[i].trim()));
+            relatedTags.add(new Tag(tags[i].trim().toLowerCase()));
         }
         thread.setTags(relatedTags);
         String validity = ThreadValidator.validateThread(thread);
@@ -110,8 +106,7 @@ public class PostThreadController implements Initializable {
                     ThreadHandler.postThread(thread);
                 }
             });
-            Stage stage = (Stage) btnPost.getScene().getWindow();
-            ControllerUtility.viewThread(stage, thread);
+            ControllerUtility.viewThread(thread);
         } else {
             statusLabel.setText(validity);
         }
@@ -119,11 +114,5 @@ public class PostThreadController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                stage = (Stage) btnPost.getScene().getWindow();
-            }
-        });
     }
 }

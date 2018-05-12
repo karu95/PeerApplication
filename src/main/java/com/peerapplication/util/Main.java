@@ -13,7 +13,7 @@ import messenger.PeerHandler;
 public class Main extends Application {
 
     public static void main(String[] args) {
-        int port = 25033;
+        int port = 25035;
         if (args.length > 1) {
             port = Integer.parseInt(args[1]);
         }
@@ -51,6 +51,7 @@ public class Main extends Application {
             }
         });
         primaryStage.setResizable(false);
-        ControllerUtility.openBSInfoController(primaryStage);
+        ControllerUtility.setStage(primaryStage);
+        ControllerUtility.openBSInfoController(false);
     }
 }

@@ -86,7 +86,7 @@ public class SignupController implements Initializable, UIUpdater {
     @FXML
     void openLogin(MouseEvent event) throws IOException {
         Stage stage = (Stage) btnLogin.getScene().getWindow();
-        ControllerUtility.login(stage);
+        ControllerUtility.login();
     }
 
 
@@ -109,7 +109,7 @@ public class SignupController implements Initializable, UIUpdater {
                         Stage stage = (Stage) btnLogin.getScene().getWindow();
                         ForumUpdateHandler.requestUpdate();
                         try {
-                            ControllerUtility.openRegister(stage);
+                            ControllerUtility.openRegister();
                         } catch (IOException e) {
                             e.printStackTrace();
                         }

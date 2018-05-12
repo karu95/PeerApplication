@@ -52,7 +52,7 @@ public class BSInfoController implements Initializable {
             Stage primaryStage = (Stage) btnConnect.getScene().getWindow();
             testConnection = false;
             connectionTester.shutdown();
-            ControllerUtility.login(primaryStage);
+            ControllerUtility.login();
         }
     }
 
@@ -112,7 +112,16 @@ public class BSInfoController implements Initializable {
                 }
             }
         });
-        txtBSIP.setText("192.168.8.100");
+        txtBSIP.setText("192.168.8.102");
         txtBSPort.setText("25025");
+    }
+
+    public void init() {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                lblStatus.setText("Unable to connect to BS");
+            }
+        });
     }
 }

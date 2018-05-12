@@ -31,6 +31,7 @@ public class Sender implements Runnable {
                 ObjectOutputStream os = new ObjectOutputStream(senderSocket.getOutputStream());
                 if (message instanceof BSMessage) {
                     os.writeObject(message);
+                    os.flush();
                     ObjectInputStream is = new ObjectInputStream(senderSocket.getInputStream());
                     RequestStatusMessage response = (RequestStatusMessage) is.readObject();
                     is.close();

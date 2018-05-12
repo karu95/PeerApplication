@@ -20,6 +20,17 @@ public class DeletedThread implements Serializable {
         this.userID = userID;
     }
 
+    public static ArrayList<DeletedThread> getDeletedThreads(long timestamp) {
+        ThreadRepository threadRepository = ThreadRepository.getThreadRepository();
+        return threadRepository.getDeletedThreads(timestamp);
+    }
+
+    public static void saveDeletedThreads(ArrayList<DeletedThread> deletedThreads) {
+        for (DeletedThread deletedThread : deletedThreads) {
+            deletedThread.deleteThread();
+        }
+    }
+
     public long getDeletedTime() {
         return deletedTime;
     }
@@ -54,16 +65,5 @@ public class DeletedThread implements Serializable {
     public boolean checkDeleted() {
         ThreadRepository threadRepository = ThreadRepository.getThreadRepository();
         return threadRepository.checkDeleted(this);
-    }
-
-    public static ArrayList<DeletedThread> getDeletedThreads(long timestamp) {
-        ThreadRepository threadRepository = ThreadRepository.getThreadRepository();
-        return threadRepository.getDeletedThreads(timestamp);
-    }
-
-    public static void saveDeletedThreads(ArrayList<DeletedThread> deletedThreads) {
-        for (DeletedThread deletedThread : deletedThreads) {
-            deletedThread.deleteThread();
-        }
     }
 }

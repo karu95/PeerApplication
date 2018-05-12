@@ -73,7 +73,7 @@ public class RegisterController implements Initializable {
                 }
             });
             Stage stage = (Stage) btnRegister.getScene().getWindow();
-            ControllerUtility.openHome(stage);
+            ControllerUtility.openHome();
         } else {
             statusLabel.setText(validity);
         }

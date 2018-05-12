@@ -1,9 +1,6 @@
 package com.peerapplication.util;
 
-import com.peerapplication.controller.HomeController;
-import com.peerapplication.controller.SettingsController;
-import com.peerapplication.controller.ViewThreadController;
-import com.peerapplication.controller.ViewUserController;
+import com.peerapplication.controller.*;
 import com.peerapplication.handler.BSHandler;
 import com.peerapplication.model.Thread;
 import com.peerapplication.model.User;
@@ -16,7 +13,10 @@ import message.LogoutMessage;
 import java.io.IOException;
 
 public class ControllerUtility {
-    public static void logout(Stage stage) throws IOException {
+
+    private static Stage stage;
+
+    public static void logout() throws IOException {
         LogoutMessage logoutMessage = new LogoutMessage(SystemUser.getSystemUserID());
         BSHandler.logout(logoutMessage);
         Parent root = FXMLLoader.load(ControllerUtility.class.getResource("/views/login.fxml"));
@@ -25,7 +25,7 @@ public class ControllerUtility {
         stage.show();
     }
 
-    public static void openHome(Stage stage) {
+    public static void openHome() {
         FXMLLoader loader = new FXMLLoader(ControllerUtility.class.getResource("/views/homepage.fxml"));
         Parent parent = null;
         try {
@@ -42,14 +42,14 @@ public class ControllerUtility {
         stage.show();
     }
 
-    public static void openThreads(Stage stage) throws IOException {
+    public static void openThreads() throws IOException {
         Parent root = FXMLLoader.load(ControllerUtility.class.getResource("/views/viewthreads.fxml"));
         stage.setScene(new Scene(root, 1035, 859));
         stage.setTitle("Threads");
         stage.show();
     }
 
-    public static void openSettings(Stage stage) {
+    public static void openSettings() {
         FXMLLoader loader = new FXMLLoader(ControllerUtility.class.getResource("/views/settings.fxml"));
         Parent parent = null;
         try {
@@ -66,7 +66,7 @@ public class ControllerUtility {
         stage.setTitle("Settings");
     }
 
-    public static void viewThread(Stage stage, Thread thread) {
+    public static void viewThread(Thread thread) {
         FXMLLoader loader = new FXMLLoader(ControllerUtility.class.getResource("/views/viewthread.fxml"));
         Parent parent = null;
         try {
@@ -81,7 +81,7 @@ public class ControllerUtility {
         stage.setTitle("View Thread");
     }
 
-    public static void viewUser(Stage stage, User user) {
+    public static void viewUser(User user) {
         FXMLLoader loader = new FXMLLoader(ControllerUtility.class.getResource("/views/viewuser.fxml"));
         Parent parent = null;
         try {
@@ -96,7 +96,7 @@ public class ControllerUtility {
         stage.setTitle("Profile: " + user.getName());
     }
 
-    public static void login(Stage stage) {
+    public static void login() {
         Parent root = null;
         try {
             root = FXMLLoader.load(ControllerUtility.class.getResource("/views/login.fxml"));
@@ -108,7 +108,7 @@ public class ControllerUtility {
         stage.setScene(scene);
     }
 
-    public static void openRegister(Stage stage) throws IOException {
+    public static void openRegister() throws IOException {
         FXMLLoader loader = new FXMLLoader(ControllerUtility.class.getResource("/views/register.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root, 1035, 859);
@@ -116,12 +116,20 @@ public class ControllerUtility {
         stage.setScene(scene);
     }
 
-    public static void openBSInfoController(Stage stage) throws IOException {
+    public static void openBSInfoController(boolean networkError) throws IOException {
         FXMLLoader loader = new FXMLLoader((ControllerUtility.class.getResource("/views/bsinfo.fxml")));
         Parent parent = loader.load();
+        if (networkError) {
+            BSInfoController bsInfoController = loader.getController();
+            bsInfoController.init();
+        }
         Scene scene = new Scene(parent, 1035, 859);
-        stage.setTitle("Provide BS Info");
+        stage.setTitle("Provide BS Information");
         stage.setScene(scene);
         stage.show();
+    }
+
+    public static void setStage(Stage stage) {
+        ControllerUtility.stage = stage;
     }
 }

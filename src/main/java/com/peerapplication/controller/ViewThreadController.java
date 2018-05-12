@@ -17,7 +17,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
-import javafx.stage.Stage;
 import message.AnswerMessage;
 import message.DeleteThreadMessage;
 import message.Message;
@@ -70,8 +69,6 @@ public class ViewThreadController implements Initializable, UIUpdater {
 
     private Text previousText;
 
-    private Stage stage;
-
     private Thread thread;
 
     private HashMap<Integer, User> relatedUsers;
@@ -82,12 +79,12 @@ public class ViewThreadController implements Initializable, UIUpdater {
 
     @FXML
     void btnHomeClicked(MouseEvent event) {
-        ControllerUtility.openHome(stage);
+        ControllerUtility.openHome();
     }
 
     @FXML
     void btnThreadsClicked(MouseEvent event) throws IOException {
-        ControllerUtility.openThreads(stage);
+        ControllerUtility.openThreads();
     }
 
     @FXML
@@ -97,12 +94,12 @@ public class ViewThreadController implements Initializable, UIUpdater {
 
     @FXML
     void logout(ActionEvent event) throws IOException {
-        ControllerUtility.logout(stage);
+        ControllerUtility.logout();
     }
 
     @FXML
     void openSettings(ActionEvent event) {
-        ControllerUtility.openSettings(stage);
+        ControllerUtility.openSettings();
     }
 
     @FXML
@@ -121,7 +118,7 @@ public class ViewThreadController implements Initializable, UIUpdater {
                     ThreadHandler.postDeleteThread(deletedThread);
                 }
             });
-            ControllerUtility.openHome(stage);
+            ControllerUtility.openHome();
         } else {
             Platform.runLater(new Runnable() {
                 @Override
@@ -177,7 +174,7 @@ public class ViewThreadController implements Initializable, UIUpdater {
         } else if (message instanceof DeleteThreadMessage) {
             DeleteThreadMessage deleteThreadMessage = (DeleteThreadMessage) message;
             if (deleteThreadMessage.getDeletedThread().getThreadID().equals(thread.getThreadID())) {
-                ControllerUtility.openHome(stage);
+                ControllerUtility.openHome();
             }
         } else if (message instanceof VoteMessage) {
             VoteMessage voteMessage = (VoteMessage) message;
@@ -204,12 +201,6 @@ public class ViewThreadController implements Initializable, UIUpdater {
         } else {
             btnDelThread.setDisable(true);
         }
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                stage = (Stage) btnAnswer.getScene().getWindow();
-            }
-        });
     }
 
     public void init(Thread thread) {
@@ -218,24 +209,36 @@ public class ViewThreadController implements Initializable, UIUpdater {
         this.thread = thread;
         relatedUsers.putIfAbsent(thread.getUserID(), new User(thread.getUserID()));
         txtThreadHeader.setText(thread.getTitle());
-        Text txtThreadDetail = new Text();
+        Text txtThreadDetail = new Text("Posted on " + new Date(thread.getTimestamp()) + " by");
         Hyperlink userLink = new Hyperlink();
         userLink.setText(relatedUsers.get(thread.getUserID()).getName());
         userLink.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                ControllerUtility.viewUser(stage, relatedUsers.get(thread.getUserID()));
+                ControllerUtility.viewUser(relatedUsers.get(thread.getUserID()));
             }
         });
-        txtThreadDetail.setText("Posted on " + new Date(thread.getTimestamp()) + " by");
-        TextFlow threadFlow = new TextFlow(txtThreadDetail, userLink);
+        TextFlow threadFlow = new TextFlow(txtThreadDetail, userLink, new Text("\nRelated Tags :"));
         threadFlow.setLayoutX(txtThreadHeader.getLayoutX());
         threadFlow.setLayoutY(txtThreadHeader.getLayoutY() + txtThreadHeader.getBoundsInLocal().getHeight());
+        for (Tag tag : thread.getTags()) {
+            Hyperlink tagLink = new Hyperlink();
+            tagLink.setText(tag.getTag());
+            System.out.println(tag.getTag());
+            tagLink.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+
+                }
+            });
+            System.out.println("Tag added");
+            threadFlow.getChildren().add(tagLink);
+        }
         Text txtThreadDescription = new Text();
         txtThreadDescription.setText(thread.getDescription());
         txtThreadDescription.setWrappingWidth(txtThreadHeader.getWrappingWidth());
         txtThreadDescription.setLayoutX(txtThreadHeader.getLayoutX());
-        txtThreadDescription.setLayoutY(threadFlow.getLayoutY() + threadFlow.getBoundsInLocal().getHeight() + 20);
+        txtThreadDescription.setLayoutY(threadFlow.getLayoutY() + threadFlow.getBoundsInParent().getHeight() + 30);
         aPaneThread.getChildren().add(threadFlow);
         aPaneThread.getChildren().add(txtThreadDescription);
         previousText = txtThreadDescription;
@@ -259,7 +262,7 @@ public class ViewThreadController implements Initializable, UIUpdater {
             userLink.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
-                    ControllerUtility.viewUser(stage, relatedUsers.get(answer.getPostedUserID()));
+                    ControllerUtility.viewUser(relatedUsers.get(answer.getPostedUserID()));
                 }
             });
         } else {

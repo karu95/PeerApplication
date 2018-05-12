@@ -83,8 +83,6 @@ public class SettingsController implements Initializable, UIUpdater {
     @FXML
     private MenuItem menuItemLogout;
 
-    private Stage stage;
-
     private FileChooser fileChooser;
 
     private UserValidator userValidator;
@@ -97,12 +95,12 @@ public class SettingsController implements Initializable, UIUpdater {
 
     @FXML
     void btnHomeClicked(MouseEvent event) {
-        ControllerUtility.openHome(stage);
+        ControllerUtility.openHome();
     }
 
     @FXML
     void btnThreadsClicked(MouseEvent event) throws IOException {
-        ControllerUtility.openThreads(stage);
+        ControllerUtility.openThreads();
     }
 
     @FXML
@@ -112,12 +110,12 @@ public class SettingsController implements Initializable, UIUpdater {
 
     @FXML
     void logout(ActionEvent event) throws IOException {
-        ControllerUtility.logout(stage);
+        ControllerUtility.logout();
     }
 
     @FXML
     void openSettings(ActionEvent event) {
-        ControllerUtility.openSettings(stage);
+        ControllerUtility.openSettings();
     }
 
     @FXML
@@ -153,6 +151,7 @@ public class SettingsController implements Initializable, UIUpdater {
 
     @FXML
     void selectImage(MouseEvent event) throws IOException {
+        Stage stage = (Stage) btnChangePwd.getScene().getWindow();
         file = fileChooser.showOpenDialog(stage);
         if (file != null) {
             Image image = new Image(file.toURI().toString());
@@ -209,7 +208,6 @@ public class SettingsController implements Initializable, UIUpdater {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                stage = (Stage) btnChangePwd.getScene().getWindow();
                 BufferedImage image = user.getUserImage();
                 if (image != null) {
                     userImage.setImage(SwingFXUtils.toFXImage(image, null));

@@ -106,8 +106,6 @@ public class HomeController implements Initializable, UIUpdater {
 
     private ObservableList<Thread> myThreads;
 
-    private Stage stage;
-
     @FXML
     void btnHomeClicked(MouseEvent event) {
 
@@ -115,7 +113,7 @@ public class HomeController implements Initializable, UIUpdater {
 
     @FXML
     void btnThreadsClicked(MouseEvent event) throws IOException {
-        ControllerUtility.openThreads(stage);
+        ControllerUtility.openThreads();
     }
 
     @FXML
@@ -125,16 +123,17 @@ public class HomeController implements Initializable, UIUpdater {
 
     @FXML
     void logout(ActionEvent event) throws IOException {
-        ControllerUtility.logout(stage);
+        ControllerUtility.logout();
     }
 
     @FXML
     void openSettings(ActionEvent event) {
-        ControllerUtility.openSettings(stage);
+        ControllerUtility.openSettings();
     }
 
     @FXML
     void postThread(MouseEvent event) throws IOException {
+        Stage stage = (Stage) btnPostThread.getScene().getWindow();
         Parent root = FXMLLoader.load(getClass().getResource("/views/postthread.fxml"));
         stage.setScene(new Scene(root));
         stage.show();
@@ -144,21 +143,21 @@ public class HomeController implements Initializable, UIUpdater {
     void openLatestThread(MouseEvent event) {
         Thread thread = latestThreadsTable.getSelectionModel().getSelectedItem();
         if (thread != null) {
-            ControllerUtility.viewThread(stage, thread);
+            ControllerUtility.viewThread(thread);
         }
     }
 
     @FXML
     void openMyThread(MouseEvent event) {
         Thread thread = myThreadsTable.getSelectionModel().getSelectedItem();
-        ControllerUtility.viewThread(stage, thread);
+        ControllerUtility.viewThread(thread);
     }
 
     @FXML
     void openNotification(MouseEvent event) {
         Thread thread = notificationsTable.getSelectionModel().getSelectedItem().getRelatedThread();
         NotificationHandler.getNotificationHandler().notificationRead(notificationsTable.getSelectionModel().getSelectedItem());
-        ControllerUtility.viewThread(stage, thread);
+        ControllerUtility.viewThread(thread);
     }
 
     @Override
@@ -197,14 +196,6 @@ public class HomeController implements Initializable, UIUpdater {
 
         colNotifications.setCellValueFactory(new PropertyValueFactory<>("description"));
         notificationsTable.setItems(NotificationHandler.getNotificationHandler().getNotifications());
-
-        if (notificationTab.isSelected()) {
-
-        } else if (myThreadTab.isSelected()) {
-
-        } else if (latestThreadTab.isSelected()) {
-
-        }
     }
 
     @Override
@@ -236,7 +227,6 @@ public class HomeController implements Initializable, UIUpdater {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                stage = (Stage) btnPostThread.getScene().getWindow();
                 BufferedImage image = user.getUserImage();
                 if (image != null) {
                     userImage.setImage(SwingFXUtils.toFXImage(image, null));

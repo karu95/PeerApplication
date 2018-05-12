@@ -54,7 +54,7 @@ public class TableRepository {
         String taggedTable = "CREATE TABLE tagged(" +
                 "tag VARCHAR(100)," +
                 "thread_id VARCHAR(20)," +
-                "PRIMARY KEY(tag, thread_id)" +
+                "PRIMARY KEY(tag, thread_id)," +
                 "FOREIGN KEY (thread_id) REFERENCES thread)";
         try {
             Statement stmt = connection.createStatement();

@@ -7,6 +7,9 @@ public class UserValidator {
 
     private static UserValidator userValidator;
 
+    private UserValidator() {
+    }
+
     public static UserValidator getUserValidator() {
         if (userValidator == null) {
             synchronized (UserValidator.class) {
@@ -14,9 +17,6 @@ public class UserValidator {
             }
         }
         return userValidator;
-    }
-
-    private UserValidator() {
     }
 
     public String validate(User user) {

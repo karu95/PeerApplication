@@ -3,9 +3,9 @@ package com.peerapplication.notifcation;
 import com.peerapplication.model.Thread;
 
 public abstract class Notification {
-    protected Thread relatedThread;
-    protected String description;
-    protected long timestamp;
+    Thread relatedThread;
+    String description;
+    long timestamp;
 
     public Thread getRelatedThread() {
         return relatedThread;
@@ -15,7 +15,7 @@ public abstract class Notification {
         return description;
     }
 
-    protected abstract void setDescription();
+    abstract void setDescription();
 
     public long getTimestamp() {
         return timestamp;

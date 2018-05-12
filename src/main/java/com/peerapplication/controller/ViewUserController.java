@@ -16,7 +16,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
 import message.Message;
 import message.ThreadMessage;
 import message.UserInfoMessage;
@@ -77,18 +76,16 @@ public class ViewUserController implements Initializable, UIUpdater {
 
     private User user;
 
-    private Stage stage;
-
     private ObservableList<Thread> postedThreads;
 
     @FXML
     void btnHomeClicked(MouseEvent event) {
-        ControllerUtility.openHome(stage);
+        ControllerUtility.openHome();
     }
 
     @FXML
     void btnThreadsClicked(MouseEvent event) throws IOException {
-        ControllerUtility.openThreads(stage);
+        ControllerUtility.openThreads();
     }
 
     @FXML
@@ -98,19 +95,19 @@ public class ViewUserController implements Initializable, UIUpdater {
 
     @FXML
     void logout(ActionEvent event) throws IOException {
-        ControllerUtility.logout(stage);
+        ControllerUtility.logout();
     }
 
     @FXML
     void openSettings(ActionEvent event) {
-        ControllerUtility.openSettings(stage);
+        ControllerUtility.openSettings();
     }
 
     @FXML
     void openThread(MouseEvent event) {
         Thread thread = postedThreadsTable.getSelectionModel().getSelectedItem();
         if (thread != null) {
-            ControllerUtility.viewThread(stage, thread);
+            ControllerUtility.viewThread(thread);
         }
     }
 
@@ -150,7 +147,6 @@ public class ViewUserController implements Initializable, UIUpdater {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                stage = (Stage) btnHome.getScene().getWindow();
                 BufferedImage bfdImage = user.getUserImage();
                 if (bfdImage != null) {
                     userImage.setImage(SwingFXUtils.toFXImage(bfdImage, null));

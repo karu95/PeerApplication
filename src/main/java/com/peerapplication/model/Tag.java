@@ -20,9 +20,9 @@ public class Tag implements Serializable {
         return tagRepository.getTags(threadID);
     }
 
-    public static ArrayList<Tag> getAllTags() {
+    public static ArrayList<String> getRelatedThreads(String[] tags) {
         TagRepository tagRepository = TagRepository.getTagRepository();
-        return tagRepository.getAllTags();
+        return tagRepository.getRelatedThreads(tags);
     }
 
     public static void saveTags(ArrayList<Tag> tags, String threadID) {

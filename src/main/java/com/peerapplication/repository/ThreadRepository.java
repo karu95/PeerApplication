@@ -1,6 +1,7 @@
 package com.peerapplication.repository;
 
 import com.peerapplication.model.DeletedThread;
+import com.peerapplication.model.Tag;
 import com.peerapplication.model.Thread;
 import com.peerapplication.util.DBConnection;
 
@@ -67,6 +68,7 @@ public class ThreadRepository {
         } catch (SQLException e) {
             if (e instanceof SQLIntegrityConstraintViolationException) {
                 System.out.println("Duplicate Thread");
+                e.printStackTrace();
             } else {
                 e.printStackTrace();
             }
@@ -117,6 +119,7 @@ public class ThreadRepository {
                 thread.setUserID(rs.getInt("posted_user"));
                 thread.setTimestamp(rs.getLong("posted_time"));
                 thread.setDescription(rs.getString("description"));
+                thread.setTags(Tag.getTags(thread.getThreadID()));
                 threads.add(thread);
             }
         } catch (SQLException e) {
