@@ -214,6 +214,8 @@ public class HomeController implements Initializable, UIUpdater {
             DeleteThreadMessage deleteThreadMessage = (DeleteThreadMessage) message;
             latestThreads = FXCollections.observableArrayList(Thread.getLatestThreads(0));
             myThreads = FXCollections.observableArrayList(Thread.getUserThreads(SystemUser.getSystemUserID()));
+            latestThreadsTable.setItems(latestThreads);
+            myThreadsTable.setItems(myThreads);
         }
     }
 

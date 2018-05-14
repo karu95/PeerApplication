@@ -141,6 +141,8 @@ public class SettingsController implements Initializable, UIUpdater {
                     }
                 });
                 updatedUser.saveUser();
+                user = updatedUser;
+                statusLabelUser.setText("User information updated successfully!");
             } else {
                 statusLabelUser.setText(validity);
             }

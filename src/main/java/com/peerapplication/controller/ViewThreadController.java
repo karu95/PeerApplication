@@ -211,7 +211,12 @@ public class ViewThreadController implements Initializable, UIUpdater {
         txtThreadHeader.setText(thread.getTitle());
         Text txtThreadDetail = new Text("Posted on " + new Date(thread.getTimestamp()) + " by");
         Hyperlink userLink = new Hyperlink();
-        userLink.setText(relatedUsers.get(thread.getUserID()).getName());
+        if (thread.getUserID() == SystemUser.getSystemUserID()) {
+            userLink.setText("you");
+            userLink.setDisable(true);
+        } else {
+            userLink.setText(relatedUsers.get(thread.getUserID()).getName());
+        }
         userLink.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -254,13 +259,11 @@ public class ViewThreadController implements Initializable, UIUpdater {
         Text txtAnswerDesc = new Text();
         txtAnswerDetail.setText("Answered on " + new Date(answer.getTimestamp()) + " by");
         Hyperlink userLink = new Hyperlink();
-        if (relatedUsers.containsKey(answer.getPostedUserID())) {
-            userLink.setText(relatedUsers.get(answer.getPostedUserID()).getName());
-        } else {
-            relatedUsers.putIfAbsent(answer.getPostedUserID(), new User(answer.getPostedUserID()));
-            userLink.setText(relatedUsers.get(answer.getPostedUserID()).getName());
+        if (!relatedUsers.containsKey(answer.getPostedUserID())) {
+            relatedUsers.put(answer.getPostedUserID(), new User(answer.getPostedUserID()));
         }
         if (answer.getPostedUserID() != SystemUser.getSystemUserID()) {
+            userLink.setText(relatedUsers.get(answer.getPostedUserID()).getName());
             userLink.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
@@ -268,6 +271,7 @@ public class ViewThreadController implements Initializable, UIUpdater {
                 }
             });
         } else {
+            userLink.setText("you");
             userLink.setDisable(true);
         }
         TextFlow answerFlow = new TextFlow(txtAnswerDetail, userLink);
@@ -275,10 +279,14 @@ public class ViewThreadController implements Initializable, UIUpdater {
         answerFlow.setLayoutY(previousText.getLayoutY() + previousText.getBoundsInLocal().getHeight());
         Hyperlink voteLink = new Hyperlink();
         voteLink.setText("Voted : " + String.valueOf(answer.getVotes().size()));
-        for (Vote vote : answer.getVotes()) {
-            if (vote.getUserID() == SystemUser.getSystemUserID()) {
-                voteLink.setDisable(true);
-                break;
+        if (answer.getPostedUserID() == SystemUser.getSystemUserID()) {
+            voteLink.setDisable(true);
+        } else {
+            for (Vote vote : answer.getVotes()) {
+                if (vote.getUserID() == SystemUser.getSystemUserID()) {
+                    voteLink.setDisable(true);
+                    break;
+                }
             }
         }
         voteLink.setOnAction(new EventHandler<ActionEvent>() {

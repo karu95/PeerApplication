@@ -17,7 +17,7 @@ public abstract class Handler {
         if (!(message instanceof BSMessage)) {
             PeerHandler.knownPeersWriteLock();
             PeerHandler.removeKnownPeer(peer.getUserID());
-            PeerHandler.knownPeersWriteLock();
+            PeerHandler.knownPeersWriteUnlock();
         } else if (message instanceof BSMessage) {
             if (!(message instanceof HeartBeatMessage)) {
                 PeerHandler.stopHeartBeat();

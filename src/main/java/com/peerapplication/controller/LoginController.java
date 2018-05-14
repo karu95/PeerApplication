@@ -99,7 +99,6 @@ public class LoginController implements Initializable, UIUpdater {
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
-                        Stage stage = (Stage) btnRegister.getScene().getWindow();
                         try {
                             ForumUpdateHandler.requestUpdate();
                             User user = new User(SystemUser.getSystemUserID());

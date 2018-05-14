@@ -78,6 +78,7 @@ public class ViewThreadsController implements UIUpdater, Initializable {
     @FXML
     void search(MouseEvent event) {
         String relatedTagsString = txtSearch.getText().trim();
+        System.out.println("Searched : " + relatedTagsString);
         searchThreads(relatedTagsString);
     }
 
@@ -134,6 +135,7 @@ public class ViewThreadsController implements UIUpdater, Initializable {
                 observableList.add(new Thread((String) thread.getKey()));
             }
             System.out.println("Observable list size " + observableList.size());
+            threadTable.setItems(observableList);
         } else {
             observableList = FXCollections.observableList(Thread.getLatestThreads(0));
         }

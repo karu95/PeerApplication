@@ -148,13 +148,14 @@ public class PeerHandler {
 
     public static boolean checkConnection() {
         String localIPAddress = getLocalIPAddress();
-        System.out.println("Connection Check " + localIPAddress);
         if (!localIPAddress.equals("No")) {
             if (userAddress == null) {
                 userAddress = localIPAddress;
                 return true;
             } else if (userAddress.equals(localIPAddress)) {
                 return true;
+            } else {
+                userAddress = localIPAddress;
             }
         }
         return false;

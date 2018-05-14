@@ -13,9 +13,9 @@ import messenger.PeerHandler;
 public class Main extends Application {
 
     public static void main(String[] args) {
-        int port = 25034;
-        if (args.length > 1) {
-            port = Integer.parseInt(args[1]);
+        int port = 25033;
+        if (args.length >= 1) {
+            port = Integer.parseInt(args[0]);
         }
         PeerHandler.setup(port);
         TableRepository tableRepo = new TableRepository();
