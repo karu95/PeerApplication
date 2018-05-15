@@ -1,16 +1,16 @@
-.text-field {
+.text-area {
     -fx-background-color: transparent, white, transparent, white;
     -fx-background-radius: 0, 0, 0, 0;
     -fx-padding: 0.166667em;
 }
 
-.text-field:hover {
+.text-area:hover {
     -fx-background-color: transparent, #909090, transparent, white;
     -fx-background-radius: 0, 0, 0, 0;
     -fx-padding: 0.166667em;
 }
 
-.text-field:focused {
+.text-area:focused {
     -fx-background-color: transparent, #909090, transparent, white;
     -fx-background-radius: 0, 0, 0, 0;
     -fx-padding: 0.166667em;

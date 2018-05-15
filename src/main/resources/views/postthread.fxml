@@ -14,9 +14,9 @@
                     AnchorPane.rightAnchor="20.0">
             <children>
                 <TextField fx:id="txtTitle" layoutX="259.0" layoutY="73.0" prefHeight="33.0" prefWidth="629.0"
-                           promptText="Title"/>
+                           promptText="Title" stylesheets="@../css/textbox.css"/>
                 <TextArea fx:id="txtDescription" layoutX="259.0" layoutY="136.0" prefHeight="389.0" prefWidth="629.0"
-                          promptText="Description"/>
+                          promptText="Description" stylesheets="@../css/textarea.css"/>
                 <Button fx:id="btnPost" layoutX="458.0" layoutY="603.0" mnemonicParsing="false" onMouseClicked="#post"
                         prefHeight="37.0" prefWidth="231.0" stylesheets="@../css/button.css" text="Post">
                     <font>
@@ -39,9 +39,9 @@
                     </font>
                 </Label>
                 <TextField fx:id="txtTags" layoutX="259.0" layoutY="543.0" prefHeight="33.0" prefWidth="629.0"
-                           promptText="Seperate tags by commas"/>
+                           promptText="Seperate tags by commas" stylesheets="@../css/textbox.css"/>
                 <Label fx:id="statusLabel" layoutX="259.0" layoutY="40.0" prefHeight="6.0" prefWidth="629.0"
-                       stylesheets="@../css/warninglabel.css" textFill="RED">
+                       stylesheets="@../css/warninglabel.css" text="*Note : Seperate tags by commas" textFill="RED">
                     <font>
                         <Font size="14.0"/>
                     </font>

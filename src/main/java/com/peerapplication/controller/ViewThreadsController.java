@@ -72,7 +72,9 @@ public class ViewThreadsController implements UIUpdater, Initializable {
     @FXML
     void openThread(MouseEvent event) {
         Thread thread = threadTable.getSelectionModel().getSelectedItem();
-        ControllerUtility.viewThread(thread);
+        if (thread != null) {
+            ControllerUtility.viewThread(thread);
+        }
     }
 
     @FXML

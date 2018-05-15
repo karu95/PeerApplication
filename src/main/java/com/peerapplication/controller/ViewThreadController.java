@@ -107,6 +107,8 @@ public class ViewThreadController implements Initializable, UIUpdater {
         TextInputDialog confirmDelete = new TextInputDialog();
         confirmDelete.setTitle("Do you want to delete?");
         confirmDelete.setHeaderText("Type \"CONFIRM\" to delete.");
+        confirmDelete.getDialogPane().getStylesheets().add(getClass().getResource("/css/background.css").toExternalForm());
+        confirmDelete.getDialogPane().getStyleClass().add("dialog");
         Optional<String> result = confirmDelete.showAndWait();
         if (result.isPresent() && result.get().equals("CONFIRM") && PeerHandler.checkConnection()) {
             DeletedThread deletedThread = new DeletedThread(thread.getThreadID(), SystemUser.getSystemUserID(),
@@ -182,7 +184,7 @@ public class ViewThreadController implements Initializable, UIUpdater {
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
-                    voteLink.setText("Voted : " + String.valueOf(Integer.valueOf(voteLink.getText().substring(8)) + 1));
+                    voteLink.setText(String.valueOf(Integer.valueOf(voteLink.getText()) + 1));
                 }
             });
         }
@@ -211,6 +213,7 @@ public class ViewThreadController implements Initializable, UIUpdater {
         txtThreadHeader.setText(thread.getTitle());
         Text txtThreadDetail = new Text("Posted on " + new Date(thread.getTimestamp()) + " by");
         Hyperlink userLink = new Hyperlink();
+        userLink.getStylesheets().add(getClass().getResource("/css/hyperlink.css").toExternalForm());
         if (thread.getUserID() == SystemUser.getSystemUserID()) {
             userLink.setText("you");
             userLink.setDisable(true);
@@ -228,6 +231,7 @@ public class ViewThreadController implements Initializable, UIUpdater {
         threadFlow.setLayoutY(txtThreadHeader.getLayoutY() + txtThreadHeader.getBoundsInLocal().getHeight());
         for (Tag tag : thread.getTags()) {
             Hyperlink tagLink = new Hyperlink();
+            tagLink.getStylesheets().add(getClass().getResource("/css/hyperlink.css").toExternalForm());
             tagLink.setText(tag.getTag());
             tagLink.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
@@ -259,6 +263,7 @@ public class ViewThreadController implements Initializable, UIUpdater {
         Text txtAnswerDesc = new Text();
         txtAnswerDetail.setText("Answered on " + new Date(answer.getTimestamp()) + " by");
         Hyperlink userLink = new Hyperlink();
+        userLink.getStylesheets().add(getClass().getResource("/css/hyperlink.css").toExternalForm());
         if (!relatedUsers.containsKey(answer.getPostedUserID())) {
             relatedUsers.put(answer.getPostedUserID(), new User(answer.getPostedUserID()));
         }
@@ -275,10 +280,13 @@ public class ViewThreadController implements Initializable, UIUpdater {
             userLink.setDisable(true);
         }
         TextFlow answerFlow = new TextFlow(txtAnswerDetail, userLink);
+        answerFlow.getStylesheets().add(getClass().getResource("/css/answer.css").toExternalForm());
         answerFlow.setLayoutX(txtThreadHeader.getLayoutX());
         answerFlow.setLayoutY(previousText.getLayoutY() + previousText.getBoundsInLocal().getHeight());
         Hyperlink voteLink = new Hyperlink();
-        voteLink.setText("Voted : " + String.valueOf(answer.getVotes().size()));
+        voteLink.getStylesheets().add(getClass().getResource("/css/hyperlink.css").toExternalForm());
+        voteLink.getStyleClass().add("votelink");
+        voteLink.setText(String.valueOf(answer.getVotes().size()));
         if (answer.getPostedUserID() == SystemUser.getSystemUserID()) {
             voteLink.setDisable(true);
         } else {
@@ -292,7 +300,7 @@ public class ViewThreadController implements Initializable, UIUpdater {
         voteLink.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                voteLink.setText("Voted : " + String.valueOf(Integer.valueOf(voteLink.getText().substring(8)) + 1));
+                voteLink.setText(String.valueOf(Integer.valueOf(voteLink.getText()) + 1));
                 voteLink.setDisable(true);
                 Vote vote = new Vote();
                 vote.setVotedTime(new Date(System.currentTimeMillis()).getTime());

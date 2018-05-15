@@ -8,7 +8,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
 import messenger.PeerHandler;
 
 import java.io.IOException;
@@ -51,7 +50,6 @@ public class BSInfoController implements Initializable {
             PeerHandler.getBS().setPeerAddress(ipAddress);
             PeerHandler.getBS().setPeerPort(port);
             PeerHandler.getBS().setUserID(1);
-            Stage primaryStage = (Stage) btnConnect.getScene().getWindow();
             testConnection = false;
             connectionTester.shutdown();
             PeerHandler.startConnectionTest();

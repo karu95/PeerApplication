@@ -26,10 +26,8 @@ public class ImagePack implements Serializable {
         return image;
     }
 
-    @Override
-    public boolean equals(Object object) {
+    public boolean equals(ImagePack imagePack) {
         boolean equal = true;
-        ImagePack imagePack = (ImagePack) object;
         if (height != imagePack.height) {
             equal = false;
             System.out.println(6.1);

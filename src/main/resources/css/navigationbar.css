@@ -37,7 +37,6 @@
 }
 
 .my-drop-down-menu-list-item {
-    -fx-graphic: url('../images/settings-icon.png');
     -fx-background-color: #2b669a;
     -fx-text-fill: #090a0c;
     -fx-pref-width: 63pt;

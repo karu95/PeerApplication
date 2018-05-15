@@ -6,10 +6,10 @@ import com.peerapplication.util.SystemUser;
 public class AnswerValidator {
     public static String validateAnswer(Answer answer) {
         String error = "valid";
-        if (answer.getDescription().isEmpty()) {
-            error = "Provide an answer";
-        } else if (SystemUser.getSystemUserID() == 0) {
+        if (SystemUser.getSystemUserID() == 0) {
             error = "Please Login to proceed";
+        } else if (answer.getDescription().isEmpty()) {
+            error = "Provide an answer";
         }
         return error;
     }

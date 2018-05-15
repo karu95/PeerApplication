@@ -6,7 +6,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-<?import java.lang.*?>
+<?import java.lang.String?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="859.0"
             prefWidth="1035.0" styleClass="anchor-pane" stylesheets="@../css/background.css"
             xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1"
@@ -100,8 +100,8 @@
         <HBox layoutX="58.0" layoutY="24.0" stylesheets="@../css/navigationbar.css" AnchorPane.leftAnchor="60.0"
               AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="24.0">
             <children>
-                <Label fx:id="lblHeading" minHeight="40.0" minWidth="171.0" onMouseClicked="#headingClicked"
-                       prefHeight="40.0" prefWidth="99.0" styleClass="heading-label" text="ONLINE FORUM">
+                <Label fx:id="lblHeading" minHeight="40.0" minWidth="190.0" onMouseClicked="#headingClicked"
+                       prefHeight="40.0" prefWidth="501.0" styleClass="heading-label" text="ONLINE FORUM">
                     <HBox.margin>
                         <Insets/>
                     </HBox.margin>
@@ -119,7 +119,6 @@
                                 <MenuItem fx:id="menuItemSettings" mnemonicParsing="false" onAction="#openSettings"
                                           text="Settings">
                                     <styleClass>
-                                        <String fx:value="settings"/>
                                         <String fx:value="my-drop-down-menu-list-item"/>
                                         <String fx:value="my-drop-down-menu-list-item:hover"/>
                                     </styleClass>

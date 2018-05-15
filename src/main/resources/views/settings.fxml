@@ -69,7 +69,6 @@
                         <MenuButton fx:id="btnMenu" mnemonicParsing="false" styleClass="my-drop-down-menu">
                             <items>
                                 <MenuItem fx:id="menuItemSettings" mnemonicParsing="false" onAction="#openSettings"
-                                          style="-fx-graphic: url('http://icons.iconarchive.com/icons/martz90/circle/16/settings-icon.png');"
                                           text="Settings">
                                     <styleClass>
                                         <String fx:value="my-drop-down-menu-list-item"/>
@@ -77,7 +76,6 @@
                                     </styleClass>
                                 </MenuItem>
                                 <MenuItem fx:id="menuItemLogout" mnemonicParsing="false" onAction="#logout"
-                                          style="-fx-graphic: url('http://icons.iconarchive.com/icons/icons8/windows-8/16/User-Interface-Logout-icon.png');"
                                           text="Logout">
                                     <styleClass>
                                         <String fx:value="my-drop-down-menu-list-item"/>

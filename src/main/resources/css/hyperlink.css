@@ -1,0 +1,23 @@
+.hyperlink {
+    -fx-underline: false;
+    -fx-text-fill: #271bbe;
+}
+
+.hyperlink:hover {
+    -fx-underline: true;
+}
+
+.votelink {
+    -fx-background-color: linear-gradient(#4e71ff, #271bbe);
+    -fx-background-radius: 30;
+    -fx-background-insets: 0;
+    -fx-text-fill: white;
+    -fx-graphic: url("../images/hand-like-icon.png");
+}
+
+.votelink:hover {
+    -fx-scale-y: 1.1;
+    -fx-scale-x: 1.1;
+    -fx-scale-z: 0.9;
+    -fx-underline: false;
+}

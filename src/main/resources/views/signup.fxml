@@ -29,7 +29,7 @@
                     </image>
                 </ImageView>
                 <Label alignment="CENTER" layoutX="145.0" layoutY="68.0" prefHeight="35.0" prefWidth="111.0"
-                       style="-fx-text-fill: #6495ed;" text="Sign Up" textAlignment="CENTER">
+                       stylesheets="@../css/heading.css" text="Sign Up" textAlignment="CENTER">
                     <font>
                         <Font name="System Bold" size="24.0"/>
                     </font>
