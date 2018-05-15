@@ -4,9 +4,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import java.lang.String?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-            minWidth="-Infinity"
-            prefHeight="859.0" prefWidth="1035.0" xmlns="http://javafx.com/javafx/8.0.141"
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="859.0"
+            prefWidth="1035.0" styleClass="anchor-pane" stylesheets="@../css/background.css"
+            xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.peerapplication.controller.ViewThreadsController">
     <children>
         <AnchorPane layoutX="29.0" layoutY="64.0" minHeight="681.0" minWidth="995.0" AnchorPane.leftAnchor="20.0"
@@ -14,21 +14,24 @@
             <children>
                 <TextField fx:id="txtSearch" layoutX="277.0" layoutY="54.0" prefHeight="33.0" prefWidth="377.0"
                            promptText="Search Threads : Related Tags"/>
-                <Button fx:id="btnSearch" layoutX="688.0" layoutY="54.0" mnemonicParsing="false"
-                        onMouseClicked="#search" prefHeight="33.0" prefWidth="95.0" text="Search"/>
+                <Button fx:id="btnSearch" layoutX="688.0" layoutY="51.0" mnemonicParsing="false"
+                        onMouseClicked="#search" prefHeight="33.0" prefWidth="95.0" stylesheets="@../css/button.css"
+                        text="Search"/>
                 <TableView fx:id="threadTable" editable="true" layoutX="107.0" layoutY="117.0"
-                           onMouseClicked="#openThread" prefHeight="478.0" prefWidth="782.0">
+                           onMouseClicked="#openThread" prefHeight="478.0" prefWidth="782.0"
+                           stylesheets="@../css/tableview.css">
                     <columns>
                         <TableColumn fx:id="colTitle" editable="false" maxWidth="781.0" minWidth="600.0"
-                                     prefWidth="771.0" sortable="false" text="Title"/>
+                                     prefWidth="780.0" sortable="false" text="Title"/>
                     </columns>
                 </TableView>
                 <Label layoutX="107.0" layoutY="94.0" prefHeight="17.0" prefWidth="782.0"
+                       stylesheets="@../css/warninglabel.css"
                        text="*Note :- Enter related tags sperated by commas to search threads." textFill="#fc0c0c"/>
             </children>
         </AnchorPane>
-        <HBox layoutX="58.0" layoutY="24.0" styleClass="my-drop-down-menu" stylesheets="@../css/navigationbar.css"
-              AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="24.0">
+        <HBox layoutX="58.0" layoutY="24.0" stylesheets="@../css/navigationbar.css" AnchorPane.leftAnchor="60.0"
+              AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="24.0">
             <children>
                 <Label fx:id="lblHeading" minHeight="40.0" minWidth="190.0" onMouseClicked="#headingClicked"
                        prefHeight="40.0" prefWidth="501.0" styleClass="heading-label" text="ONLINE FORUM">
@@ -39,9 +42,10 @@
                 <ButtonBar buttonMinWidth="20.0" minHeight="40.0" minWidth="732.0">
                     <buttons>
                         <Button fx:id="btnHome" accessibleRole="MENU_BUTTON" layoutX="978.0" layoutY="14.0"
-                                mnemonicParsing="false" onMouseClicked="#btnHomeClicked" text="Home"/>
+                                mnemonicParsing="false" onMouseClicked="#btnHomeClicked"
+                                stylesheets="@../css/button.css" text="Home"/>
                         <Button fx:id="btnThreads" layoutX="912.0" layoutY="14.0" mnemonicParsing="false"
-                                onMouseClicked="#btnThreadsClicked" text="Threads"/>
+                                onMouseClicked="#btnThreadsClicked" stylesheets="@../css/button.css" text="Threads"/>
                         <MenuButton fx:id="btnMenu" mnemonicParsing="false" styleClass="my-drop-down-menu">
                             <items>
                                 <MenuItem fx:id="menuItemSettings" mnemonicParsing="false" onAction="#openSettings"

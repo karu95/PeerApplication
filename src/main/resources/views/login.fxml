@@ -5,20 +5,21 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="859.0" prefWidth="1035.0"
-            stylesheets="@../css/bootstrapfx.css" xmlns="http://javafx.com/javafx/8.0.141"
+<AnchorPane prefHeight="859.0" prefWidth="1035.0" styleClass="anchor-pane" stylesheets="@../css/background.css"
+            xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.peerapplication.controller.LoginController">
     <children>
-        <AnchorPane layoutX="313.0" layoutY="218.0" prefHeight="423.0" prefWidth="409.0"
-                    style="-fx-background-color: #dcdcdc;" AnchorPane.bottomAnchor="218.0" AnchorPane.leftAnchor="313.0"
-                    AnchorPane.rightAnchor="313.0" AnchorPane.topAnchor="218.0">
+        <AnchorPane layoutX="313.0" layoutY="218.0" prefHeight="423.0" prefWidth="409.0" AnchorPane.bottomAnchor="218.0"
+                    AnchorPane.leftAnchor="313.0" AnchorPane.rightAnchor="313.0" AnchorPane.topAnchor="218.0">
             <children>
                 <TextField fx:id="txtUsername" layoutX="79.0" layoutY="154.0" prefHeight="33.0" prefWidth="243.0"
-                           promptText="Username"/>
+                           promptText="Username" stylesheets="@../css/textbox.css"/>
                 <Button fx:id="btnLogin" layoutX="79.0" layoutY="277.0" mnemonicParsing="false"
-                        onMouseClicked="#confirmLogin" prefHeight="33.0" prefWidth="243.0" text="Login"/>
+                        onMouseClicked="#confirmLogin" prefHeight="33.0" prefWidth="243.0"
+                        stylesheets="@../css/button.css" text="Login"/>
                 <Button fx:id="btnRegister" layoutX="79.0" layoutY="333.0" mnemonicParsing="false"
-                        onMouseClicked="#openSignup" prefHeight="33.0" prefWidth="243.0" text="Register"/>
+                        onMouseClicked="#openSignup" prefHeight="33.0" prefWidth="243.0"
+                        stylesheets="@../css/button.css" text="Register"/>
                 <Label fx:id="statusLabel" layoutX="79.0" layoutY="110.0" prefHeight="22.0" prefWidth="243.0"/>
                 <ImageView fitHeight="117.0" fitWidth="129.0" layoutX="142.0" layoutY="-58.0" pickOnBounds="true"
                            preserveRatio="true">
@@ -26,14 +27,14 @@
                         <Image url="@../images/075828-3d-glossy-blue-orb-icon-business-lock2.png"/>
                     </image>
                 </ImageView>
-                <Label alignment="CENTER" layoutX="155.0" layoutY="59.0" prefHeight="33.0" prefWidth="90.0"
-                       style="-fx-text-fill: #6495ed;" text="Login" textAlignment="CENTER">
+                <Label alignment="CENTER" layoutX="155.0" layoutY="59.0" prefHeight="33.0" prefWidth="90.0" text="Login"
+                       textAlignment="CENTER">
                     <font>
                         <Font name="System Bold" size="24.0"/>
                     </font>
                 </Label>
                 <PasswordField fx:id="txtPassword" layoutX="79.0" layoutY="218.0" prefHeight="33.0" prefWidth="243.0"
-                               promptText="Password"/>
+                               promptText="Password" stylesheets="@../css/textbox.css"/>
             </children>
         </AnchorPane>
     </children>

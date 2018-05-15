@@ -1,22 +1,52 @@
 .my-drop-down-menu {
-    -fx-background-color: TRANSPARENT, TRANSPARENT, TRANSPARENT, TRANSPARENT;
+    -fx-background-color: #090a0c,
+    linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),
+    linear-gradient(#20262b, #191d22),
+    radial-gradient(center 50% 0%, radius 100%, rgba(114, 131, 148, 0.9), rgba(255, 255, 255, 0));
+    -fx-background-radius: 5, 4, 3, 5;
+    -fx-background-insets: 0, 0, 0, 0;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.6), 5, 0.0, 0, 1);
+    -fx-font-family: "Arial";
+    -fx-text-fill: linear-gradient(white, #d0d0d0);
     -fx-graphic: url('../images/man-icon.png');
 }
 
-@font-face {
-    font-family: Angel;
-    src: url('ANGEL.ttf');
+.my-drop-down-menu:hover {
+    -fx-scale-y: 1.1;
 }
 
 .heading-label {
     -fx-graphic: url('../images/Users-icon.png');
-    -fx-font-weight: bolder;
+    -fx-background-color: #c3c4c4,
+    linear-gradient(#d6d6d6 50%, white 100%),
+    radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230, 230, 230, 0) 50%);
+    -fx-background-radius: 30;
+    -fx-background-insets: 0, 1, 1;
+    -fx-text-fill: black;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.6), 3, 0.0, 0, 1);
+    -fx-border-color: transparent;
+    -fx-font-family: fantasy;
+    -fx-font-size: 10pt;
+    -fx-text-fill: #2b669a;
+    -fx-alignment: center;
+}
+
+.heading-label:hover {
+    -fx-scale-y: 1.1;
+    -fx-scale-x: 1.1;
 }
 
 .my-drop-down-menu-list-item {
-    -fx-background-color: #FAFAFA;
+    -fx-graphic: url('../images/settings-icon.png');
+    -fx-background-color: #2b669a;
+    -fx-text-fill: #090a0c;
+    -fx-pref-width: 63pt;
 }
 
+
 .my-drop-down-menu-list-item:hover {
-    -fx-background-color: cornflowerblue;
+    -fx-background-color: #122b40;
+    -fx-text-fill: white;
 }
+
+

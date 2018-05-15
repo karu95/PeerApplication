@@ -6,9 +6,9 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <?import java.lang.String?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-            minWidth="-Infinity"
-            prefHeight="859.0" prefWidth="1035.0" xmlns="http://javafx.com/javafx/8.0.141"
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="859.0"
+            prefWidth="1035.0" styleClass="anchor-pane" stylesheets="@../css/background.css"
+            xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.peerapplication.controller.SettingsController">
     <children>
         <AnchorPane layoutX="29.0" layoutY="64.0" minHeight="681.0" minWidth="995.0" AnchorPane.leftAnchor="20.0"
@@ -23,23 +23,25 @@
                             </image>
                         </ImageView>
                         <TextField fx:id="txtName" layoutX="82.0" layoutY="284.0" prefHeight="31.0" prefWidth="232.0"
-                                   promptText="Nick Name"/>
+                                   promptText="Nick Name" stylesheets="@../css/textbox.css"/>
                         <TextField fx:id="txtEmail" layoutX="82.0" layoutY="339.0" prefHeight="31.0" prefWidth="232.0"
-                                   promptText="E-Mail Address"/>
+                                   promptText="E-Mail Address" stylesheets="@../css/textbox.css"/>
                         <Button fx:id="btnUpdate" layoutX="82.0" layoutY="392.0" mnemonicParsing="false"
                                 onMouseClicked="#updateSettings" prefHeight="31.0" prefWidth="232.0"
-                                text="Update Profile"/>
+                                stylesheets="@../css/button.css" text="Update Profile"/>
                         <Label fx:id="statusLabelUser" alignment="CENTER" layoutX="83.0" layoutY="252.0"
-                               prefHeight="17.0" prefWidth="232.0" text="Click on image to upload your photo"/>
+                               prefHeight="17.0" prefWidth="232.0" stylesheets="@../css/warninglabel.css"
+                               text="Click on image to upload your photo"/>
                         <PasswordField fx:id="txtOldPwd" layoutX="377.0" layoutY="135.0" prefHeight="31.0"
-                                       prefWidth="232.0" promptText="Old Password"/>
+                                       prefWidth="232.0" promptText="Old Password" stylesheets="@../css/textbox.css"/>
                         <PasswordField fx:id="txtNewPwd" layoutX="377.0" layoutY="190.0" prefHeight="31.0"
-                                       prefWidth="232.0" promptText="New Password"/>
+                                       prefWidth="232.0" promptText="New Password" stylesheets="@../css/textbox.css"/>
                         <PasswordField fx:id="txtCnfrmPwd" layoutX="377.0" layoutY="245.0" prefHeight="31.0"
-                                       prefWidth="232.0" promptText="Confirm Password"/>
+                                       prefWidth="232.0" promptText="Confirm Password"
+                                       stylesheets="@../css/textbox.css"/>
                         <Button fx:id="btnChangePwd" layoutX="377.0" layoutY="298.0" mnemonicParsing="false"
                                 onMouseClicked="#changePassword" prefHeight="31.0" prefWidth="232.0"
-                                text="Change Password"/>
+                                stylesheets="@../css/button.css" text="Change Password"/>
                         <Separator layoutX="346.0" layoutY="70.0" orientation="VERTICAL" prefHeight="365.0"
                                    prefWidth="1.0"/>
                         <Label fx:id="statusLabelPwd" alignment="CENTER" layoutX="377.0" layoutY="97.0"
@@ -48,8 +50,8 @@
                 </AnchorPane>
             </children>
         </AnchorPane>
-        <HBox layoutX="58.0" layoutY="24.0" styleClass="my-drop-down-menu" stylesheets="@../css/navigationbar.css"
-              AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="24.0">
+        <HBox layoutX="58.0" layoutY="24.0" stylesheets="@../css/navigationbar.css" AnchorPane.leftAnchor="60.0"
+              AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="24.0">
             <children>
                 <Label fx:id="lblHeading" minHeight="40.0" minWidth="190.0" onMouseClicked="#headingClicked"
                        prefHeight="40.0" prefWidth="501.0" styleClass="heading-label" text="ONLINE FORUM">
@@ -60,9 +62,10 @@
                 <ButtonBar buttonMinWidth="20.0" minHeight="40.0" minWidth="732.0">
                     <buttons>
                         <Button fx:id="btnHome" accessibleRole="MENU_BUTTON" layoutX="978.0" layoutY="14.0"
-                                mnemonicParsing="false" onMouseClicked="#btnHomeClicked" text="Home"/>
+                                mnemonicParsing="false" onMouseClicked="#btnHomeClicked"
+                                stylesheets="@../css/button.css" text="Home"/>
                         <Button fx:id="btnThreads" layoutX="912.0" layoutY="14.0" mnemonicParsing="false"
-                                onMouseClicked="#btnThreadsClicked" text="Threads"/>
+                                onMouseClicked="#btnThreadsClicked" stylesheets="@../css/button.css" text="Threads"/>
                         <MenuButton fx:id="btnMenu" mnemonicParsing="false" styleClass="my-drop-down-menu">
                             <items>
                                 <MenuItem fx:id="menuItemSettings" mnemonicParsing="false" onAction="#openSettings"

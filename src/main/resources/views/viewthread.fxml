@@ -6,9 +6,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 <?import java.lang.String?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-            minWidth="-Infinity"
-            prefHeight="859.0" prefWidth="1035.0" xmlns="http://javafx.com/javafx/8.0.141"
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="859.0"
+            prefWidth="1035.0" styleClass="anchor-pane" stylesheets="@../css/background.css"
+            xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.peerapplication.controller.ViewThreadController">
     <children>
         <AnchorPane layoutX="29.0" layoutY="64.0" minHeight="681.0" minWidth="995.0" AnchorPane.leftAnchor="20.0"
@@ -17,7 +17,8 @@
                 <TextArea fx:id="txtAreaAnswer" layoutX="36.0" layoutY="531.0" prefHeight="91.0" prefWidth="912.0"
                           promptText="Wanna Answer?"/>
                 <Button fx:id="btnAnswer" layoutX="434.0" layoutY="642.0" mnemonicParsing="false"
-                        onMouseClicked="#saveAnswer" prefHeight="25.0" prefWidth="129.0" text="Answer"/>
+                        onMouseClicked="#saveAnswer" prefHeight="25.0" prefWidth="129.0"
+                        stylesheets="@../css/button.css" text="Answer"/>
                 <ScrollPane layoutX="38.0" layoutY="32.0" prefHeight="463.0" prefWidth="912.0">
                     <content>
                         <AnchorPane fx:id="aPaneThread" prefHeight="45.0" prefWidth="880.0">
@@ -35,13 +36,14 @@
                     </content>
                 </ScrollPane>
                 <Button fx:id="btnDelThread" layoutX="808.0" layoutY="642.0" mnemonicParsing="false"
-                        onMouseClicked="#deleteThread" prefHeight="25.0" prefWidth="140.0" text="Delete Thread"/>
+                        onMouseClicked="#deleteThread" prefHeight="25.0" prefWidth="140.0"
+                        stylesheets="@../css/button.css" text="Delete Thread"/>
                 <Label fx:id="statusLbl" layoutX="38.0" layoutY="506.0" prefHeight="17.0" prefWidth="912.0"
-                       textFill="#eb0808"/>
+                       stylesheets="@../css/warninglabel.css" textFill="#eb0808"/>
             </children>
         </AnchorPane>
-        <HBox layoutX="58.0" layoutY="24.0" styleClass="my-drop-down-menu" stylesheets="@../css/navigationbar.css"
-              AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="24.0">
+        <HBox layoutX="58.0" layoutY="24.0" stylesheets="@../css/navigationbar.css" AnchorPane.leftAnchor="60.0"
+              AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="24.0">
             <children>
                 <Label fx:id="lblHeading" minHeight="40.0" minWidth="190.0" onMouseClicked="#headingClicked"
                        prefHeight="40.0" prefWidth="501.0" styleClass="heading-label" text="ONLINE FORUM">
@@ -52,13 +54,13 @@
                 <ButtonBar buttonMinWidth="20.0" minHeight="40.0" minWidth="732.0">
                     <buttons>
                         <Button fx:id="btnHome" accessibleRole="MENU_BUTTON" layoutX="978.0" layoutY="14.0"
-                                mnemonicParsing="false" onMouseClicked="#btnHomeClicked" text="Home"/>
+                                mnemonicParsing="false" onMouseClicked="#btnHomeClicked"
+                                stylesheets="@../css/button.css" text="Home"/>
                         <Button fx:id="btnThreads" layoutX="912.0" layoutY="14.0" mnemonicParsing="false"
-                                onMouseClicked="#btnThreadsClicked" text="Threads"/>
+                                onMouseClicked="#btnThreadsClicked" stylesheets="@../css/button.css" text="Threads"/>
                         <MenuButton fx:id="btnMenu" mnemonicParsing="false" styleClass="my-drop-down-menu">
                             <items>
                                 <MenuItem fx:id="menuItemSettings" mnemonicParsing="false" onAction="#openSettings"
-                                          style="-fx-graphic: url('http://icons.iconarchive.com/icons/martz90/circle/16/settings-icon.png');"
                                           text="Settings">
                                     <styleClass>
                                         <String fx:value="my-drop-down-menu-list-item"/>
@@ -66,7 +68,6 @@
                                     </styleClass>
                                 </MenuItem>
                                 <MenuItem fx:id="menuItemLogout" mnemonicParsing="false" onAction="#logout"
-                                          style="-fx-graphic: url('http://icons.iconarchive.com/icons/icons8/windows-8/16/User-Interface-Logout-icon.png');"
                                           text="Logout">
                                     <styleClass>
                                         <String fx:value="my-drop-down-menu-list-item"/>

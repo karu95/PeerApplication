@@ -5,9 +5,9 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-            minWidth="-Infinity"
-            prefHeight="859.0" prefWidth="1035.0" xmlns="http://javafx.com/javafx/8.0.141"
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="859.0"
+            prefWidth="1035.0" styleClass="anchor-pane" stylesheets="@../css/background.css"
+            xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.peerapplication.controller.RegisterController">
     <children>
         <AnchorPane layoutX="29.0" layoutY="64.0" minHeight="681.0" minWidth="995.0" AnchorPane.leftAnchor="20.0"
@@ -25,23 +25,21 @@
                         <Label alignment="CENTER" layoutX="99.0" layoutY="23.0" prefHeight="40.0" prefWidth="202.0"
                                text="Welcome to ONLINE FORUM"/>
                         <TextField fx:id="txtName" layoutX="84.0" layoutY="316.0" prefHeight="31.0" prefWidth="232.0"
-                                   promptText="Nick Name"/>
+                                   promptText="Nick Name" stylesheets="@../css/textbox.css"/>
                         <TextField fx:id="txtEmail" layoutX="84.0" layoutY="371.0" prefHeight="31.0" prefWidth="232.0"
-                                   promptText="E-Mail Address"/>
+                                   promptText="E-Mail Address" stylesheets="@../css/textbox.css"/>
                         <Button fx:id="btnRegister" layoutX="84.0" layoutY="424.0" mnemonicParsing="false"
-                                onMouseClicked="#register" prefHeight="31.0" prefWidth="232.0" text="Register"/>
+                                onMouseClicked="#register" prefHeight="31.0" prefWidth="232.0"
+                                stylesheets="@../css/button.css" text="Register"/>
                         <Label fx:id="statusLabel" alignment="CENTER" layoutX="85.0" layoutY="284.0" prefHeight="17.0"
-                               prefWidth="232.0" text="Click on image to upload your photo"/>
+                               prefWidth="232.0" stylesheets="@../css/warninglabel.css"
+                               text="Click on image to upload your photo"/>
                     </children>
                 </AnchorPane>
             </children>
         </AnchorPane>
         <HBox layoutX="58.0" layoutY="24.0" styleClass="my-drop-down-menu" stylesheets="@../css/navigationbar.css"
-              AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="24.0">
-            <children>
-                <ButtonBar buttonMinWidth="20.0" minHeight="40.0" minWidth="732.0"/>
-            </children>
-        </HBox>
+              AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="24.0"/>
         <VBox layoutX="186.0" layoutY="768.0" prefHeight="91.0" prefWidth="1035.0" AnchorPane.bottomAnchor="0.0"
               AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"/>
     </children>

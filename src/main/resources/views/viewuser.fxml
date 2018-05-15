@@ -7,17 +7,17 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 <?import java.lang.String?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-            minWidth="-Infinity"
-            prefHeight="859.0" prefWidth="1035.0" xmlns="http://javafx.com/javafx/8.0.141"
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="859.0"
+            prefWidth="1035.0" styleClass="anchor-pane" stylesheets="@../css/background.css"
+            xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.peerapplication.controller.ViewUserController">
     <children>
         <AnchorPane layoutX="29.0" layoutY="64.0" minHeight="681.0" minWidth="995.0" AnchorPane.leftAnchor="20.0"
                     AnchorPane.rightAnchor="20.0">
             <children>
                 <TabPane fx:id="homeTabs" layoutX="219.0" layoutY="33.0" minHeight="636.0" minWidth="776.0"
-                         opacity="0.55" prefHeight="671.0" prefWidth="776.0" tabClosingPolicy="UNAVAILABLE"
-                         AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="33.0">
+                         opacity="0.55" prefHeight="671.0" prefWidth="776.0" stylesheets="@../css/tabpane.css"
+                         tabClosingPolicy="UNAVAILABLE" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="33.0">
                     <tabs>
                         <Tab fx:id="myThreadTab" closable="false" text="Posted Threads">
                             <content>
@@ -25,8 +25,9 @@
                                     <children>
                                         <TableView fx:id="postedThreadsTable" editable="true" layoutX="67.0"
                                                    layoutY="52.0" onMouseClicked="#openThread"
-                                                   AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="50.0"
-                                                   AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="50.0">
+                                                   stylesheets="@../css/tableview.css" AnchorPane.bottomAnchor="100.0"
+                                                   AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0"
+                                                   AnchorPane.topAnchor="50.0">
                                             <columns>
                                                 <TableColumn fx:id="colTitle" editable="false" maxWidth="675.0"
                                                              minWidth="600.0" prefWidth="675.0" sortable="false"
@@ -46,21 +47,21 @@
                     </image>
                 </ImageView>
                 <Label fx:id="lblName" alignment="CENTER" layoutX="14.0" layoutY="231.0" prefHeight="32.0"
-                       prefWidth="190.0" style="-fx-background-color: darkgray;" text="User001"/>
+                       prefWidth="190.0" stylesheets="@../css/label-user.css" text="User001"/>
                 <Label fx:id="lblEmail" alignment="CENTER" layoutX="14.0" layoutY="275.0" prefHeight="32.0"
-                       prefWidth="190.0" style="-fx-background-color: darkgray;" text="Email : "/>
+                       prefWidth="190.0" stylesheets="@../css/label-user.css" text="Email : "/>
                 <Label fx:id="lblRegDate" alignment="CENTER" layoutX="14.0" layoutY="318.0" prefHeight="32.0"
-                       prefWidth="190.0" style="-fx-background-color: darkgray;" text="Since"/>
+                       prefWidth="190.0" stylesheets="@../css/label-user.css" text="Since"/>
                 <Label fx:id="lblPostedThreads" alignment="CENTER" layoutX="14.0" layoutY="362.0" prefHeight="32.0"
-                       prefWidth="190.0" style="-fx-background-color: darkgray;" text="Posted Threads :">
+                       prefWidth="190.0" stylesheets="@../css/label-user.css" text="Posted Threads :">
                     <font>
                         <Font size="11.0"/>
                     </font>
                 </Label>
             </children>
         </AnchorPane>
-        <HBox layoutX="58.0" layoutY="24.0" styleClass="my-drop-down-menu" stylesheets="@../css/navigationbar.css"
-              AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="24.0">
+        <HBox layoutX="58.0" layoutY="24.0" stylesheets="@../css/navigationbar.css" AnchorPane.leftAnchor="60.0"
+              AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="24.0">
             <children>
                 <Label fx:id="lblHeading" minHeight="40.0" minWidth="190.0" onMouseClicked="#headingClicked"
                        prefHeight="40.0" prefWidth="501.0" styleClass="heading-label" text="ONLINE FORUM">
@@ -71,13 +72,13 @@
                 <ButtonBar buttonMinWidth="20.0" minHeight="40.0" minWidth="732.0">
                     <buttons>
                         <Button fx:id="btnHome" accessibleRole="MENU_BUTTON" layoutX="978.0" layoutY="14.0"
-                                mnemonicParsing="false" onMouseClicked="#btnHomeClicked" text="Home"/>
+                                mnemonicParsing="false" onMouseClicked="#btnHomeClicked"
+                                stylesheets="@../css/button.css" text="Home"/>
                         <Button fx:id="btnThreads" layoutX="912.0" layoutY="14.0" mnemonicParsing="false"
-                                onMouseClicked="#btnThreadsClicked" text="Threads"/>
+                                onMouseClicked="#btnThreadsClicked" stylesheets="@../css/button.css" text="Threads"/>
                         <MenuButton fx:id="btnMenu" mnemonicParsing="false" styleClass="my-drop-down-menu">
                             <items>
                                 <MenuItem fx:id="menuItemSettings" mnemonicParsing="false" onAction="#openSettings"
-                                          style="-fx-graphic: url('http://icons.iconarchive.com/icons/martz90/circle/16/settings-icon.png');"
                                           text="Settings">
                                     <styleClass>
                                         <String fx:value="my-drop-down-menu-list-item"/>
@@ -85,7 +86,6 @@
                                     </styleClass>
                                 </MenuItem>
                                 <MenuItem fx:id="menuItemLogout" mnemonicParsing="false" onAction="#logout"
-                                          style="-fx-graphic: url('http://icons.iconarchive.com/icons/icons8/windows-8/16/User-Interface-Logout-icon.png');"
                                           text="Logout">
                                     <styleClass>
                                         <String fx:value="my-drop-down-menu-list-item"/>
