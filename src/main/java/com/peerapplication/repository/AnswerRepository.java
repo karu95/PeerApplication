@@ -67,9 +67,9 @@ public class AnswerRepository {
         } catch (SQLException e) {
             if (e instanceof SQLIntegrityConstraintViolationException) {
                 System.out.println("Duplicate Answer");
-                return;
+            } else {
+                e.printStackTrace();
             }
-            e.printStackTrace();
         } finally {
             readWriteLock.writeLock().unlock();
         }

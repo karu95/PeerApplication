@@ -82,7 +82,7 @@ public class TagRepository {
                 savePsmt.setString(1, tag.getTag());
             } catch (SQLException e) {
                 if (e instanceof SQLIntegrityConstraintViolationException) {
-
+                    System.out.println("Duplicate tag!");
                 } else {
                     e.printStackTrace();
                 }
@@ -94,7 +94,7 @@ public class TagRepository {
                     updateTaggedTableStmt.execute();
                 } catch (SQLException e) {
                     if (e instanceof SQLIntegrityConstraintViolationException) {
-                        System.out.println("Integrity Constrsint");
+                        System.out.println("Integrity Constraint");
                     } else {
                         e.printStackTrace();
                     }

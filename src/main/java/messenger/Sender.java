@@ -53,7 +53,6 @@ public class Sender implements Runnable {
                     System.out.println("message failed" + message.getTitle());
                     PeerHandler.handleFailedMessage(message, peer);
                 }
-
             } catch (ClassNotFoundException ex) {
 
             }

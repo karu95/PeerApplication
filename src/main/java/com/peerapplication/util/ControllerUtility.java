@@ -48,7 +48,7 @@ public class ControllerUtility {
         ViewThreadsController controller = fxmlLoader.getController();
         controller.init(tag);
         stage.setScene(new Scene(root, 1035, 859));
-        stage.setTitle("Threads");
+        stage.setTitle("Search Threads");
         stage.show();
     }
 
@@ -66,7 +66,7 @@ public class ControllerUtility {
         controller.init(user);
         Scene scene = new Scene(parent, 1035, 859);
         stage.setScene(scene);
-        stage.setTitle("Settings");
+        stage.setTitle("Profile Settings");
     }
 
     public static void viewThread(Thread thread) {
@@ -81,7 +81,7 @@ public class ControllerUtility {
         viewThreadController.init(thread);
         Scene scene = new Scene(parent, 1035, 859);
         stage.setScene(scene);
-        stage.setTitle("View Thread");
+        stage.setTitle("Thread : " + thread.getTitle());
     }
 
     public static void viewUser(User user) {
@@ -96,7 +96,7 @@ public class ControllerUtility {
         controller.init(user);
         Scene scene = new Scene(parent, 1035, 859);
         stage.setScene(scene);
-        stage.setTitle("Profile: " + user.getName());
+        stage.setTitle("Profile : " + user.getName());
     }
 
     public static void login() {

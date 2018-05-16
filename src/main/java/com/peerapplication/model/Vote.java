@@ -15,6 +15,12 @@ public class Vote implements Serializable {
         this.userID = userID;
     }
 
+    public Vote(int userID, String answerID, long votedTime) {
+        this.answerID = answerID;
+        this.userID = userID;
+        this.votedTime = votedTime;
+    }
+
     public Vote() {
     }
 

@@ -103,7 +103,7 @@ public class Answer implements Serializable {
     public void getAnswer(String answerID) {
         AnswerRepository answerRepo = AnswerRepository.getAnswerRepository();
         answerRepo.getAnswer(answerID, this);
-        if (this.answerID.equals(answerID)) {
+        if (answerID.equals(this.answerID)) {
             this.setVotes(Vote.getVotes(this.answerID));
         }
     }

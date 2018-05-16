@@ -9,9 +9,8 @@
             xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.peerapplication.controller.SignupController">
     <children>
-        <AnchorPane layoutX="313.0" layoutY="205.0" prefHeight="449.0" prefWidth="409.0"
-                    style="-fx-background-color: #dcdcdc;" AnchorPane.bottomAnchor="205.0" AnchorPane.leftAnchor="313.0"
-                    AnchorPane.rightAnchor="313.0" AnchorPane.topAnchor="205.0">
+        <AnchorPane layoutX="313.0" layoutY="205.0" prefHeight="449.0" prefWidth="409.0" AnchorPane.bottomAnchor="205.0"
+                    AnchorPane.leftAnchor="313.0" AnchorPane.rightAnchor="313.0" AnchorPane.topAnchor="205.0">
             <children>
                 <TextField fx:id="txtUsername" layoutX="79.0" layoutY="154.0" prefHeight="33.0" prefWidth="243.0"
                            promptText="Username" stylesheets="@../css/textbox.css"/>

@@ -13,7 +13,7 @@ import messenger.PeerHandler;
 public class Main extends Application {
 
     public static void main(String[] args) {
-        int port = 25032;
+        int port = 25034;
         if (args.length >= 1) {
             port = Integer.parseInt(args[0]);
         }

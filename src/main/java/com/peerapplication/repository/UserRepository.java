@@ -78,9 +78,9 @@ public class UserRepository {
         } catch (SQLException e) {
             if (e instanceof SQLIntegrityConstraintViolationException) {
                 System.out.println("Duplicate User");
-                return;
+            } else {
+                e.printStackTrace();
             }
-            e.printStackTrace();
         } finally {
             readWriteLock.writeLock().unlock();
         }

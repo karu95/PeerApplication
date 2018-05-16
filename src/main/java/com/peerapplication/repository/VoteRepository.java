@@ -64,9 +64,9 @@ public class VoteRepository {
         } catch (SQLException e) {
             if (e instanceof SQLIntegrityConstraintViolationException) {
                 System.out.println("Duplicate Vote");
-                return;
+            } else {
+                e.printStackTrace();
             }
-            e.printStackTrace();
         } finally {
             readWriteLock.writeLock().unlock();
         }
