@@ -1,6 +1,7 @@
 package com.peerapplication.util;
 
 import java.io.File;
+import java.sql.Date;
 
 public class SystemUser {
     private static int systemUserID;
@@ -26,15 +27,18 @@ public class SystemUser {
     }
 
     public static long getLastSeen() {
+        System.out.println("Get Last " + new Date(lastSeen));
         return lastSeen;
     }
 
     public static void setLastSeen(long lastSeen) {
+        System.out.println("Got Last" + new Date(lastSeen));
         if (!tablesCreated) {
             SystemUser.lastSeen = lastSeen;
         } else {
             SystemUser.lastSeen = 0;
         }
+        System.out.println("Last " + new Date(SystemUser.lastSeen));
     }
 
     public static String getImageLocation() {

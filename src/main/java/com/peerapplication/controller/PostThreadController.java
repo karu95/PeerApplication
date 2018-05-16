@@ -92,8 +92,10 @@ public class PostThreadController implements Initializable {
         thread.setThreadID(IDGenerator.generateThreadID(thread.getTimestamp()));
         String[] tags = txtTags.getText().trim().split(",");
         ArrayList<Tag> relatedTags = new ArrayList<>();
-        for (int i = 0; i < tags.length; i++) {
-            relatedTags.add(new Tag(tags[i].trim().toLowerCase()));
+        if (!tags[0].equals("")) {
+            for (int i = 0; i < tags.length; i++) {
+                relatedTags.add(new Tag(tags[i].trim().toLowerCase()));
+            }
         }
         thread.setTags(relatedTags);
         String validity = ThreadValidator.validateThread(thread);

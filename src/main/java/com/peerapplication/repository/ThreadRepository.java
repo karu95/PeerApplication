@@ -145,7 +145,7 @@ public class ThreadRepository {
             } else {
                 e.printStackTrace();
             }
-            e.printStackTrace();
+            //e.printStackTrace();
         } finally {
             readWriteLock.writeLock().unlock();
         }

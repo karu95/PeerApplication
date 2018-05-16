@@ -10,10 +10,6 @@ public class DeletedThread implements Serializable {
     private int userID;
     private long deletedTime;
 
-    public DeletedThread() {
-
-    }
-
     public DeletedThread(String threadID, int userID, long deletedTime) {
         this.deletedTime = deletedTime;
         this.threadID = threadID;
@@ -35,10 +31,6 @@ public class DeletedThread implements Serializable {
         return deletedTime;
     }
 
-    public void setDeletedTime(long deletedTime) {
-        this.deletedTime = deletedTime;
-    }
-
     public int getUserID() {
         return userID;
     }
@@ -49,10 +41,6 @@ public class DeletedThread implements Serializable {
 
     public String getThreadID() {
         return threadID;
-    }
-
-    public void setThreadID(String threadID) {
-        this.threadID = threadID;
     }
 
     public void deleteThread() {

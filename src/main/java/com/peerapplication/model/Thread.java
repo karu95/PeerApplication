@@ -91,10 +91,6 @@ public class Thread implements Serializable {
         answers.add(answer);
     }
 
-    public void addTag(Tag tag) {
-        tags.add(tag);
-    }
-
     public int getUserID() {
         return userID;
     }

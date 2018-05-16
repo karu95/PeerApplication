@@ -166,28 +166,8 @@ public class HomeController implements Initializable, UIUpdater {
     public void initialize(URL location, ResourceBundle resources) {
         UIUpdateHandler.refreshUpdater();
         UIUpdateHandler.setThreadUpdater(this);
-        UIUpdateHandler.setAnswerUpdater(this);
-        UIUpdateHandler.setVoteUpdater(this);
-        notificationTab.setOnSelectionChanged(ActionEvent -> {
-            if (notificationTab.isSelected()) {
-                System.out.println(NotificationHandler.getNotificationHandler().getNotifications().size());
-            }
-        });
 
         btnHome.setDisable(true);
-
-        myThreadTab.setOnSelectionChanged(ActionEvent -> {
-            if (myThreadTab.isSelected()) {
-                System.out.println("MyThread");
-            }
-        });
-
-        latestThreadTab.setOnSelectionChanged(ActionEvent -> {
-            if (latestThreadTab.isSelected()) {
-                System.out.println("LatestThread");
-            }
-        });
-
         latestThreads = FXCollections.observableArrayList(Thread.getLatestThreads(0));
         colTitleLatest.setCellValueFactory(new PropertyValueFactory<>("title"));
         latestThreadsTable.setItems(latestThreads);
@@ -211,7 +191,16 @@ public class HomeController implements Initializable, UIUpdater {
                 }
             });
         } else if (message instanceof DeleteThreadMessage) {
+            System.out.println("Deleted thread received");
             DeleteThreadMessage deleteThreadMessage = (DeleteThreadMessage) message;
+            if (Integer.valueOf(deleteThreadMessage.getDeletedThread().getThreadID().substring(0, 6)) == SystemUser.getSystemUserID()) {
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        lblPostedThreads.setText("Posted Threads : " + String.valueOf(Integer.valueOf(lblPostedThreads.getText().substring(17)) - 1));
+                    }
+                });
+            }
             latestThreads = FXCollections.observableArrayList(Thread.getLatestThreads(0));
             myThreads = FXCollections.observableArrayList(Thread.getUserThreads(SystemUser.getSystemUserID()));
             latestThreadsTable.setItems(latestThreads);

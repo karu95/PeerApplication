@@ -146,7 +146,7 @@ public class User implements Serializable {
         } else if (!this.email.equals(user.getEmail())) {
             equal = false;
             System.out.println(3);
-        } else if (!this.imageURL.equals(user.getImageURL())) {
+        } else if ((imageURL != null) && (!this.imageURL.equals(user.getImageURL()))) {
             equal = false;
             System.out.println(4);
         } else if (this.registerTime != user.getRegisterTime()) {

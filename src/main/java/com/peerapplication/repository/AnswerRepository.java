@@ -104,26 +104,6 @@ public class AnswerRepository {
         return answers;
     }
 
-    public int getAnswerCount(int userID) {
-        int count = 0;
-        Connection connection = dbConn.getConnection();
-        String countQuery = "SELECT COUNT(*) AS cnt FROM answer WHERE posted_user=?";
-        try {
-            PreparedStatement countStatement = connection.prepareStatement(countQuery);
-            countStatement.setInt(1, userID);
-            readWriteLock.readLock().lock();
-            ResultSet rs = countStatement.executeQuery();
-            while (rs.next()) {
-                count = rs.getInt("cnt");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            readWriteLock.readLock().unlock();
-        }
-        return count;
-    }
-
     public ArrayList<Answer> getLatestAnswers(long timestamp) {
         ArrayList<Answer> latestAnswers = new ArrayList<>();
         Connection connection = dbConn.getConnection();

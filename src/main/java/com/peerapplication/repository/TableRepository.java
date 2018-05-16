@@ -47,9 +47,10 @@ public class TableRepository {
                 "PRIMARY KEY(answer_id, user_id)," +
                 "FOREIGN KEY (user_id) REFERENCES users(user_id))";
         String deletedTable = "CREATE TABLE deleted(" +
-                "thread_id VARCHAR(20) PRIMARY KEY," +
+                "thread_id VARCHAR(20)," +
                 "user_id INT," +
                 "delete_time BIGINT," +
+                "PRIMARY KEY(thread_id)," +
                 "FOREIGN KEY (user_id) REFERENCES users)";
         String taggedTable = "CREATE TABLE tagged(" +
                 "tag VARCHAR(100)," +

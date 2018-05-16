@@ -176,7 +176,12 @@ public class ViewThreadController implements Initializable, UIUpdater {
         } else if (message instanceof DeleteThreadMessage) {
             DeleteThreadMessage deleteThreadMessage = (DeleteThreadMessage) message;
             if (deleteThreadMessage.getDeletedThread().getThreadID().equals(thread.getThreadID())) {
-                ControllerUtility.openHome();
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        ControllerUtility.openHome();
+                    }
+                });
             }
         } else if (message instanceof VoteMessage) {
             VoteMessage voteMessage = (VoteMessage) message;

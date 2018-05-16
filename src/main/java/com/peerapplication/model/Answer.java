@@ -35,11 +35,6 @@ public class Answer implements Serializable {
         return answerRepository.getAnswers(threadID);
     }
 
-    public static int getAnswerCount(int userID) {
-        AnswerRepository answerRepository = AnswerRepository.getAnswerRepository();
-        return answerRepository.getAnswerCount(userID);
-    }
-
     public static ArrayList<Answer> getLatestAnswers(long timestamp) {
         AnswerRepository answerRepository = AnswerRepository.getAnswerRepository();
         return answerRepository.getLatestAnswers(timestamp);
@@ -108,7 +103,7 @@ public class Answer implements Serializable {
     public void getAnswer(String answerID) {
         AnswerRepository answerRepo = AnswerRepository.getAnswerRepository();
         answerRepo.getAnswer(answerID, this);
-        if (this.answerID == answerID) {
+        if (this.answerID.equals(answerID)) {
             this.setVotes(Vote.getVotes(this.answerID));
         }
     }
