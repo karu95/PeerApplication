@@ -15,9 +15,9 @@
             <children>
                 <TextField fx:id="txtTitle" layoutX="259.0" layoutY="73.0" prefHeight="33.0" prefWidth="629.0"
                            promptText="Title" stylesheets="@../css/textbox.css"/>
-                <TextArea fx:id="txtDescription" layoutX="259.0" layoutY="136.0" prefHeight="389.0" prefWidth="629.0"
+                <TextArea fx:id="txtDescription" layoutX="259.0" layoutY="136.0" prefHeight="416.0" prefWidth="629.0"
                           promptText="Description" stylesheets="@../css/textarea.css"/>
-                <Button fx:id="btnPost" layoutX="458.0" layoutY="603.0" mnemonicParsing="false" onMouseClicked="#post"
+                <Button fx:id="btnPost" layoutX="458.0" layoutY="628.0" mnemonicParsing="false" onMouseClicked="#post"
                         prefHeight="37.0" prefWidth="231.0" stylesheets="@../css/button.css" text="Post">
                     <font>
                         <Font size="16.0"/>
@@ -33,12 +33,12 @@
                         <Font size="20.0"/>
                     </font>
                 </Label>
-                <Label layoutX="118.0" layoutY="543.0" prefHeight="33.0" prefWidth="121.0" text="Related Tags">
+                <Label layoutX="118.0" layoutY="577.0" prefHeight="33.0" prefWidth="121.0" text="Related Tags">
                     <font>
                         <Font size="20.0"/>
                     </font>
                 </Label>
-                <TextField fx:id="txtTags" layoutX="259.0" layoutY="543.0" prefHeight="33.0" prefWidth="629.0"
+                <TextField fx:id="txtTags" layoutX="259.0" layoutY="576.0" prefHeight="33.0" prefWidth="629.0"
                            promptText="Seperate tags by commas" stylesheets="@../css/textbox.css"/>
                 <Label fx:id="statusLabel" layoutX="259.0" layoutY="40.0" prefHeight="6.0" prefWidth="629.0"
                        stylesheets="@../css/warninglabel.css" text="*Note : Seperate tags by commas" textFill="RED">

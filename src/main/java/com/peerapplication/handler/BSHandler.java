@@ -40,6 +40,7 @@ public class BSHandler extends Handler {
 
     public static void logout(LogoutMessage logoutMessage) {
         PeerHandler.stopHeartBeat();
+        SystemUser.setTablesCreated(false);
         logoutMessage.setTimestamp(new Date(System.currentTimeMillis()).getTime());
         PeerHandler.getSenderController().send(logoutMessage, PeerHandler.getBS());
         PeerHandler.getKnownPeers().clear();

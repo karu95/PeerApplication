@@ -20,7 +20,8 @@
                 <Button fx:id="btnRegister" layoutX="79.0" layoutY="333.0" mnemonicParsing="false"
                         onMouseClicked="#openSignup" prefHeight="33.0" prefWidth="243.0"
                         stylesheets="@../css/button.css" text="Register"/>
-                <Label fx:id="statusLabel" layoutX="79.0" layoutY="110.0" prefHeight="22.0" prefWidth="243.0"/>
+                <Label fx:id="statusLabel" layoutX="79.0" layoutY="121.0" prefHeight="22.0" prefWidth="243.0"
+                       textFill="#f80303"/>
                 <ImageView fitHeight="117.0" fitWidth="129.0" layoutX="142.0" layoutY="-58.0" pickOnBounds="true"
                            preserveRatio="true">
                     <image>

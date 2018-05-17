@@ -116,6 +116,7 @@ public class ViewUserController implements Initializable, UIUpdater {
         if (message instanceof UserInfoMessage) {
             UserInfoMessage userInfoMessage = (UserInfoMessage) message;
             if (userInfoMessage.getUser().getUserID() == user.getUserID()) {
+                System.out.println("User Info Here");
                 this.user = userInfoMessage.getUser();
                 updateInterface();
             }

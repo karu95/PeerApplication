@@ -17,10 +17,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
-import message.AnswerMessage;
-import message.DeleteThreadMessage;
-import message.Message;
-import message.VoteMessage;
+import message.*;
 import messenger.PeerHandler;
 
 import java.io.IOException;
@@ -192,6 +189,11 @@ public class ViewThreadController implements Initializable, UIUpdater {
                     voteLink.setText(String.valueOf(Integer.valueOf(voteLink.getText()) + 1));
                 }
             });
+        } else if (message instanceof UserInfoMessage) {
+            UserInfoMessage userInfoMessage = (UserInfoMessage) message;
+            if (relatedUsers.containsKey(userInfoMessage.getUser().getUserID())) {
+                relatedUsers.replace(userInfoMessage.getUser().getUserID(), userInfoMessage.getUser());
+            }
         }
     }
 
@@ -200,6 +202,7 @@ public class ViewThreadController implements Initializable, UIUpdater {
         UIUpdateHandler.refreshUpdater();
         UIUpdateHandler.setAnswerUpdater(this);
         UIUpdateHandler.setVoteUpdater(this);
+        UIUpdateHandler.setUserInfoUpdater(this);
         UIUpdateHandler.setThreadUpdater(this);
         voteLinks = new HashMap<>();
         senderService = Executors.newSingleThreadExecutor();

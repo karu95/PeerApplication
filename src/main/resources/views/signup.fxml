@@ -20,7 +20,8 @@
                 <Button fx:id="btnLogin" layoutX="79.0" layoutY="377.0" mnemonicParsing="false"
                         onMouseClicked="#openLogin" prefHeight="33.0" prefWidth="243.0" stylesheets="@../css/button.css"
                         text="Login"/>
-                <Label fx:id="statusLabel" layoutX="79.0" layoutY="110.0" prefHeight="22.0" prefWidth="243.0"/>
+                <Label fx:id="statusLabel" layoutX="79.0" layoutY="122.0" prefHeight="22.0" prefWidth="243.0"
+                       textFill="#f20707"/>
                 <ImageView fitHeight="117.0" fitWidth="129.0" layoutX="142.0" layoutY="-58.0" pickOnBounds="true"
                            preserveRatio="true">
                     <image>

@@ -126,7 +126,7 @@ public class ControllerUtility {
             BSInfoController bsInfoController = loader.getController();
             bsInfoController.init();
         }
-        Scene scene = new Scene(parent, 1035, 859);
+        Scene scene = new Scene(parent, 382, 248);
         stage.setTitle("Provide BS Information");
         stage.setScene(scene);
         stage.show();

@@ -1,6 +1,7 @@
 package com.peerapplication.handler;
 
 import com.peerapplication.model.User;
+import com.peerapplication.util.UIUpdateHandler;
 import message.Message;
 import message.UserInfoMessage;
 import messenger.Handler;
@@ -53,6 +54,7 @@ public class UserHandler extends Handler {
             HashMap<Integer, Peer> peers = PeerHandler.getKnownPeers();
             ArrayList<Peer> receivers = new ArrayList<>();
             userInfoMessage.getUser().saveUser();
+            UIUpdateHandler.informUserUpdater(userInfoMessage);
             System.out.println("User saved!");
             for (Map.Entry peer : peers.entrySet()) {
                 if (peer.getKey().equals(Integer.valueOf(userInfoMessage.getUser().getUserID()))

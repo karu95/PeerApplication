@@ -5,6 +5,7 @@ import com.peerapplication.model.Thread;
 import com.peerapplication.util.ControllerUtility;
 import com.peerapplication.util.UIUpdateHandler;
 import com.peerapplication.util.UIUpdater;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -89,6 +90,12 @@ public class ViewThreadsController implements UIUpdater, Initializable {
         if (message instanceof ThreadMessage) {
             ThreadMessage threadMessage = (ThreadMessage) message;
             observableList.add(0, threadMessage.getThread());
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    threadTable.setItems(observableList);
+                }
+            });
         }
     }
 
