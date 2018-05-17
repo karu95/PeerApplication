@@ -44,10 +44,10 @@ public class LoginController implements Initializable, UIUpdater {
     private Label statusLabel;
 
     @FXML
-    void confirmLogin(MouseEvent event) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+    void confirmLogin(MouseEvent event) throws NoSuchAlgorithmException, UnsupportedEncodingException {                 //login button click
         String username = txtUsername.getText().trim();
         String password = txtPassword.getText().trim();
-        if (!(username.isEmpty()) && !(password.isEmpty())) {
+        if (!(username.isEmpty()) && !(password.isEmpty())) {                                                           //validate username and password
             if (username.length() < 8 || username.length() > 20) {
                 statusLabel.setText("Invalid username!");
                 txtUsername.clear();
@@ -58,7 +58,7 @@ public class LoginController implements Initializable, UIUpdater {
                 statusLabel.setText("Invalid password!");
                 txtPassword.clear();
             } else {
-                String pw = PasswordEncrypter.SHA1(password);
+                String pw = PasswordEncrypter.SHA1(password);                                                           //encrypt password using PasswordEncrypter
                 System.out.println(pw);
                 LoginMessage loginMessage = new LoginMessage(username, pw);
                 BSHandler.login(loginMessage);
@@ -70,7 +70,7 @@ public class LoginController implements Initializable, UIUpdater {
     }
 
     @FXML
-    void openSignup(MouseEvent event) throws IOException {
+    void openSignup(MouseEvent event) throws IOException {                                                              //signup button click
         Stage stage = (Stage) btnRegister.getScene().getWindow();
         Parent root = FXMLLoader.load(getClass().getResource("/views/signup.fxml"));
         Scene scene = new Scene(root, 1035, 859);
@@ -80,14 +80,14 @@ public class LoginController implements Initializable, UIUpdater {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        UIUpdateHandler.refreshUpdater();
+        UIUpdateHandler.refreshUpdater();                                                                               // register login updater
         UIUpdateHandler.setLoginUpdater(this);
     }
 
     @Override
-    public void updateUI(Message message) {
+    public void updateUI(Message message) {                                                                             //message updates from network layer
         if (message instanceof RequestStatusMessage) {
-            RequestStatusMessage reqMessage = (RequestStatusMessage) message;
+            RequestStatusMessage reqMessage = (RequestStatusMessage) message;                                           //check message validity
             if (!(reqMessage.getStatus().equals("Success"))) {
                 Platform.runLater(new Runnable() {
                     @Override
@@ -96,13 +96,13 @@ public class LoginController implements Initializable, UIUpdater {
                     }
                 });
             } else {
-                Platform.runLater(new Runnable() {
+                Platform.runLater(new Runnable() {                                                                      //update UI after successfull login.
                     @Override
                     public void run() {
                         try {
-                            ForumUpdateHandler.requestUpdate();
+                            ForumUpdateHandler.requestUpdate();                                                         //request forum update from other peers
                             User user = new User(SystemUser.getSystemUserID());
-                            if (user.getUserID() == SystemUser.getSystemUserID()) {
+                            if (user.getUserID() == SystemUser.getSystemUserID()) {                                     //check whether user registered.
                                 ControllerUtility.openHome();
                             } else {
                                 ControllerUtility.openRegister();

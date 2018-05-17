@@ -30,17 +30,17 @@ public class Answer implements Serializable {
         this.timestamp = timestamp;
     }
 
-    public static ArrayList<Answer> getAnswers(String threadID) {
+    public static ArrayList<Answer> getAnswers(String threadID) {                                                       //get answers of a given thread
         AnswerRepository answerRepository = AnswerRepository.getAnswerRepository();
         return answerRepository.getAnswers(threadID);
     }
 
-    public static ArrayList<Answer> getLatestAnswers(long timestamp) {
+    public static ArrayList<Answer> getLatestAnswers(long timestamp) {                                                  // get answers after a given date
         AnswerRepository answerRepository = AnswerRepository.getAnswerRepository();
         return answerRepository.getLatestAnswers(timestamp);
     }
 
-    public static void saveAnswers(ArrayList<Answer> answers) {
+    public static void saveAnswers(ArrayList<Answer> answers) {                                                         //save answer
         if (!answers.isEmpty()) {
             for (Answer answer : answers) {
                 answer.saveAnswer();
@@ -100,7 +100,7 @@ public class Answer implements Serializable {
         votes.add(vote);
     }
 
-    public void getAnswer(String answerID) {
+    public void getAnswer(String answerID) {                                                                            //get answer of a given ID
         AnswerRepository answerRepo = AnswerRepository.getAnswerRepository();
         answerRepo.getAnswer(answerID, this);
         if (answerID.equals(this.answerID)) {
@@ -108,7 +108,7 @@ public class Answer implements Serializable {
         }
     }
 
-    public void saveAnswer() {
+    public void saveAnswer() {                                                                                          //save answer
         if (answerID != null) {
             AnswerRepository answerRepo = AnswerRepository.getAnswerRepository();
             answerRepo.saveAnswer(this);

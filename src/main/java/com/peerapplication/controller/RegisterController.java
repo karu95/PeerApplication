@@ -52,21 +52,21 @@ public class RegisterController implements Initializable {
     private File file;
 
     @FXML
-    void register(MouseEvent event) throws IOException {
+    void register(MouseEvent event) throws IOException {                                                                // user registration.
         String name = txtName.getText().trim();
         String email = txtEmail.getText().trim();
         User user = new User(SystemUser.getSystemUserID(), name, email);
-        String validity = userValidator.validate(user);
-        if (validity.equals("Success")) {
-            if (file != null) {
+        String validity = userValidator.validate(user);                                                                 // validate user
+        if (validity.equals("Success")) {                                                                               // check user validity
+            if (file != null) {                                                                                         // get image file
                 user.setUserImage(ImageIO.read(file));
                 user.setImageURL(String.valueOf(user.getUserID()));
             }
             user.setRegisterTime(new Date(System.currentTimeMillis()).getTime());
             user.setLastProfileUpdate(user.getRegisterTime());
-            user.saveUser();
+            user.saveUser();                                                                                            // save user
             ExecutorService userService = Executors.newSingleThreadExecutor();
-            userService.execute(new Runnable() {
+            userService.execute(new Runnable() {                                                                        // send user information to others.
                 @Override
                 public void run() {
                     UserHandler.postUser(user);
@@ -80,9 +80,9 @@ public class RegisterController implements Initializable {
     }
 
     @FXML
-    void selectImage(MouseEvent event) throws IOException {
+    void selectImage(MouseEvent event) throws IOException {                                                             // image selection
         Stage stage = (Stage) userImage.getScene().getWindow();
-        file = fileChooser.showOpenDialog(stage);
+        file = fileChooser.showOpenDialog(stage);                                                                       // file chooser to select image
         if (file != null) {
             Image image = new Image(file.toURI().toString());
             userImage.setImage(image);
@@ -90,7 +90,7 @@ public class RegisterController implements Initializable {
     }
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize(URL location, ResourceBundle resources) {                                                    // initialize register controller.
         userValidator = UserValidator.getUserValidator();
         fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().addAll(

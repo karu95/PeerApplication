@@ -23,7 +23,7 @@ public class AnswerHandler extends Handler {
 
     }
 
-    public static AnswerHandler getAnswerHandler() {
+    public static AnswerHandler getAnswerHandler() {                                                                    //singleton pattern for handler
         if (answerHandler == null) {
             synchronized (AnswerHandler.class) {
                 answerHandler = new AnswerHandler();
@@ -32,7 +32,7 @@ public class AnswerHandler extends Handler {
         return answerHandler;
     }
 
-    public static void postAnswer(Answer answer) {
+    public static void postAnswer(Answer answer) {                                                                      // post an answer
         System.out.println("Posting Answer");
         AnswerMessage answerMessage = new AnswerMessage();
         answerMessage.setAnswer(answer);
@@ -42,18 +42,18 @@ public class AnswerHandler extends Handler {
         System.out.println("Answer Posted");
     }
 
-    private static void handleAnswer(AnswerMessage answerMessage) {
+    private static void handleAnswer(AnswerMessage answerMessage) {                                                     // handle received answer
         System.out.println("Handling answer");
         answerHandleLock.writeLock().lock();
         Answer answer = new Answer(answerMessage.getAnswer().getAnswerID());
-        if (answer.getAnswerID() == null) {
+        if (answer.getAnswerID() == null) {                                                                             // check answer is in database
             System.out.println("New Answer");
             answerMessage.getAnswer().saveAnswer();
             NotificationHandler.getNotificationHandler().handleAnswer(answerMessage.getAnswer());
             UIUpdateHandler.informAnswerUpdater(answerMessage);
             ArrayList<Peer> receivers = new ArrayList<>();
             PeerHandler.knownPeersReadLock();
-            for (Map.Entry peer : PeerHandler.getKnownPeers().entrySet()) {
+            for (Map.Entry peer : PeerHandler.getKnownPeers().entrySet()) {                                             // create senders list
                 if (peer.getKey().equals(Integer.valueOf(answerMessage.getAnswer().getPostedUserID()))
                         || peer.getKey().equals(Integer.valueOf(answerMessage.getSenderID()))) {
                     continue;

@@ -16,7 +16,7 @@ public class ControllerUtility {
 
     private static Stage stage;
 
-    public static void logout() throws IOException {
+    public static void logout() throws IOException {                                                                    //open login
         LogoutMessage logoutMessage = new LogoutMessage(SystemUser.getSystemUserID());
         BSHandler.logout(logoutMessage);
         Parent root = FXMLLoader.load(ControllerUtility.class.getResource("/views/login.fxml"));
@@ -25,7 +25,7 @@ public class ControllerUtility {
         stage.show();
     }
 
-    public static void openHome() {
+    public static void openHome() {                                                                                     //open home stage
         FXMLLoader loader = new FXMLLoader(ControllerUtility.class.getResource("/views/homepage.fxml"));
         Parent parent = null;
         try {
@@ -42,7 +42,7 @@ public class ControllerUtility {
         stage.show();
     }
 
-    public static void openThreads(String tag) throws IOException {
+    public static void openThreads(String tag) throws IOException {                                                     // open threads stage
         FXMLLoader fxmlLoader = new FXMLLoader(ControllerUtility.class.getResource("/views/viewthreads.fxml"));
         Parent root = fxmlLoader.load();
         ViewThreadsController controller = fxmlLoader.getController();
@@ -52,7 +52,7 @@ public class ControllerUtility {
         stage.show();
     }
 
-    public static void openSettings() {
+    public static void openSettings() {                                                                                 // open settings stage
         FXMLLoader loader = new FXMLLoader(ControllerUtility.class.getResource("/views/settings.fxml"));
         Parent parent = null;
         try {
@@ -69,7 +69,7 @@ public class ControllerUtility {
         stage.setTitle("Profile Settings");
     }
 
-    public static void viewThread(Thread thread) {
+    public static void viewThread(Thread thread) {                                                                      // open thread stage of a given thread
         FXMLLoader loader = new FXMLLoader(ControllerUtility.class.getResource("/views/viewthread.fxml"));
         Parent parent = null;
         try {
@@ -84,7 +84,7 @@ public class ControllerUtility {
         stage.setTitle("Thread : " + thread.getTitle());
     }
 
-    public static void viewUser(User user) {
+    public static void viewUser(User user) {                                                                            // view a given user
         FXMLLoader loader = new FXMLLoader(ControllerUtility.class.getResource("/views/viewuser.fxml"));
         Parent parent = null;
         try {
@@ -99,7 +99,7 @@ public class ControllerUtility {
         stage.setTitle("Profile : " + user.getName());
     }
 
-    public static void login() {
+    public static void login() {                                                                                        // open login
         Parent root = null;
         try {
             root = FXMLLoader.load(ControllerUtility.class.getResource("/views/login.fxml"));

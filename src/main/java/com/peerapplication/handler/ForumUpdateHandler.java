@@ -30,7 +30,7 @@ public class ForumUpdateHandler extends Handler {
         return forumUpdateHandler;
     }
 
-    public static void requestUpdate() {
+    public static void requestUpdate() {                                                                                // request forum update from other connected peer
         if (!(PeerHandler.getKnownPeers().isEmpty())) {
             System.out.println("Requesting Forum update");
             PeerHandler.knownPeersReadLock();
@@ -47,9 +47,9 @@ public class ForumUpdateHandler extends Handler {
         }
     }
 
-    private static void handleUpdate(ForumUpdateMessage forumUpdateMessage) {
-        if (forumUpdateMessage.getStatus().equals("Request")) {
-            ForumUpdateMessage processedRequest = new ForumUpdateMessage();
+    private static void handleUpdate(ForumUpdateMessage forumUpdateMessage) {                                           //handle received update
+        if (forumUpdateMessage.getStatus().equals("Request")) {                                                         // check if a request
+            ForumUpdateMessage processedRequest = new ForumUpdateMessage();                                             // provide updates into the message
             processedRequest.setStatus("Processed Request");
             System.out.println(new Date(forumUpdateMessage.getLastSeen()));
             processedRequest.setRegisteredUsers(User.getLatestUsers(forumUpdateMessage.getLastSeen()));
@@ -59,7 +59,7 @@ public class ForumUpdateHandler extends Handler {
             processedRequest.setDeletedThreads(DeletedThread.getDeletedThreads(forumUpdateMessage.getLastSeen()));
             PeerHandler.getSenderController().send(processedRequest, PeerHandler.getKnownPeers().get(forumUpdateMessage.getSenderID()));
             System.out.println("Request Processed");
-        } else if (forumUpdateMessage.getStatus().equals("Processed Request")) {
+        } else if (forumUpdateMessage.getStatus().equals("Processed Request")) {                                        // check if a processed request
             System.out.println("Processed request received");
             User.saveUsers(forumUpdateMessage.getRegisteredUsers());
             Thread.saveThreads(forumUpdateMessage.getLatestThreads());
@@ -73,7 +73,7 @@ public class ForumUpdateHandler extends Handler {
         }
     }
 
-    public static void checkForumUpdate() {
+    public static void checkForumUpdate() {                                                                             // check for forum update
         if (!forumUpdated) {
             synchronized (forumUpdated) {
                 try {
@@ -87,7 +87,7 @@ public class ForumUpdateHandler extends Handler {
         }
     }
 
-    private static void forumUpdated() {
+    private static void forumUpdated() {                                                                                //udpated forum
         synchronized (forumUpdated) {
             PeerHandler.startHeartBeat();
             System.out.println("Heart");
@@ -103,7 +103,7 @@ public class ForumUpdateHandler extends Handler {
     }
 
     @Override
-    public void handleFailedMessage(Message message, Peer peer) {
+    public void handleFailedMessage(Message message, Peer peer) {                                                       // handle forum update failure
         super.handleFailedMessage(message, peer);
         requestUpdate();
     }

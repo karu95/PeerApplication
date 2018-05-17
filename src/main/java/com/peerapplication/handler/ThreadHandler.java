@@ -32,7 +32,7 @@ public class ThreadHandler extends Handler {
         return threadHandler;
     }
 
-    public static void postThread(Thread thread) {
+    public static void postThread(Thread thread) {                                                                      //post thread
         System.out.println("Posting thread");
         ThreadMessage threadMessage = new ThreadMessage();
         threadMessage.setThread(thread);
@@ -42,7 +42,7 @@ public class ThreadHandler extends Handler {
         System.out.println("Thread posted");
     }
 
-    public static void postDeleteThread(DeletedThread deletedThread) {
+    public static void postDeleteThread(DeletedThread deletedThread) {                                                  //post delete thread
         System.out.println("Deleted Thread posting");
         DeleteThreadMessage deleteThreadMessage = new DeleteThreadMessage();
         deleteThreadMessage.setDeletedThread(deletedThread);
@@ -52,11 +52,11 @@ public class ThreadHandler extends Handler {
         System.out.println("Deleted thread posted");
     }
 
-    private static void handleThread(ThreadMessage threadMessage) {
+    private static void handleThread(ThreadMessage threadMessage) {                                                     //handle received thread
         System.out.println("thread message received");
         threadHandleLock.writeLock().lock();
         Thread thread = new Thread(threadMessage.getThread().getThreadID());
-        if (thread.getThreadID() == null) {
+        if (thread.getThreadID() == null) {                                                                             //check if thread is in DB
             System.out.println("New Thread");
             threadMessage.getThread().saveThread();
             UIUpdateHandler.informThreadUpdater(threadMessage);
@@ -77,10 +77,10 @@ public class ThreadHandler extends Handler {
         threadHandleLock.writeLock().unlock();
     }
 
-    private static void handleDeletedThread(DeleteThreadMessage deleteThreadMessage) {
+    private static void handleDeletedThread(DeleteThreadMessage deleteThreadMessage) {                                  //handle thread delete
         System.out.println("Deleted thread message received");
         threadHandleLock.writeLock().lock();
-        if (!(deleteThreadMessage.getDeletedThread().checkDeleted())) {
+        if (!(deleteThreadMessage.getDeletedThread().checkDeleted())) {                                                 //check if thread is already deleted.
             System.out.println("Not deleted thread");
             deleteThreadMessage.getDeletedThread().deleteThread();
             UIUpdateHandler.informThreadUpdater(deleteThreadMessage);

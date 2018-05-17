@@ -119,28 +119,28 @@ public class SettingsController implements Initializable, UIUpdater {
     }
 
     @FXML
-    void updateSettings(MouseEvent event) throws CloneNotSupportedException, IOException {
+    void updateSettings(MouseEvent event) throws CloneNotSupportedException, IOException {                              // update settings
         String name = txtName.getText().trim();
         String email = txtEmail.getText().trim();
         User updatedUser = new User();
         updatedUser.getUserWithImage(SystemUser.getSystemUserID());
-        if (file != null) {
+        if (file != null) {                                                                                             //check image uploaded
             updatedUser.setUserImage(ImageIO.read(file));
             updatedUser.setImageURL(String.valueOf(user.getUserID()));
         }
         updatedUser.setName(name);
         updatedUser.setEmail(email);
-        if (!updatedUser.equals(user)) {
+        if (!updatedUser.equals(user)) {                                                                                // check whether user info updated
             String validity = userValidator.validate(updatedUser);
-            if (validity.equals("Success") && PeerHandler.checkConnection()) {
+            if (validity.equals("Success") && PeerHandler.checkConnection()) {                                          //validate new user
                 updatedUser.setLastProfileUpdate(new Date(System.currentTimeMillis()).getTime());
                 userUpdater.execute(new Runnable() {
                     @Override
                     public void run() {
-                        UserHandler.postUser(updatedUser);
+                        UserHandler.postUser(updatedUser);                                                              //send updated user info.
                     }
                 });
-                updatedUser.saveUser();
+                updatedUser.saveUser();                                                                                 // save updated user
                 user = updatedUser;
                 statusLabelUser.setText("User information updated successfully!");
             } else {

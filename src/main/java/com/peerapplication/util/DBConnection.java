@@ -34,7 +34,7 @@ public class DBConnection {
         return dbConnection;
     }
 
-    public Connection getConnection() {
+    public Connection getConnection() {                                                                                 // create a connection and return
         Connection conn = null;
         try {
             Class.forName(prop.getProperty("db.driver"));

@@ -27,47 +27,47 @@ public class BSHandler extends Handler {
         return bsHandler;
     }
 
-    public static void login(LoginMessage loginMessage) {
+    public static void login(LoginMessage loginMessage) {                                                               // send login to BS
         PeerHandler.getSenderController().send(loginMessage, PeerHandler.getBS());
         System.out.println("Login Sent!");
     }
 
-    public static void signup(RegisterMessage registerMessage) {
+    public static void signup(RegisterMessage registerMessage) {                                                        // send signup to BS
         registerMessage.setTimestamp(new Date(System.currentTimeMillis()).getTime());
         PeerHandler.getSenderController().send(registerMessage, PeerHandler.getBS());
         System.out.println("Register Sent!");
     }
 
-    public static void logout(LogoutMessage logoutMessage) {
-        PeerHandler.stopHeartBeat();
+    public static void logout(LogoutMessage logoutMessage) {                                                            // send logout to BS
+        PeerHandler.stopHeartBeat();                                                                                    //stop heartbeat
         SystemUser.setTablesCreated(false);
         logoutMessage.setTimestamp(new Date(System.currentTimeMillis()).getTime());
         PeerHandler.getSenderController().send(logoutMessage, PeerHandler.getBS());
         PeerHandler.getKnownPeers().clear();
         SystemUser.setAccountType(0);
-        SystemUser.setSystemUserID(0);
+        SystemUser.setSystemUserID(0);                                                                                  //clear systemUser
     }
 
-    public static void changePassword(PasswordChangeMessage pwChangeMessage) {
+    public static void changePassword(PasswordChangeMessage pwChangeMessage) {                                          //change password
         PeerHandler.getSenderController().send(pwChangeMessage, PeerHandler.getBS());
         System.out.println("PW Change sent!");
     }
 
-    private static void handleRequest(RequestStatusMessage message) {
-        if (message.getTitle().equals("LoginStatus")) {
+    private static void handleRequest(RequestStatusMessage message) {                                                   //handle request status messages from BS
+        if (message.getTitle().equals("LoginStatus")) {                                                                 //login status
             if (message.getStatus().equals("Success")) {
                 notifyPeerHandler(message);
             }
             UIUpdateHandler.informLoginUpdater(message);
-        } else if (message.getTitle().equals("RegisterStatus")) {
+        } else if (message.getTitle().equals("RegisterStatus")) {                                                       // register status
             if (message.getStatus().equals("Success")) {
                 notifyPeerHandler(message);
             }
             UIUpdateHandler.informRegisterUpdater(message);
-        } else if (message.getTitle().equals("PWChangeStatus")) {
+        } else if (message.getTitle().equals("PWChangeStatus")) {                                                       //PW change status
             UIUpdateHandler.informUserUpdater(message);
             System.out.println("PW Change status received");
-        } else if (message.getTitle().equals("HeartBeatStatus")) {
+        } else if (message.getTitle().equals("HeartBeatStatus")) {                                                      // heartbeat status
             if (message.getStatus().equals("Not Logged In")) {
                 Platform.runLater(new Runnable() {
                     @Override
@@ -84,7 +84,7 @@ public class BSHandler extends Handler {
         }
     }
 
-    private static void notifyPeerHandler(RequestStatusMessage message) {
+    private static void notifyPeerHandler(RequestStatusMessage message) {                                               // notify peer handler method. update successfull login and register
         SystemUser.setSystemUserID(message.getUserID());
         System.out.println(message.getUserID());
         SystemUser.setLastSeen(message.getLastSeen());

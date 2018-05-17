@@ -1,5 +1,7 @@
 package com.peerapplication.util;
 
+import messenger.PeerHandler;
+
 import java.io.File;
 import java.sql.Date;
 
@@ -43,7 +45,7 @@ public class SystemUser {
 
     public static String getImageLocation() {
         if (imageLocation == null) {
-            imageLocation = "/" + System.getProperty("user.dir") + "/images" + String.valueOf(systemUserID) + "/";
+            imageLocation = "/" + System.getProperty("user.dir") + "/images" + String.valueOf(PeerHandler.getUserPort()) + "/";
             File imageDir = new File(imageLocation);
             if (!imageDir.exists()) {
                 imageDir.mkdir();

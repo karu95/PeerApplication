@@ -38,26 +38,26 @@ public class BSInfoController implements Initializable {
     private String error;
 
     @FXML
-    void connect(MouseEvent event) throws IOException {
+    void connect(MouseEvent event) throws IOException {                                     // connect button click
         int port = Integer.parseInt(txtBSPort.getText().trim());
         String ipAddress = txtBSIP.getText().trim();
 
-        if (!portNumberValidator(port)) {
+        if (!portNumberValidator(port)) {                                                   //validate port
             lblStatus.setText("Invalid port number!");
-        } else if (!ipAddressValidator(ipAddress)) {
+        } else if (!ipAddressValidator(ipAddress)) {                                        //validate IP
             lblStatus.setText("Invalid IP address!");
         } else {
-            PeerHandler.getBS().setPeerAddress(ipAddress);
+            PeerHandler.getBS().setPeerAddress(ipAddress);                                  //configure PeerHandler with bs detail
             PeerHandler.getBS().setPeerPort(port);
             PeerHandler.getBS().setUserID(1);
             testConnection = false;
-            connectionTester.shutdown();
+            connectionTester.shutdown();                                                    // shut down connection tester
             PeerHandler.startConnectionTest();
             ControllerUtility.login();
         }
     }
 
-    private boolean portNumberValidator(int port) {
+    private boolean portNumberValidator(int port) {                                         //port validator method
         boolean valid = false;
         if ((port > 1024) && (port < 65536)) {
             valid = true;
@@ -65,7 +65,7 @@ public class BSInfoController implements Initializable {
         return valid;
     }
 
-    private boolean ipAddressValidator(String ipAdd) {
+    private boolean ipAddressValidator(String ipAdd) {                                      //ip validator method
         boolean valid = true;
         if (!(ipAdd.matches("[0-9.]+") && (ipAdd.length() > 0 && ipAdd.length() < 16))) {
             valid = false;
@@ -74,10 +74,10 @@ public class BSInfoController implements Initializable {
     }
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize(URL location, ResourceBundle resources) {                        //Controller initialization
         error = "";
         this.testConnection = true;
-        connectionTester = Executors.newSingleThreadExecutor(new ThreadFactory() {
+        connectionTester = Executors.newSingleThreadExecutor(new ThreadFactory() {          // start connection tester
             @Override
             public Thread newThread(Runnable r) {
                 Thread thread = Executors.defaultThreadFactory().newThread(r);
@@ -88,7 +88,7 @@ public class BSInfoController implements Initializable {
         connectionTester.execute(new Runnable() {
             @Override
             public void run() {
-                while (testConnection) {
+                while (testConnection) {                                                    //testing lan connection
                     if (PeerHandler.checkConnection()) {
                         btnConnect.setDisable(false);
                         if (!error.equals("Unable to connect to BS")) {
@@ -119,7 +119,7 @@ public class BSInfoController implements Initializable {
         txtBSPort.setText("25025");
     }
 
-    public void init() {
+    public void init() {                                                                //controller update method.
         error = "Unable to connect to BS";
         Platform.runLater(new Runnable() {
             @Override

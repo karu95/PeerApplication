@@ -83,7 +83,7 @@ public class PostThreadController implements Initializable {
     }
 
     @FXML
-    void post(MouseEvent event) throws IOException {
+    void post(MouseEvent event) throws IOException {                                                                    //thread post button events
         Thread thread = new Thread();
         thread.setTimestamp(new Date(System.currentTimeMillis()).getTime());
         thread.setDescription(txtDescription.getText().trim());
@@ -92,17 +92,17 @@ public class PostThreadController implements Initializable {
         thread.setThreadID(IDGenerator.generateThreadID(thread.getTimestamp()));
         String[] tags = txtTags.getText().trim().split(",");
         ArrayList<Tag> relatedTags = new ArrayList<>();
-        if (!tags[0].equals("")) {
+        if (!tags[0].equals("")) {                                                                                      //gather tags
             for (int i = 0; i < tags.length; i++) {
                 relatedTags.add(new Tag(tags[i].trim().toLowerCase()));
             }
         }
         thread.setTags(relatedTags);
-        String validity = ThreadValidator.validateThread(thread);
-        if (validity.equals("valid") && PeerHandler.checkConnection()) {
-            thread.saveThread();
+        String validity = ThreadValidator.validateThread(thread);                                                       // validate thread
+        if (validity.equals("valid") && PeerHandler.checkConnection()) {                                                //check validity
+            thread.saveThread();                                                                                        //save thread
             ExecutorService postThreadService = Executors.newSingleThreadExecutor();
-            postThreadService.execute(new Runnable() {
+            postThreadService.execute(new Runnable() {                                                                  //send thread to other known peers.
                 @Override
                 public void run() {
                     ThreadHandler.postThread(thread);

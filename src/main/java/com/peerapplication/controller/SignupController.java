@@ -47,18 +47,18 @@ public class SignupController implements Initializable, UIUpdater {
 
 
     @FXML
-    void confirmSignup(MouseEvent event) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+    void confirmSignup(MouseEvent event) throws NoSuchAlgorithmException, UnsupportedEncodingException {                // signup confirmation
         String username = txtUsername.getText().trim();
         String password = txtPassword.getText().trim();
         String cnfmPassword = txtCnfmPassword.getText().trim();
-        if (!(username.isEmpty()) && !(password.isEmpty()) && !(cnfmPassword.isEmpty())) {
+        if (!(username.isEmpty()) && !(password.isEmpty()) && !(cnfmPassword.isEmpty())) {                              // validate password
             if (username.length() < 8 || username.length() > 20) {
                 statusLabel.setText("Username should have 8-20 characters!");
                 txtUsername.clear();
-            } else if (!username.matches("[a-zA-Z0-9]+")) {
+            } else if (!username.matches("[a-zA-Z0-9]+")) {                                                       // validate username
                 statusLabel.setText("Username should contain only alpha-numeric characters!");
                 txtUsername.clear();
-            } else if (password.length() < 8 || password.length() > 20) {
+            } else if (password.length() < 8 || password.length() > 20) {                                               // validate password length
                 statusLabel.setText("Password should have 8-20 characters!");
                 txtCnfmPassword.clear();
                 txtPassword.clear();
@@ -68,9 +68,9 @@ public class SignupController implements Initializable, UIUpdater {
                 statusLabel.setText("Password mismatch!");
                 txtPassword.clear();
                 txtCnfmPassword.clear();
-            } else {
+            } else {                                                                                                    // signup user
                 RegisterMessage regMsg = new RegisterMessage();
-                String pw = PasswordEncrypter.SHA1(password);
+                String pw = PasswordEncrypter.SHA1(password);                                                           // encrypt password
                 regMsg.setUsername(username);
                 regMsg.setPassword(pw);
                 BSHandler.signup(regMsg);
@@ -97,10 +97,10 @@ public class SignupController implements Initializable, UIUpdater {
     }
 
     @Override
-    public void updateUI(Message message) {
+    public void updateUI(Message message) {                                                                             // update UI from UIUpdateHandler
         if (message instanceof RequestStatusMessage) {
             RequestStatusMessage reqMessage = (RequestStatusMessage) message;
-            Platform.runLater(new Runnable() {
+            Platform.runLater(new Runnable() {                                                                          // send register message to BS
                 @Override
                 public void run() {
                     if (!(reqMessage.getStatus().equals("Success"))) {

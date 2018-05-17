@@ -114,7 +114,7 @@ public class HomeController implements Initializable, UIUpdater {
     }
 
     @FXML
-    void btnThreadsClicked(MouseEvent event) throws IOException {
+    void btnThreadsClicked(MouseEvent event) throws IOException {                                           //threads button press
         ControllerUtility.openThreads("");
     }
 
@@ -163,26 +163,26 @@ public class HomeController implements Initializable, UIUpdater {
     }
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize(URL location, ResourceBundle resources) {                                                    //home controller initialization
         UIUpdateHandler.refreshUpdater();
         UIUpdateHandler.setThreadUpdater(this);
 
         btnHome.setDisable(true);
-        latestThreads = FXCollections.observableArrayList(Thread.getLatestThreads(0));
+        latestThreads = FXCollections.observableArrayList(Thread.getLatestThreads(0));                        // update latest threads
         colTitleLatest.setCellValueFactory(new PropertyValueFactory<>("title"));
         latestThreadsTable.setItems(latestThreads);
 
-        myThreads = FXCollections.observableArrayList(Thread.getUserThreads(SystemUser.getSystemUserID()));
+        myThreads = FXCollections.observableArrayList(Thread.getUserThreads(SystemUser.getSystemUserID()));             //update current user threads
         colTitleMyThreads.setCellValueFactory(new PropertyValueFactory<>("title"));
         myThreadsTable.setItems(myThreads);
 
-        colNotifications.setCellValueFactory(new PropertyValueFactory<>("description"));
+        colNotifications.setCellValueFactory(new PropertyValueFactory<>("description"));                                //update notifications
         notificationsTable.setItems(NotificationHandler.getNotificationHandler().getNotifications());
     }
 
     @Override
-    public void updateUI(Message message) {
-        if (message instanceof ThreadMessage) {
+    public void updateUI(Message message) {                                                                             //update UI from received messages
+        if (message instanceof ThreadMessage) {                                                                         // thread message update
             ThreadMessage threadMessage = (ThreadMessage) message;
             Platform.runLater(new Runnable() {
                 @Override
@@ -190,7 +190,7 @@ public class HomeController implements Initializable, UIUpdater {
                     latestThreads.add(0, threadMessage.getThread());
                 }
             });
-        } else if (message instanceof DeleteThreadMessage) {
+        } else if (message instanceof DeleteThreadMessage) {                                                            // delete thread messsage update
             System.out.println("Deleted thread received");
             DeleteThreadMessage deleteThreadMessage = (DeleteThreadMessage) message;
             if (Integer.valueOf(deleteThreadMessage.getDeletedThread().getThreadID().substring(0, 6)) == SystemUser.getSystemUserID()) {
@@ -201,7 +201,7 @@ public class HomeController implements Initializable, UIUpdater {
                     }
                 });
             }
-            latestThreads = FXCollections.observableArrayList(Thread.getLatestThreads(0));
+            latestThreads = FXCollections.observableArrayList(Thread.getLatestThreads(0));                     // table update
             myThreads = FXCollections.observableArrayList(Thread.getUserThreads(SystemUser.getSystemUserID()));
             latestThreadsTable.setItems(latestThreads);
             myThreadsTable.setItems(myThreads);
